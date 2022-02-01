@@ -1,16 +1,4 @@
-/**
- * Team 3229
- * CaptureFile.cpp
- *
- * This class is a simple file IO interface. The capture filename is specified
- * in the constructor and can be closed through a method or automatically in
- * the destructor.
- *
- * This class uses C functions and not C++ IO because WPIlib somehow disables
- * normal fstream stuff.  Ugh.
- */
-
-#include "Autonomous/CaptureFile.h"
+#include "CaptureFile.h"
 
 CaptureFile::CaptureFile() {}
 

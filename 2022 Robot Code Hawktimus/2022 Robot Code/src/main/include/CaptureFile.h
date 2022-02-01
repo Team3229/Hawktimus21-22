@@ -1,8 +1,3 @@
-/*
- * Team 3229
- * CaptureFile.h
- */
-
 #ifndef CAPTUREFILE_H_
 #define CAPTUREFILE_H_
 
