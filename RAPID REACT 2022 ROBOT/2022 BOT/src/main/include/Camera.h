@@ -14,10 +14,11 @@ class Camera
 {
 public:
     Camera();
+    
 private:
 
-    cs::VideoSource camera; //intake + feeder 
-    cs::VideoSource camera2; //climbing
+    cs::VideoSource camera;
+    cs::VideoSource camera2;
 
     const int FPS = 15;
     const int BRIGHTNESS = 40;

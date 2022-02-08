@@ -16,18 +16,24 @@ private:
     frc::Compressor * m_compressor;
     frc::DoubleSolenoid * m_intakeSolenoid;
 
-    //rev::CANSparkMax * m_intakeMotor;
-    ctre::phoenix::motorcontrol::can::WPI_TalonSRX * m_intakeMotor;
+    
+    ctre::phoenix::motorcontrol::can::WPI_TalonSRX * m_intakeMotor1; 
 
     const int kIntakeMotorID = 9;
+    const int kIntakePivotID = 10;
     
-    const int kCompressorPCMID = 0;
-    const int kForwardIntakeID = 2; //was 0
-    const int kReverseIntakeID = 3; //was 1
+    const int kCompressorPCMID = 0; //uodate these
+    const int kForwardIntakeID = 2; //update these
+    const int kReverseIntakeID = 3; //update these
     
     bool intakeExtended = false;
     const double INTAKE_POWER_IN = -.7;
     const double INTAKE_POWER_OUT = .7;
+
+    frc::DoubleSolenoid * m_intakepivot;
+    
+    const int FORWARD_ID = 0;
+    const int REVERSE_ID = 1;
 
 public:
     Intake();

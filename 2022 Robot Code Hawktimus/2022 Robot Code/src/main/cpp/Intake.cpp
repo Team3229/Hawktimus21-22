@@ -5,12 +5,30 @@ Intake::Intake()
     //m_compressor = new frc::Compressor(kCompressorPCMID);
     //m_intakeSolenoid = new frc::DoubleSolenoid(kForwardIntakeID,kReverseIntakeID);
    // m_intakeMotor = new rev::CANSparkMax(kIntakeMotorID,rev::CANSparkMax::MotorType::kBrushless);
-    m_intakeMotor = new ctre::phoenix::motorcontrol::can::WPI_TalonSRX(kIntakeMotorID);
+    m_intakeMotor1 = new ctre::phoenix::motorcontrol::can::WPI_TalonSRX(kIntakepivotRID);
+    m_intakeMotor2 = new ctre::phoenix::motorcontrol::can::WPI_TalonSRX(kIntakepivotLID);
+
     //m_intakeSolenoid->ClearAllPCMStickyFaults();
    // m_compressor->ClearAllPCMStickyFaults();
     
-    //m_intakeMotor->RestoreFactoryDefaults();
-    m_intakeMotor->ClearStickyFaults();
+    //m_intakepivot->RestoreFactoryDefaults();
+    m_intakeMotor1->ClearStickyFaults();
+    m_intakeMotor2->ClearStickyFaults();
+
+
+    m_intakepivotR = new frc::DoubleSolenoid(FORWARD_ID, REVERSE_ID);
+    m_intakepivotL = new frc::DoubleSolenoid(FORWARD_ID, REVERSE_ID);
+
+
+
+  m_intakepivotR->ClearAllPCMStickyFaults();
+  // Start pos
+  m_intakepivotR->Set(frc::DoubleSolenoid::Value::kReverse);
+
+  m_intakepivotL->ClearAllPCMStickyFaults();
+  // Start pos
+  m_intakepivotL->Set(frc::DoubleSolenoid::Value::kReverse);
+
 
    // m_compressor->SetClosedLoopControl(true);
 }
@@ -19,7 +37,8 @@ Intake::~Intake()
 {
   //  m_compressor->SetClosedLoopControl(false);
     delete m_compressor;
-    delete m_intakeMotor;
+    delete m_intakepivotL;
+    delete m_intakepivotR;
     delete m_intakeSolenoid;
 }
 
@@ -61,7 +80,8 @@ Intake::~Intake()
 void Intake::runIntake()
 {
     if (intakeExtended) {
-        m_intakeMotor->Set(INTAKE_POWER_IN);
+        m_intakepivotR->Set(INTAKE_POWER_IN);
+        m_intakepivotL->Set(INTAKE_POWER_IN);
     } else {
         stopIntake();
     }

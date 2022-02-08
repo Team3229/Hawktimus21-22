@@ -36,7 +36,7 @@ Shooter::~Shooter()
  */
 double Shooter::calcRPM(units::inch_t dist)
 {
-    double FWSetRPM = std::clamp(dist.to double() * kDIST_RPM_RATIO,0.0,kMAX_FW_RPM);
+    double FWSetRPM = std::clamp(dist.to double)() * kDIST_RPM_RATIO,0.0,kMAX_FW_RPM);
     debug(FWSetRPMDebug = FWSetRPM);
     return FWSetRPM;
 }

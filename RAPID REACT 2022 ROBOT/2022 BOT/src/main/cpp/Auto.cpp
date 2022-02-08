@@ -1,7 +1,7 @@
+
 #include "Auto.h"
 
-Auto::Auto(Drivetrain *c, Turret *t, Intake *i, Shooter *s)
- {
+Auto::Auto(DriveSystem *c) {
 
   // Passes in subsystems from Robot make sure to populate these! 
   autoChassis = c;
