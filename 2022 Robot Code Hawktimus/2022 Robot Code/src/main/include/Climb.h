@@ -18,7 +18,7 @@ class Climb {
     rev:: CANSparkMax * l_climber; //left NEO
     rev:: CANSparkMax * r_climber; //right NEO
 
-    const int mClimbID = 1; //change these with actual port valies!! 
+    const int mClimbID = 1; //change these with actual port values!! 
     const int lClimbID = 2;
     const int rClimbID = 3;
 };

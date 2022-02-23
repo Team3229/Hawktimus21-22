@@ -5,29 +5,23 @@ Intake::Intake()
     //m_compressor = new frc::Compressor(kCompressorPCMID);
     //m_intakeSolenoid = new frc::DoubleSolenoid(kForwardIntakeID,kReverseIntakeID);
    // m_intakeMotor = new rev::CANSparkMax(kIntakeMotorID,rev::CANSparkMax::MotorType::kBrushless);
-    m_intakeMotor1 = new ctre::phoenix::motorcontrol::can::WPI_TalonSRX(kIntakepivotRID);
-    m_intakeMotor2 = new ctre::phoenix::motorcontrol::can::WPI_TalonSRX(kIntakepivotLID);
+    m_intakeMotor = new ctre::phoenix::motorcontrol::can::WPI_TalonSRX(kIntakeMotorID);
+   
 
     //m_intakeSolenoid->ClearAllPCMStickyFaults();
    // m_compressor->ClearAllPCMStickyFaults();
     
     //m_intakepivot->RestoreFactoryDefaults();
-    m_intakeMotor1->ClearStickyFaults();
-    m_intakeMotor2->ClearStickyFaults();
+    m_intakeMotor->ClearStickyFaults();
+   
 
+ //uncoment once the intake picvot specifications are runned through m_intakepivot = new frc::DoubleSolenoid(FORWARD_ID, REVERSE_ID); 
+   
 
-    m_intakepivotR = new frc::DoubleSolenoid(FORWARD_ID, REVERSE_ID);
-    m_intakepivotL = new frc::DoubleSolenoid(FORWARD_ID, REVERSE_ID);
-
-
-
-  m_intakepivotR->ClearAllPCMStickyFaults();
   // Start pos
-  m_intakepivotR->Set(frc::DoubleSolenoid::Value::kReverse);
+  m_intakepivot->Set(frc::DoubleSolenoid::Value::kReverse);
 
-  m_intakepivotL->ClearAllPCMStickyFaults();
-  // Start pos
-  m_intakepivotL->Set(frc::DoubleSolenoid::Value::kReverse);
+  
 
 
    // m_compressor->SetClosedLoopControl(true);
@@ -37,8 +31,8 @@ Intake::~Intake()
 {
   //  m_compressor->SetClosedLoopControl(false);
     delete m_compressor;
-    delete m_intakepivotL;
-    delete m_intakepivotR;
+    delete m_intakeMotor;
+    delete m_intakepivot;
     delete m_intakeSolenoid;
 }
 
@@ -80,8 +74,8 @@ Intake::~Intake()
 void Intake::runIntake()
 {
     if (intakeExtended) {
-        m_intakepivotR->Set(INTAKE_POWER_IN);
-        m_intakepivotL->Set(INTAKE_POWER_IN);
+       // m_intakepivot->Set(INTAKE_POWER_IN); change this once pneumatics are done
+      
     } else {
         stopIntake();
     }

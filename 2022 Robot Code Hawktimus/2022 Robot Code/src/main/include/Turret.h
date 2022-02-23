@@ -36,7 +36,7 @@ class Turret
 
         const int kTurretEncoderID = 0;
         frc::AnalogInput turretEncID{kTurretEncoderID}; //Analog Input
-        const int kTurretMotorID = 10;
+        const int kTurretMotorID = 12;//turret PDP ID
 
         //Turret turn rate limit
         const double kMAX_TURRET_POWER = .2;            //max turret turn power

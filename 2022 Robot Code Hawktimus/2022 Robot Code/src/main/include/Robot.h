@@ -15,8 +15,7 @@
 #include "Limelight.h"
 #include "Intake.h"
 #include "Climb.h"
-#include "LED.h"
-#include "Camera.h
+#include "Camera.h"
 #include "Auto.h"
 
 class Robot : public frc::TimedRobot {
@@ -47,7 +46,7 @@ class Robot : public frc::TimedRobot {
 
   Drivetrain m_drive;
 
-  Auto m_auto{&m_drive};
+  Auto m_auto{&m_drive,&m_intake,&m_turret,&m_shooter};
   const bool m_recordMode = true; // use this to force disable recording, useful at competitions
   
   Camera m_camera;

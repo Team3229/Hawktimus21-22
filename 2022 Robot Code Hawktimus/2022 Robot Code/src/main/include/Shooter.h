@@ -59,8 +59,6 @@ public:
     Shooter();
     ~Shooter();
 
-    double calcRPM(units::inch_t dist); 
-    bool readyFeed(units::inch_t dist);
     bool adjustFWSpeed(double rpm);
 
     void runShooter();

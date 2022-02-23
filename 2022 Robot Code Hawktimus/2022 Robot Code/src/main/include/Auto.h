@@ -22,9 +22,10 @@
 #include "Limelight.h"
 #include "Intake.h"
 #include "Climb.h"
-#include "LED.h"
 
-class Auto {
+
+class Auto
+ {
 private:
   bool autoDone = false;
 

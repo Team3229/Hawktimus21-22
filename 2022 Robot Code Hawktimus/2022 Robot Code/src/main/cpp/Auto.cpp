@@ -5,6 +5,9 @@ Auto::Auto(Drivetrain *c, Turret *t, Intake *i, Shooter *s)
 
   // Passes in subsystems from Robot make sure to populate these! 
   autoChassis = c;
+  autoTurret = t;
+  autoShooter = s;
+  //make srue to add in intake
   
 
   // Setup SmartDashboard

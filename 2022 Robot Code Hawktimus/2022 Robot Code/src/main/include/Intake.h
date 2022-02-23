@@ -15,9 +15,10 @@ class Intake
 private:
     frc::Compressor * m_compressor;
     frc::DoubleSolenoid * m_intakeSolenoid;
+    
 
     
-    ctre::phoenix::motorcontrol::can::WPI_TalonSRX * m_intakeMotor1; 
+    ctre::phoenix::motorcontrol::can::WPI_TalonSRX * m_intakeMotor; 
 
     const int kIntakeMotorID = 9;
     const int kIntakePivotID = 10;

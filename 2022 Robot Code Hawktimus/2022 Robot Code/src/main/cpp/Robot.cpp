@@ -31,42 +31,42 @@ void Robot::TeleopInit()
 void Robot::TeleopPeriodic() 
 {
   // Populate controller struct
-  m_controllerInputs->drive_rightY = m_driveController.GetY(frc::GenericHID::kRightHand);
-  m_controllerInputs->drive_rightX = m_driveController.GetX(frc::GenericHID::kRightHand);
-  m_controllerInputs->drive_leftY = m_driveController.GetY(frc::GenericHID::kLeftHand);
-  m_controllerInputs->drive_leftX = m_driveController.GetX(frc::GenericHID::kLeftHand);
+  m_controllerInputs->drive_rightY = m_driveController.GetRightY();
+  m_controllerInputs->drive_rightX = m_driveController.GetRightX();
+  m_controllerInputs->drive_leftY = m_driveController.GetLeftY();
+  m_controllerInputs->drive_leftX = m_driveController.GetLeftX();
   m_controllerInputs->drive_AButton = m_driveController.GetAButton();
   m_controllerInputs->drive_BButton = m_driveController.GetBButton();
   m_controllerInputs->drive_XButton = m_driveController.GetXButton();
   m_controllerInputs->drive_YButton = m_driveController.GetYButton();
   m_controllerInputs->drive_RightBumper =
-      m_driveController.GetBumper(frc::GenericHID::kRightHand);
+      m_driveController.GetRightBumper();
   m_controllerInputs->drive_LeftBumper =
-      m_driveController.GetBumper(frc::GenericHID::kLeftHand);
+      m_driveController.GetLeftBumper();
   m_controllerInputs->drive_RightTriggerAxis =
-      m_driveController.GetTriggerAxis(frc::GenericHID::kRightHand);
+      m_driveController.GetRightTriggerAxis();
   m_controllerInputs->drive_LeftTriggerAxis =
-      m_driveController.GetTriggerAxis(frc::GenericHID::kLeftHand);
+      m_driveController.GetLeftTriggerAxis();
   m_controllerInputs->drive_POV = m_driveController.GetPOV();
-  m_controllerInputs->mani_rightY = m_maniController.GetY(frc::GenericHID::kRightHand);
-  m_controllerInputs->mani_rightX = m_maniController.GetX(frc::GenericHID::kRightHand);
-  m_controllerInputs->mani_leftY = m_maniController.GetY(frc::GenericHID::kLeftHand);
-  m_controllerInputs->mani_leftX = m_maniController.GetX(frc::GenericHID::kLeftHand);
+  m_controllerInputs->mani_rightY = m_maniController.GetRightY();
+  m_controllerInputs->mani_rightX = m_maniController.GetRightX();
+  m_controllerInputs->mani_leftY = m_maniController.GetLeftY();
+  m_controllerInputs->mani_leftX = m_maniController.GetLeftX();
   m_controllerInputs->mani_AButton = m_maniController.GetAButton();
   m_controllerInputs->mani_BButton = m_maniController.GetBButton();
   m_controllerInputs->mani_XButton = m_maniController.GetXButton();
   m_controllerInputs->mani_YButton = m_maniController.GetYButton();
   m_controllerInputs->mani_RightBumper =
-      m_maniController.GetBumper(frc::GenericHID::kRightHand);
+ m_maniController.GetRightBumper();
   m_controllerInputs->mani_LeftBumper =
-      m_maniController.GetBumper(frc::GenericHID::kLeftHand);
+      m_maniController.GetLeftBumper();
   m_controllerInputs->mani_RightTriggerAxis =
-      m_maniController.GetTriggerAxis(frc::GenericHID::kRightHand);
+      m_maniController.GetRightTriggerAxis();
   m_controllerInputs->mani_LeftTriggerAxis =
-      m_maniController.GetTriggerAxis(frc::GenericHID::kLeftHand);
+      m_maniController.GetLeftTriggerAxis();
   m_controllerInputs->mani_POV = m_maniController.GetPOV();
   
-  m_limelight.limelightDash();
+
   m_shooter.shooterDash();
   m_drive.drivetrainDash();
   m_turret.turretDash();
@@ -133,33 +133,26 @@ void Robot::ExecuteControls()
   }
   
   // Toggle the climber
-  if (m_controllerInputs->mani_XButton) {
+  //if (m_controllerInputs->mani_XButton) {
   
-    Climb.ClimbT();
-  }
+   // Climb.ClimbT();
+  //}
   
   //Vision manip control
   
   auto rpm = frc::SmartDashboard::GetNumber("RPM",0); //test code, tune shooter
 
   if (m_controllerInputs->mani_YButton) { //auto aim controls, manual control disabled when held down
-    //turn on limelight vision
-    m_limelight.limelightLED(3);
-    m_limelight.limelightPipeLine(0);
-    //aim
-    bool canShoot = m_limelight.aimOperation();
-    debugDashNum("(R) canShoot",canShoot);
+    
+ 
     //shoot
     if(m_controllerInputs->mani_RightTriggerAxis) {
-      //use after calcRPM() tuned with scoreWithPOVManual() 
-      //if(canShoot) {
-      //  m_limelight.scoreOperation();
-      //}
+     
+     
       if(m_controllerInputs->mani_RightBumper){ //force reverse feed during shooting
         m_shooter.reverseFeed();
       } else {
-        //m_shooter.runShooter(); //if no time to test shooter rpm adjust but vision is working
-        m_limelight.scoreWithPOVManual(m_controllerInputs->mani_POV, rpm);
+        
       }
     } else if (m_controllerInputs->mani_RightBumper) {
       m_shooter.reverseFeed();
@@ -168,9 +161,7 @@ void Robot::ExecuteControls()
       m_shooter.stopFeed();
     }
   } else { //manual controls
-    //driver camera mode
-    m_limelight.limelightLED(1);
-    m_limelight.limelightPipeLine(1);
+  
     // Running the shooter
     if (m_controllerInputs->mani_RightTriggerAxis > .1) {
       m_shooter.runShooter();

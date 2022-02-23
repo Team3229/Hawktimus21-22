@@ -2,11 +2,11 @@
 
 Drivetrain::Drivetrain()
 {
- 
-  m_leftFront = new rev::CANSparkMax(6,rev::CANSparkMax::MotorType::kBrushless);
-  m_leftBack = new rev::CANSparkMax(5,rev::CANSparkMax::MotorType::kBrushless);
+  //constants for motor ID's 
+  m_leftFront = new rev::CANSparkMax(1,rev::CANSparkMax::MotorType::kBrushless);
+  m_leftBack = new rev::CANSparkMax(2,rev::CANSparkMax::MotorType::kBrushless);
   m_rightFront = new rev::CANSparkMax(3,rev::CANSparkMax::MotorType::kBrushless);
-  m_rightBack = new rev::CANSparkMax(2,rev::CANSparkMax::MotorType::kBrushless);
+  m_rightBack = new rev::CANSparkMax(4,rev::CANSparkMax::MotorType::kBrushless);
   
   navXGyro = new AHRS(frc::SPI::Port::kMXP);
   

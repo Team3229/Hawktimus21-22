@@ -29,36 +29,6 @@ Shooter::~Shooter()
     delete m_feeder;
 }
 
-/**
- * calculate rpm with a distance input
- * @param dist, distance units from the target
- * @return double, calculated rpm the flywheel should be
- */
-double Shooter::calcRPM(units::inch_t dist)
-{
-    double FWSetRPM = std::clamp(dist.to double)() * kDIST_RPM_RATIO,0.0,kMAX_FW_RPM);
-    debug(FWSetRPMDebug = FWSetRPM);
-    return FWSetRPM;
-}
-
-/**
- * entire shooter mechanism
- * check conditions before feeding in balls
- * @param dist, distance unit from the target
- * @return true if it is appropriate to shoot power cells
- */
-bool Shooter::readyFeed(units::inch_t dist)
-{
-    //add a timer if this is too fast
-    if (adjustFWSpeed(calcRPM(dist)) /*&& adjustHood(calcHoodPos(dist))*/)
-        return true;
-    return false;
-}
-
-/**
- * sets the fly wheel rpm 
- * @return true if it is in appropriate rpm
- */ 
 bool Shooter::adjustFWSpeed(double rpm)
 {
     double FWSpeed = m_flyWheelLead->GetEncoder().GetVelocity(); //gets current rpm
