@@ -2,10 +2,10 @@
 
 #include "Auto.h"
 
-Auto::Auto(DriveSystem *c) {
+Auto::Auto(DriveSystem *c) 
+{
   // Passes in subsystems from Robot
   autoChassis = c;
-  
 
   // Setup SmartDashboard
   frc::SmartDashboard::PutString("Auto files:\n", stationFileList);

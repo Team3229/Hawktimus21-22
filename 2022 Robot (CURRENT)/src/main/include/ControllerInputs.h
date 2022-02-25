@@ -1,9 +1,9 @@
 #ifndef CONTROLLER_INPUTS_H
 #define CONTROLLER_INPUTS_H
 
-// Method of storing and replaying drivers inputs
-struct cmd {
-  // Driver 1
+struct cmd 
+{
+  // Driver 1 Controls
   double driver_rightY;
   double driver_rightX;
   double driver_leftX;
@@ -17,7 +17,7 @@ struct cmd {
   float driver_RightTriggerAxis;
   float driver_LeftTriggerAxis;
   int driver_POV;
-  // Driver 2
+  // Driver 2 Controls
   float mani_leftX;
   float mani_rightX;
   float mani_leftY;

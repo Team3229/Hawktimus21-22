@@ -113,6 +113,13 @@ if(abs(DEAD_BAND > std::abs(m_controllerInputs->driver_rightY) && DEAD_BAND > st
     chassis.ChangeSpeed(3); // fast
     m_lastUsedSpeed = 3;
   }
+
+   // Run the intake
+  if (m_controllerInputs->mani_LeftBumper) {
+    m_intake.runIntake();
+  } else {
+    m_intake.stopIntake(); 
+  }
 }
 
 

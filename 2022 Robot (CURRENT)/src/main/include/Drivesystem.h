@@ -22,14 +22,11 @@ class DriveSystem
 public:
     DriveSystem();
     ~DriveSystem();
+
+	
     void Drive(double& Y, double& X, double& Z);
     void Stop();
     void ChangeSpeed(int choice);
-
-	/*frc::SpeedControllerGroup m_left{leftLead, leftFollower};
-	frc::SpeedControllerGroup m_right{rightLead, rightFollower};
-
-	frc::DifferentialDrive m_drive{m_right, m_left}; */
 
 private:
     //SparkMax's

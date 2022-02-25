@@ -19,8 +19,10 @@
 
 // Subsystem includes
 #include "DriveSystem.h"
+#include "Intake.h"
 #include "Auto.h"
 #include "Debug.h"
+#include "Turret.h"
 
 
 
@@ -55,11 +57,13 @@ class Robot : public frc::TimedRobot
   // Controller variables
   int m_lastUsedSpeed = 2;
   
+  Intake m_intake;
+  Turret m_turret;
 
   // Objects of subsystems
   DriveSystem chassis;
 
-  Auto m_auto{&chassis};
+  Auto m_auto{&chassis}; //populate these for testing
   const bool m_recordMode = true; // use this to force disable recording, useful at competitions
   
   frc::XboxController m_driveController {XBOX_USB_DRIVER_1}; //Chassis driver

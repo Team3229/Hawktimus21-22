@@ -14,8 +14,10 @@
 #include "CaptureFile.h"
 #include "Debug.h"
 #include "ControllerInputs.h"
+#include "Intake.h"
 
-class Auto {
+class Auto 
+{
 private:
   bool autoDone = false;
 
@@ -23,7 +25,6 @@ private:
   // MAKE SURE TO UPDATE CONSTRUCTOR ARGS AND SUBSYSTEMS FOR THIS YEAR
   DriveSystem * autoChassis;
   
-
   // files stuff
   // Use .aut file extension
   std::string stationFileList = "crossLineAndShoot.aut, crossLine.aut";
@@ -36,7 +37,7 @@ private:
   CaptureFile cmdFile {};
 
 public:
-  Auto(DriveSystem *c);
+  Auto(DriveSystem *c); //make sure to pass in subsystems 
   ~Auto();
   void SetupPlayback();
   void ReadFile(cmd * inputs);
