@@ -31,6 +31,7 @@ private:
   Intake * autoIntake;
   Turret * autoTurret;
   Feeder * autoFeeder;
+  UpperFeeder *autoUpperFeeder;
   Shooter * autoShooter;
   
   // files stuff
@@ -45,7 +46,7 @@ private:
   CaptureFile cmdFile {};
 
 public:
-  Auto(DriveSystem *c, Intake *i, Turret *t, Feeder *f, Shooter *s); //make sure to pass in subsystems 
+  Auto(DriveSystem *c, Intake *i, Turret *t, Feeder *f, UpperFeeder *u, Shooter *s); //make sure to pass in subsystems 
   ~Auto();
   void SetupPlayback();
   void ReadFile(cmd * inputs);
