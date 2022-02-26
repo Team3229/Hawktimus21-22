@@ -25,7 +25,6 @@
 #include "Turret.h"
 
 
-
 class Robot : public frc::TimedRobot 
 {
  public:
@@ -59,6 +58,7 @@ class Robot : public frc::TimedRobot
   
   Intake m_intake;
   Turret m_turret;
+  
 
   // Objects of subsystems
   DriveSystem chassis;

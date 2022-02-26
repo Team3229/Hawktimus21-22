@@ -120,6 +120,14 @@ if(abs(DEAD_BAND > std::abs(m_controllerInputs->driver_rightY) && DEAD_BAND > st
   } else {
     m_intake.stopIntake(); 
   }
+
+  if (std::abs(m_controllerInputs->mani_rightX) > .1) {
+      m_turret.Turn(m_controllerInputs->mani_rightX/5);
+    } else {
+      m_turret.Turn(0);
+    }
+
+
 }
 
 

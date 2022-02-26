@@ -13,9 +13,9 @@ class Intake
 private:
     ctre::phoenix::motorcontrol::can::WPI_TalonSRX * m_intakeMotor;
     
-    const int kIntakeMotorID = 7;
-    const double INTAKE_POWER_IN = .7; //70 percent power
-    const double INTAKE_POWER_OUT = -.7;
+    const int kIntakeMotorID = 11;
+    const double INTAKE_POWER_IN = -.8; //70 percent power
+    const double INTAKE_POWER_OUT = .8;
 public:
     Intake();
     ~Intake();
