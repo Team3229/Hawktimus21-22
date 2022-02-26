@@ -23,7 +23,8 @@
 #include "Auto.h"
 #include "Debug.h"
 #include "Turret.h"
-
+#include "Feeder.h"
+#include "Shooter.h"
 
 class Robot : public frc::TimedRobot 
 {
@@ -58,12 +59,14 @@ class Robot : public frc::TimedRobot
   
   Intake m_intake;
   Turret m_turret;
+  Feeder m_feeder;
+  Shooter m_shooter;
   
 
   // Objects of subsystems
   DriveSystem chassis;
 
-  Auto m_auto{&chassis}; //populate these for testing
+  Auto m_auto{&chassis}; //populate these for testing make sure to change them! 
   const bool m_recordMode = true; // use this to force disable recording, useful at competitions
   
   frc::XboxController m_driveController {XBOX_USB_DRIVER_1}; //Chassis driver

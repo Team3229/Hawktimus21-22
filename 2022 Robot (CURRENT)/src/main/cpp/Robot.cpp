@@ -114,11 +114,18 @@ if(abs(DEAD_BAND > std::abs(m_controllerInputs->driver_rightY) && DEAD_BAND > st
     m_lastUsedSpeed = 3;
   }
 
-   // Run the intake
+   //Run the intake
   if (m_controllerInputs->mani_LeftBumper) {
     m_intake.runIntake();
   } else {
     m_intake.stopIntake(); 
+  }
+
+  //Run polycoord feeder
+   if (m_controllerInputs->mani_RightBumper) {
+    m_feeder.runFeeder();
+  } else {
+    m_feeder.stopFeeder(); 
   }
 
   if (std::abs(m_controllerInputs->mani_rightX) > .1) {
@@ -126,6 +133,13 @@ if(abs(DEAD_BAND > std::abs(m_controllerInputs->driver_rightY) && DEAD_BAND > st
     } else {
       m_turret.Turn(0);
     }
+
+  if (std::abs(m_controllerInputs->mani_LeftTriggerAxis > .1)){
+      m_shooter.runShooter();
+  }
+  else{
+      m_shooter.stopShooter();
+  }
 
 
 }
