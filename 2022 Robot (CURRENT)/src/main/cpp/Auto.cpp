@@ -2,10 +2,14 @@
 
 #include "Auto.h"
 
-Auto::Auto(DriveSystem *c) 
+Auto::Auto(DriveSystem *c, Intake *i, Turret *t, Feeder *f, Shooter *s) 
 {
   // Passes in subsystems from Robot
   autoChassis = c;
+  autoTurret = t;
+  autoShooter = s;
+  autoIntake = i;
+  autoFeeder = f;
 
   // Setup SmartDashboard
   frc::SmartDashboard::PutString("Auto files:\n", stationFileList);
@@ -14,6 +18,10 @@ Auto::Auto(DriveSystem *c)
 
 Auto::~Auto() {
   delete autoChassis;
+  delete autoTurret;
+  delete autoShooter;
+  delete autoIntake;
+  delete autoFeeder;
  
 }
 

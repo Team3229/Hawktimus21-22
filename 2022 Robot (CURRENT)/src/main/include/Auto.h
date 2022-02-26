@@ -15,6 +15,10 @@
 #include "Debug.h"
 #include "ControllerInputs.h"
 #include "Intake.h"
+#include "Feeder.h"
+#include "Turret.h"
+#include "Shooter.h"
+#include "Feeder.h"
 
 class Auto 
 {
@@ -24,6 +28,10 @@ private:
   // Pass in our subsystems
   // MAKE SURE TO UPDATE CONSTRUCTOR ARGS AND SUBSYSTEMS FOR THIS YEAR
   DriveSystem * autoChassis;
+  Intake * autoIntake;
+  Turret * autoTurret;
+  Feeder * autoFeeder;
+  Shooter * autoShooter;
   
   // files stuff
   // Use .aut file extension
@@ -37,7 +45,7 @@ private:
   CaptureFile cmdFile {};
 
 public:
-  Auto(DriveSystem *c); //make sure to pass in subsystems 
+  Auto(DriveSystem *c, Intake *i, Turret *t, Feeder *f, Shooter *s); //make sure to pass in subsystems 
   ~Auto();
   void SetupPlayback();
   void ReadFile(cmd * inputs);
