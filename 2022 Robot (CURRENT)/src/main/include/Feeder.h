@@ -26,4 +26,24 @@ public:
     void stopFeeder();
 };
 
+class UpperFeeder
+{
+    private:
+    ctre::phoenix::motorcontrol::can::WPI_TalonSRX * m_upperfeederMotor;
+    
+    const int kupperfeederMotorID = 10; 
+    const double UPPER_FEEDER_POWER_IN = .8; //80 percent power
+    const double UPPER_FEEDER_POWER_OUT = -.8;
+public:
+    UpperFeeder();
+    ~UpperFeeder();
+
+    void runUpperFeeder();
+    void reverseUpperFeeder();
+
+    void stopUpperFeeder();
+
+
+}; 
+
 #endif

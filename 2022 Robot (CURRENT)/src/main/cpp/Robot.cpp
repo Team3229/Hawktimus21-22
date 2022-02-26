@@ -121,18 +121,31 @@ if(abs(DEAD_BAND > std::abs(m_controllerInputs->driver_rightY) && DEAD_BAND > st
     m_intake.stopIntake(); 
   }
 
-  //Run polycoord feeder
+  //Run polycoord feeder forwards
    if (m_controllerInputs->mani_RightBumper) {
     m_feeder.runFeeder();
   } else {
     m_feeder.stopFeeder(); 
   }
 
+  //Run upper feeder 
+   if (std::abs(m_controllerInputs->mani_RightTriggerAxis > .1)) 
+   {
+    m_upperFeeder.runUpperFeeder();
+  }
+   else 
+   {
+    m_upperFeeder.stopUpperFeeder(); 
+  }
+
+  //turret
   if (std::abs(m_controllerInputs->mani_rightX) > .1) {
       m_turret.Turn(m_controllerInputs->mani_rightX/5);
     } else {
       m_turret.Turn(0);
     }
+
+    //shooter
 
   if (std::abs(m_controllerInputs->mani_LeftTriggerAxis > .1)){
       m_shooter.runShooter();
@@ -141,6 +154,12 @@ if(abs(DEAD_BAND > std::abs(m_controllerInputs->driver_rightY) && DEAD_BAND > st
       m_shooter.stopShooter();
   }
 
+  //pivot turning
+  if (std::abs(m_controllerInputs->mani_leftY) > .1) {
+      m_pivot.Turn(m_controllerInputs->mani_leftY/5);
+    } else {
+      m_pivot.Turn(0);
+    }
 
 }
 

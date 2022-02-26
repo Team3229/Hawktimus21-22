@@ -25,6 +25,7 @@
 #include "Turret.h"
 #include "Feeder.h"
 #include "Shooter.h"
+#include "Pivot.h"
 
 class Robot : public frc::TimedRobot 
 {
@@ -60,8 +61,9 @@ class Robot : public frc::TimedRobot
   Intake m_intake;
   Turret m_turret;
   Feeder m_feeder;
+  UpperFeeder m_upperFeeder;
   Shooter m_shooter;
-  
+  Pivot m_pivot; //make sure to add to autonomous
 
   // Objects of subsystems
   DriveSystem chassis;

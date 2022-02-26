@@ -1,5 +1,5 @@
-#ifndef TURRET_H
-#define TURRET_H
+#ifndef PIVOT_H
+#define PIVOT_H
 
 #pragma once
 
@@ -13,36 +13,32 @@
 #include "Debug.h"
 #include "Drivesystem.h" //for gyro
 
-
-class Turret
+class Pivot
 {
     public:
-        Turret();
-        ~Turret();
+        Pivot();
+        ~Pivot();
 
-        bool VisionTurn(double tX);
+    
         void Turn(double setPower);
         double GetAngle();
-        void findTarget(double startPos);
-
-        void turretDash();
 
         bool canReverse;
     private:
 
-        ctre::phoenix::motorcontrol::can::WPI_TalonSRX * m_turretMotor;
-        frc2::PIDController * m_turretPID;
-        frc::AnalogEncoder * m_turEncoder;
+        ctre::phoenix::motorcontrol::can::WPI_TalonSRX * m_pivotMotor;
+        frc2::PIDController * m_pivotPID;
+        frc::AnalogEncoder * m_pivotEncoder;
 
-        const int kTurretEncoderID = 0;
-        frc::AnalogInput turretEncID{kTurretEncoderID}; //Analog Input
-        const int kTurretMotorID = 12;
+        const int kPivotEncoderID = 1;
+        frc::AnalogInput pivotEncID{kPivotEncoderID}; //Analog Input
+        const int kPivotMotorID = 8;
 
         //Turret turn rate limit
-        const double kMAX_TURRET_POWER = .2;            //max turret turn power
-        const double kMAX_TURRET_CORRECT_POWER = .1;    //correct when turret goes beyond max range
+        const double kMAX_PIVOT_POWER = .2;            //max pivot turn power 2 percent
+        const double kMAX_PIVOT_CORRECT_POWER = .1;    //correct when turret goes beyond max range
         //Turret Limits
-        const units::degree_t kMAX_RANGE = 90_deg;
+        const units::degree_t kMAX_RANGE = 10_deg;
         const double kENCODER_RATIO = 73.17;
         const double kNOMINAL_TX_ERROR = 1;
 
