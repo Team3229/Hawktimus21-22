@@ -33,15 +33,13 @@ private:
     Turret * visionTurret;
 
 
- 
-float m_xOffset = nt::NetworkTableInstance::GetDefault().GetTable("limelight")->GetNumber("tx",0.0);         //Get horizontal off set from target
-float m_yOffset = nt::NetworkTableInstance::GetDefault().GetTable("limelight")->GetNumber("ty",0.0);                   //Get vertical offset from target
-float m_targetDistance = nt::NetworkTableInstance::GetDefault().GetTable("limelight")->GetNumber("ta",0.0);                   //Get area of target on screen
-float m_skew = nt::NetworkTableInstance::GetDefault().GetTable("limelight")->GetNumber("ts",0.0);                   //Get skew of target
-float m_shortDistance = nt::NetworkTableInstance::GetDefault().GetTable("limelight")->GetNumber("tv", 0.0);
+    double m_xOffset;        //Get horizontal off set from target
+    double m_yOffset;                   //Get vertical offset from target
+    double m_targetDistance;                   //Get area of target on screen
+    double m_skew;              //Get skew of target
+    double m_shortDistance;
+    float m_validObject; // yes/no is there a target on screen "tv"
 
-   float m_validObject; // yes/no is there a target on screen "tv"
-   
    /**
     float m_xOffset; // x angle offset from target "tx"
 	float m_yOffset; // y "ty"

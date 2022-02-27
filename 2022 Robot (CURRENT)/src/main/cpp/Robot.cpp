@@ -132,12 +132,20 @@ if(abs(DEAD_BAND > std::abs(m_controllerInputs->driver_rightY) && DEAD_BAND > st
    if (std::abs(m_controllerInputs->mani_RightTriggerAxis > .1)) 
    {
     m_upperFeeder.runUpperFeeder();
+
   }
    else 
    {
     m_upperFeeder.stopUpperFeeder(); 
   }
-
+  //Limelight debugging
+  if (m_controllerInputs->driver_RightBumper)
+  {
+    debugCons("Displaying Values")
+      m_vision.GetValues();
+  }
+  else 
+  {}
   //turret
   if (std::abs(m_controllerInputs->mani_rightX) > .1) {
       m_turret.Turn(m_controllerInputs->mani_rightX/5);
@@ -160,7 +168,6 @@ if(abs(DEAD_BAND > std::abs(m_controllerInputs->driver_rightY) && DEAD_BAND > st
     } else {
       m_pivot.Turn(0);
     }
-   
 
 }
 
