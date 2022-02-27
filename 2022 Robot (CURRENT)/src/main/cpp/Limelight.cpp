@@ -8,13 +8,11 @@
 Limelight::Limelight(Turret * m_turret)
 {
     // Pasted from documentation
-
-    visionTurret = m_turret;
-
-    table = nt::NetworkTableInstance::GetDefault().GetTable("limelight");
     nt::NetworkTableInstance::GetDefault().GetTable("limelight")->PutNumber("pipeline", 0);
     nt::NetworkTableInstance::GetDefault().GetTable("limelight")->PutNumber("ledMode", 3);
     nt::NetworkTableInstance::GetDefault().GetTable("limelight")->PutNumber("camMode", 0);
+
+    visionTurret = m_turret;
 }
 
 Limelight::~Limelight()
@@ -24,11 +22,12 @@ Limelight::~Limelight()
 
 void Limelight::GetValues()
 {
-	m_xOffset = table->GetNumber("tx", 0.0);
-    //m_yOffset = table->GetNumber("ty", 0.0);
-    m_targetDistance = table->GetNumber("ta", 0.0);
-    m_validObject = table->GetNumber("tv", 0.0);
-    m_skew = table->GetNumber("ts", 0.0);
+   m_xOffset = nt::NetworkTableInstance::GetDefault().GetTable("limelight")->GetNumber("tx",0.0);    
+   m_yOffset = nt::NetworkTableInstance::GetDefault().GetTable("limelight")->GetNumber("ty",0.0);                   
+   m_targetDistance = nt::NetworkTableInstance::GetDefault().GetTable("limelight")->GetNumber("ta",0.0);                  
+   m_skew = nt::NetworkTableInstance::GetDefault().GetTable("limelight")->GetNumber("ts",0.0);                   
+   m_shortDistance = nt::NetworkTableInstance::GetDefault().GetTable("limelight")->GetNumber("tv", 0.0);
+
 
     debug("X offset: " << m_xOffset << "\n");
     //debug("Y offset: " << m_yOffset << "\n");

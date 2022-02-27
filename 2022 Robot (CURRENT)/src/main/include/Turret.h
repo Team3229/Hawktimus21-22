@@ -39,7 +39,7 @@ class Turret
         const int kTurretMotorID = 12;
 
         //Turret turn rate limit
-        const double kMAX_TURRET_POWER = .2;            //max turret turn power
+        const double kMAX_TURRET_POWER = .2;            //max turret turn power 20 percent
         const double kMAX_TURRET_CORRECT_POWER = .1;    //correct when turret goes beyond max range
         //Turret Limits
         const units::degree_t kMAX_RANGE = 90_deg;

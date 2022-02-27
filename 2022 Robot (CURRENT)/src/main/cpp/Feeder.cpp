@@ -4,7 +4,8 @@
 Feeder::Feeder()
 {
     m_feederMotor = new ctre::phoenix::motorcontrol::can::WPI_TalonSRX(kfeederMotorID);
-}
+    
+}   
 
 Feeder::~Feeder()
 {
