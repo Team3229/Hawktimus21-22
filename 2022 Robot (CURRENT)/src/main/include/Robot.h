@@ -46,6 +46,8 @@ class Robot : public frc::TimedRobot
 
   void ExecuteControls();
 
+
+
  private:
   
   std::string m_driveSelected;
@@ -59,6 +61,7 @@ class Robot : public frc::TimedRobot
 
   // Controller variables
   int m_lastUsedSpeed = 2;
+
   
   Intake m_intake;
   Turret m_turret;
@@ -66,7 +69,7 @@ class Robot : public frc::TimedRobot
   UpperFeeder m_upperFeeder;
   Shooter m_shooter;
   Pivot m_pivot; //make sure to add to autonomous
-  Limelight m_vision{&m_turret};
+  Limelight m_limelight;
 
   // Objects of subsystems
   DriveSystem chassis;

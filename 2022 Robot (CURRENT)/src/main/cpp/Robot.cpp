@@ -1,6 +1,12 @@
 
 #include "Robot.h"
 #include <iostream>
+#include <frc/smartdashboard/SmartDashboard.h>
+#include <networktables/NetworkTable.h>
+#include <networktables/NetworkTableInstance.h>
+#include <networktables/NetworkTableEntry.h>
+#include <networktables/NetworkTableValue.h>
+#include "wpi/span.h"
 
 void Robot::RobotInit(){}
 
@@ -62,6 +68,8 @@ void Robot::TeleopPeriodic()
       m_maniController.GetLeftTriggerAxis();
 
     ExecuteControls();
+  
+    
 }
 
 void Robot::TestInit() 
@@ -138,14 +146,16 @@ if(abs(DEAD_BAND > std::abs(m_controllerInputs->driver_rightY) && DEAD_BAND > st
    {
     m_upperFeeder.stopUpperFeeder(); 
   }
-  //Limelight debugging
+
+  /**
   if (m_controllerInputs->driver_RightBumper)
   {
-    debugCons("Displaying Values")
       m_vision.GetValues();
   }
   else 
   {}
+  */
+
   //turret
   if (std::abs(m_controllerInputs->mani_rightX) > .1) {
       m_turret.Turn(m_controllerInputs->mani_rightX/5);
@@ -169,7 +179,22 @@ if(abs(DEAD_BAND > std::abs(m_controllerInputs->driver_rightY) && DEAD_BAND > st
       m_pivot.Turn(0);
     }
 
+  if (m_controllerInputs->driver_LeftBumper)
+  {
+    m_limelight.LightOff();
+  }
+  else 
+  {}
+
+  if (m_controllerInputs->driver_RightBumper)
+  {
+    m_limelight.LightOn();
+  }
+
 }
+
+
+
 
 
 #ifndef RUNNING_FRC_TESTS
