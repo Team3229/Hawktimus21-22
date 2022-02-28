@@ -27,12 +27,12 @@ void Limelight::LightOn(){
 
  if (IsTargeting() == true){
         debugCons("Object found?: YES" << "\n");
-          visionTurret->Turn(1);
+          visionTurret->Turn(1); //turn turret until no target found 
 
             }
     else{
         debugCons("Object found?: NO" << "\n"); 
-        visionTurret->Turn(0);
+        visionTurret->Turn(0); //stop turning the turret TEMPORARY, THIS WILL BE REPLACED BY THE SEEKING THRESHOLDS
         }
     
 }
