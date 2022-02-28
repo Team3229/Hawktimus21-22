@@ -23,7 +23,7 @@ public:
     void LightOn();
 
     bool IsTargeting();
-    void SeekTarget();  
+    void SeekTarget(double setPower);  
    
 private:
 
@@ -35,6 +35,11 @@ private:
   double m_skew = nt::NetworkTableInstance::GetDefault().GetTable("limelight")->GetNumber("ts",0.0);                   //Get skew of target
   double m_shortDistance = nt::NetworkTableInstance::GetDefault().GetTable("limelight")->GetNumber("tv", 0.0);
 
+  //threshold for turning 
+  const float TARGET_RANGE = 4.0;
+
+  const double kMAX_TURRET_POWER = .2;            //max turret turn power 20 percent
+  const double kMAX_TURRET_CORRECT_POWER = .1;
 };
 
 #endif // LIMELIGHT_H

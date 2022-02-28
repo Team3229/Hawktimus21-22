@@ -8,7 +8,8 @@
 #include <networktables/NetworkTableValue.h>
 #include "wpi/span.h"
 
-void Robot::RobotInit(){}
+void Robot::RobotInit(){
+}
 
 void Robot::RobotPeriodic() {}
 
@@ -146,15 +147,6 @@ if(abs(DEAD_BAND > std::abs(m_controllerInputs->driver_rightY) && DEAD_BAND > st
    {
     m_upperFeeder.stopUpperFeeder(); 
   }
-
-  /**
-  if (m_controllerInputs->driver_RightBumper)
-  {
-      m_vision.GetValues();
-  }
-  else 
-  {}
-  */
 
   //turret
   if (std::abs(m_controllerInputs->mani_rightX) > .1) {

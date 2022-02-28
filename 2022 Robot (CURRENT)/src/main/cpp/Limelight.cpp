@@ -3,6 +3,7 @@
 Limelight::Limelight(Turret * m_turret){
     
     visionTurret = m_turret;
+    LightOff();
 }
 
 Limelight::~Limelight(){
@@ -27,12 +28,12 @@ void Limelight::LightOn(){
 
  if (IsTargeting() == true){
         debugCons("Object found?: YES" << "\n");
-          visionTurret->Turn(1); //turn turret until no target found 
+          //visionTurret->Turn(1); //turn turret until no target found 
 
             }
     else{
         debugCons("Object found?: NO" << "\n"); 
-        visionTurret->Turn(0); //stop turning the turret TEMPORARY, THIS WILL BE REPLACED BY THE SEEKING THRESHOLDS
+        //visionTurret->Turn(0); //stop turning the turret TEMPORARY, THIS WILL BE REPLACED BY THE SEEKING THRESHOLDS
         }
     
 }
@@ -45,5 +46,15 @@ bool Limelight::IsTargeting()
 		return false;
 }
 
-void Limelight::SeekTarget(){
+void Limelight::SeekTarget(double setPower){ //make sure to add turret turning for seeking 
+
+if (abs(m_xOffset) < TARGET_RANGE){
+
+}
+else if (m_xOffset > 0) {
+
+}
+else if (m_xOffset < 0){
+
+}
 }

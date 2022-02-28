@@ -68,13 +68,14 @@ class Robot : public frc::TimedRobot
   Feeder m_feeder;
   UpperFeeder m_upperFeeder;
   Shooter m_shooter;
-  Pivot m_pivot; //make sure to add to autonomous
   Limelight m_limelight{&m_turret};
+  Pivot m_pivot; //make sure to add to autonomous
+
 
   // Objects of subsystems
   DriveSystem chassis;
 
-  Auto m_auto{&chassis,&m_intake,&m_turret,&m_feeder,&m_upperFeeder,&m_shooter}; //populate these for testing make sure to change them! 
+  Auto m_auto{&chassis,&m_intake,&m_turret,&m_feeder,&m_upperFeeder,&m_shooter, &m_limelight,&m_pivot}; //populate these for testing make sure to change them! 
   const bool m_recordMode = true; // use this to force disable recording, useful at competitions
   
   frc::XboxController m_driveController {XBOX_USB_DRIVER_1}; //Chassis driver

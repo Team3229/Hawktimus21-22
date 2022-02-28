@@ -19,6 +19,8 @@
 #include "Turret.h"
 #include "Shooter.h"
 #include "Feeder.h"
+#include "Limelight.h"
+#include "Pivot.h"
 
 class Auto 
 {
@@ -33,6 +35,8 @@ private:
   Feeder * autoFeeder;
   UpperFeeder *autoUpperFeeder;
   Shooter * autoShooter;
+  Limelight * autoLimelight; 
+  Pivot * autoPivot; 
   
   // files stuff
   // Use .aut file extension
@@ -46,7 +50,7 @@ private:
   CaptureFile cmdFile {};
 
 public:
-  Auto(DriveSystem *c, Intake *i, Turret *t, Feeder *f, UpperFeeder *u, Shooter *s); //make sure to pass in subsystems 
+  Auto(DriveSystem *c, Intake *i, Turret *t, Feeder *f, UpperFeeder *u, Shooter *s, Limelight *l, Pivot *p); //make sure to pass in subsystems 
   ~Auto();
   void SetupPlayback();
   void ReadFile(cmd * inputs);
