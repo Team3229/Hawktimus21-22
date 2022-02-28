@@ -11,16 +11,24 @@
 #include "networktables/NetworkTableEntry.h"
 #include "networktables/NetworkTableInstance.h"
 
+#include "Turret.h"
+
 class Limelight
 {
 public:
-    Limelight();
+    Limelight(Turret * m_turret);
     ~Limelight();
 
     void LightOff();
     void LightOn();
+
+    bool IsTargeting();
+    void SeekTarget();  
    
 private:
+
+ Turret * visionTurret;
+
   double m_xOffset = nt::NetworkTableInstance::GetDefault().GetTable("limelight")->GetNumber("tx",0.0);         //Get horizontal off set from target
   double m_yOffset = nt::NetworkTableInstance::GetDefault().GetTable("limelight")->GetNumber("ty",0.0);                   //Get vertical offset from target
   double m_targetDistance = nt::NetworkTableInstance::GetDefault().GetTable("limelight")->GetNumber("ta",0.0);                   //Get area of target on screen

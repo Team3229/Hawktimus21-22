@@ -69,7 +69,7 @@ class Robot : public frc::TimedRobot
   UpperFeeder m_upperFeeder;
   Shooter m_shooter;
   Pivot m_pivot; //make sure to add to autonomous
-  Limelight m_limelight;
+  Limelight m_limelight{&m_turret};
 
   // Objects of subsystems
   DriveSystem chassis;
