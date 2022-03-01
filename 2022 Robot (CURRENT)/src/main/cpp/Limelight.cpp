@@ -28,6 +28,7 @@ void Limelight::LightOn(){
 
  if (IsTargeting() == true){
         debugCons("Object found?: YES" << "\n");
+        debugCons("Distance away from target (IN INCHES): " << distanceFromLimelightToGoalInches << "\n"); //output to the console how far away the target is 
           //visionTurret->Turn(1); //turn turret until no target found 
 
             }

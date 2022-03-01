@@ -27,7 +27,6 @@ private:
     const float SHOOTER_POWERONE = -1.0;
     const float SHOOTER_POWERTWO = 1.0;
     
-
     
 public:
     Shooter();

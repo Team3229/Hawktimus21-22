@@ -55,7 +55,7 @@ void DriveSystem::Drive(double& Y, double& X, double& Z)
     //Drive function
 	Y = -Y; // invert Y
     driveTrain->ArcadeDrive(Y, X); //might cause issues due to update? needs testing
-	debug("Drive mode: With Gyro\n");
+	//debugCons("Drive mode: With Gyro\n");
 }
 
 void DriveSystem::Stop()
@@ -68,16 +68,16 @@ void DriveSystem::ChangeSpeed(int choice)
     if (choice == 1)
 	{
         driveTrain->SetMaxOutput(LOW_OUTPUT);
-    	debug("Slow speed\n");
+    	//debugCons("Slow speed\n");
 	}
     else if (choice == 2)
 	{
         driveTrain->SetMaxOutput(MAX_OUTPUT);
-    	debug("Normal speed\n");
+    	//debugCons("Normal speed\n");
 	}
     else if (choice == 3)
 	{
         driveTrain->SetMaxOutput(HIGH_OUTPUT);
-    	debug("Fast speed\n"); 
+    	//debugCons("Fast speed\n"); 
 	}
 }

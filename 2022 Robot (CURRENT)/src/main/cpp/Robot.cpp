@@ -95,6 +95,8 @@ void Robot::DisabledInit()
 
 void Robot::ExecuteControls()
 {
+
+  //chasis  h aving some weird turning issues. 
 if(abs(DEAD_BAND > std::abs(m_controllerInputs->driver_rightY) && DEAD_BAND > std::abs(m_controllerInputs->driver_leftX)))
 		{
         chassis.Stop();
