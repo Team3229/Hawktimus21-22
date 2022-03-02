@@ -13,22 +13,28 @@
 #include "math.h"
 
 #include "Turret.h"
+#include "Shooter.h"
+#include "Pivot.h"
 
 class Limelight
 {
 public:
-    Limelight(Turret * m_turret);
+    Limelight(Turret * m_turret, Pivot * m_pivot, Shooter * m_shooter);
     ~Limelight();
 
     void LightOff();
     void LightOn();
+    void LightToggle();
+    
 
     bool IsTargeting();
     void SeekTarget(double setPower);  
    
 private:
-
+ 
  Turret * visionTurret;
+ Pivot * visionPivot; 
+ Shooter * visionShooter;
 
   double m_xOffset = nt::NetworkTableInstance::GetDefault().GetTable("limelight")->GetNumber("tx",0.0);      //Get horizontal off set from target
   double m_yOffset = nt::NetworkTableInstance::GetDefault().GetTable("limelight")->GetNumber("ty",0.0);      //Get vertical offset from target
@@ -55,6 +61,12 @@ private:
 
   const double kMAX_TURRET_POWER = .2;            //max turret turn power 20 percent
   const double kMAX_TURRET_CORRECT_POWER = .1;
+
+  bool lightToggle = true; 
+
+  double angleForPivot;
+
+
 };
 
 #endif // LIMELIGHT_H

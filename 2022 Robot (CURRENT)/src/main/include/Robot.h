@@ -27,6 +27,7 @@
 #include "Shooter.h"
 #include "Pivot.h"
 #include "Limelight.h"
+#include "Climb.h"
 
 
 class Robot : public frc::TimedRobot 
@@ -68,8 +69,9 @@ class Robot : public frc::TimedRobot
   Feeder m_feeder;
   UpperFeeder m_upperFeeder;
   Shooter m_shooter;
-  Limelight m_limelight{&m_turret};
+  Limelight m_limelight{&m_turret,&m_pivot,&m_shooter};
   Pivot m_pivot; //make sure to add to autonomous
+  Climb m_climb; 
 
 
   // Objects of subsystems

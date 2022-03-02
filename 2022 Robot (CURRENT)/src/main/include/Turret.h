@@ -22,6 +22,8 @@ class Turret
 
         bool VisionTurn(double tX);
         void Turn(double setPower);
+        void TurnLimelightRight(double setPower);
+        void TurnLimelightLeft(double setPower);
         double GetAngle();
         void findTarget(double startPos);
 

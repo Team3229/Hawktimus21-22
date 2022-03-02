@@ -26,10 +26,10 @@ void Pivot::Turn(double setPower)
     //limits pivot turn range
     if (std::abs(GetAngle()) < kMAX_RANGE.to<double>()){
      
-        m_pivotMotor->Set(std::clamp(setPower,-kMAX_PIVOT_POWER,kMAX_PIVOT_POWER));
+        m_pivotMotor->Set(std::clamp(-setPower,-kMAX_PIVOT_POWER,kMAX_PIVOT_POWER));
     }else{
         //prevent locking of the pivot
-        m_pivotMotor->Set(std::clamp(-setPower,-kMAX_PIVOT_CORRECT_POWER,kMAX_PIVOT_CORRECT_POWER));
+        m_pivotMotor->Set(std::clamp(setPower,-kMAX_PIVOT_CORRECT_POWER,kMAX_PIVOT_CORRECT_POWER));
     }
 }
 

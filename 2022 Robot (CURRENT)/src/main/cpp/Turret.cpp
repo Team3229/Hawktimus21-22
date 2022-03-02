@@ -55,6 +55,17 @@ void Turret::Turn(double setPower)
     }
 }
 
+//FOR LIMELIGHT SEEKING TURNING 
+void Turret::TurnLimelightRight(double setPower){
+
+       m_turretMotor->Set(std::clamp(setPower,-kMAX_TURRET_POWER,kMAX_TURRET_POWER));
+}
+
+void Turret::TurnLimelightLeft(double setPower){
+
+      m_turretMotor->Set(std::clamp(-setPower,-kMAX_TURRET_CORRECT_POWER,kMAX_TURRET_CORRECT_POWER));
+}
+
 /**
  * ratio of angle:encoder is 73.17:1
  * GetDistance() start: 0, left 90: -1.23, right 90: 1.23

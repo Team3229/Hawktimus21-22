@@ -4,7 +4,7 @@
 Feeder::Feeder()
 {
     m_feederMotor = new ctre::phoenix::motorcontrol::can::WPI_TalonSRX(kfeederMotorID);
-    
+    m_feederMotor->ClearStickyFaults();
 }   
 
 Feeder::~Feeder()

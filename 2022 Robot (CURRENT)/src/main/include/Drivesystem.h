@@ -28,6 +28,9 @@ public:
     void Stop();
     void ChangeSpeed(int choice);
 
+	void AutoPlaybackSwitch();
+	void TeleopModeSwitch();
+
 private:
     //SparkMax's
 	rev::CANSparkMax * leftLead; //Front left, leader
@@ -45,9 +48,9 @@ private:
 	const int RIGHT_FOLLOWER_ID = 4;
 
     //Changable powers
-	const float MAX_OUTPUT = 0.7;
-	const float LOW_OUTPUT = 0.4;
-	const float HIGH_OUTPUT = 1.0;
+	const float MAX_OUTPUT = 0.5;
+	const float LOW_OUTPUT = 0.2;
+	const float HIGH_OUTPUT = 0.6;
   	const float DRIVE_RAMP_TIME = 0.7;
 
 	const float SMOOTH_TIME = 0.4;

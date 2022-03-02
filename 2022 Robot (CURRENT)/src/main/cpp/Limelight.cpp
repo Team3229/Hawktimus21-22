@@ -1,14 +1,18 @@
 #include "Limelight.h"
 
-Limelight::Limelight(Turret * m_turret){
+Limelight::Limelight(Turret * m_turret, Pivot * m_pivot, Shooter * m_shooter){
     
     visionTurret = m_turret;
+    visionPivot = m_pivot; 
+    visionShooter = m_shooter;
     LightOff();
 }
 
 Limelight::~Limelight(){
 
 delete visionTurret;
+delete visionPivot; 
+delete visionShooter;
 }
 
 void Limelight::LightOff(){
@@ -27,15 +31,28 @@ void Limelight::LightOn(){
  m_shortDistance = nt::NetworkTableInstance::GetDefault().GetTable("limelight")->GetNumber("tv", 0.0);
 
  if (IsTargeting() == true){
-        debugCons("Object found?: YES" << "\n");
-        debugCons("Distance away from target (IN INCHES): " << distanceFromLimelightToGoalInches << "\n"); //output to the console how far away the target is 
-          //visionTurret->Turn(1); //turn turret until no target found 
+         debugCons("Object found?: YES" << "\n");
+         debugCons("XOFFSET: " << m_xOffset << "\n");
+         debugCons("YOFFSET: " << m_yOffset);
+
+        //calculate distance 
+       angleToGoalDegrees = limelightMountAngleDegrees + m_yOffset;
+       angleToGoalRadians = angleToGoalDegrees * (3.14159 / 180.0);
+       distanceFromLimelightToGoalInches = (goalHeightInches - limelightLensHeightInches)/(tan(angleToGoalRadians));
+       angleForPivot = (0.81*(distanceFromLimelightToGoalInches)+5.09);
+
+        debugCons("DISTANCE IN INCHES: " << distanceFromLimelightToGoalInches << "\n");
+        debugCons("ANGLE FOR PIVOT " << angleForPivot << "\n");
+
+
+        SeekTarget(true); //being seeking target and get aligned
+        visionShooter->runShooter(); //begin reving up shooter
 
             }
     else{
         debugCons("Object found?: NO" << "\n"); 
-        //visionTurret->Turn(0); //stop turning the turret TEMPORARY, THIS WILL BE REPLACED BY THE SEEKING THRESHOLDS
-        }
+        visionShooter->stopShooter(); //still try to get aligned and look for target
+                }
     
 }
 
@@ -47,15 +64,33 @@ bool Limelight::IsTargeting()
 		return false;
 }
 
-void Limelight::SeekTarget(double setPower){ //make sure to add turret turning for seeking 
+void Limelight::SeekTarget(double setPower){ //make sure to add turret turning for seeking pivot angles 
 
 if (abs(m_xOffset) < TARGET_RANGE){
-
+    visionTurret->Turn(0);
 }
 else if (m_xOffset > 0) {
+
+   visionTurret->TurnLimelightRight(1);
 
 }
 else if (m_xOffset < 0){
 
+    visionTurret->TurnLimelightLeft(1);
+  }
 }
+
+void Limelight::LightToggle(){
+
+  if (lightToggle == true)
+    {
+      LightOn();
+    }
+  else {
+      LightOff();
+  }
+
 }
+
+
+

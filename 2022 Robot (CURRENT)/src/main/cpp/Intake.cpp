@@ -4,6 +4,7 @@
 Intake::Intake()
 {
     m_intakeMotor = new ctre::phoenix::motorcontrol::can::WPI_TalonSRX(kIntakeMotorID);
+    m_intakeMotor->ClearStickyFaults();
 }
 
 Intake::~Intake()

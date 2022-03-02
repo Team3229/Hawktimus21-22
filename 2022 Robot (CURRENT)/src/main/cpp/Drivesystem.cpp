@@ -53,7 +53,7 @@ DriveSystem::~DriveSystem()
 void DriveSystem::Drive(double& Y, double& X, double& Z)
 {
     //Drive function
-	Y = -Y; // invert Y
+	//Y = Y; // invert Y
     driveTrain->ArcadeDrive(Y, X); //might cause issues due to update? needs testing
 	//debugCons("Drive mode: With Gyro\n");
 }
@@ -80,4 +80,23 @@ void DriveSystem::ChangeSpeed(int choice)
         driveTrain->SetMaxOutput(HIGH_OUTPUT);
     	//debugCons("Fast speed\n"); 
 	}
+}
+
+void DriveSystem::AutoPlaybackSwitch(){
+
+	rightFollower->SetInverted(false);
+	rightLead->SetInverted(false);
+
+	leftFollower->SetInverted(true);
+	leftLead->SetInverted(true);
+
+}
+
+void DriveSystem::TeleopModeSwitch(){
+
+	rightFollower->SetInverted(true);
+	rightLead->SetInverted(true);
+
+	leftFollower->SetInverted(false);
+	leftLead->SetInverted(false);
 }

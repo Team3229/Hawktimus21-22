@@ -22,6 +22,9 @@ void Robot::AutonomousInit()
 void Robot::AutonomousPeriodic() 
 {
   m_auto.ReadFile(m_controllerInputs);
+  //reverse the chassis behavior during playback temporary fix 
+  chassis.AutoPlaybackSwitch(); 
+
   debugCons("Running Auto");
   ExecuteControls();
 }
@@ -29,6 +32,7 @@ void Robot::AutonomousPeriodic()
 void Robot::TeleopInit() 
 {
   m_auto.CloseFile();
+  chassis.TeleopModeSwitch(); //switch from playback to actual direction of drive 
 }
 
 void Robot::TeleopPeriodic()
@@ -173,16 +177,16 @@ if(abs(DEAD_BAND > std::abs(m_controllerInputs->driver_rightY) && DEAD_BAND > st
       m_pivot.Turn(0);
     }
 
-  if (m_controllerInputs->driver_LeftBumper)
+    //limelight toggle auto seeking
+  if (m_controllerInputs->driver_XButton)
   {
-    m_limelight.LightOff();
+   m_limelight.LightToggle();
   }
-  else 
-  {}
-
-  if (m_controllerInputs->driver_RightBumper)
+  
+  //climb toggle 
+  if (m_controllerInputs->mani_AButton)
   {
-    m_limelight.LightOn();
+    m_climb.Toggle();
   }
 
 }
