@@ -9,6 +9,7 @@
 #include "wpi/span.h"
 
 void Robot::RobotInit(){
+  m_limelight.LightOff();
 }
 
 void Robot::RobotPeriodic() {}
@@ -22,8 +23,7 @@ void Robot::AutonomousInit()
 void Robot::AutonomousPeriodic() 
 {
   m_auto.ReadFile(m_controllerInputs);
-  //reverse the chassis behavior during playback temporary fix 
-  chassis.AutoPlaybackSwitch(); 
+  
 
   debugCons("Running Auto");
   ExecuteControls();
@@ -32,7 +32,6 @@ void Robot::AutonomousPeriodic()
 void Robot::TeleopInit() 
 {
   m_auto.CloseFile();
-  chassis.TeleopModeSwitch(); //switch from playback to actual direction of drive 
 }
 
 void Robot::TeleopPeriodic()
@@ -71,6 +70,7 @@ void Robot::TeleopPeriodic()
       m_maniController.GetRightTriggerAxis();
   m_controllerInputs->mani_LeftTriggerAxis =
       m_maniController.GetLeftTriggerAxis();
+  m_controllerInputs->mani_POV = m_maniController.GetPOV();
 
     ExecuteControls();
   
@@ -177,23 +177,23 @@ if(abs(DEAD_BAND > std::abs(m_controllerInputs->driver_rightY) && DEAD_BAND > st
       m_pivot.Turn(0);
     }
 
-    //limelight toggle auto seeking
-  if (m_controllerInputs->driver_XButton)
-  {
-   m_limelight.LightToggle();
-  }
-  
-  //climb toggle 
+    //limelight toggle auto seeking //auto shooter is x per nathan from mechanical 
   if (m_controllerInputs->mani_AButton)
   {
-    m_climb.Toggle();
+   m_limelight.LightToggle();
+   
+  }
+
+  m_limelight.GetValues(); //aim to get values even though limelight is off 
+  
+  
+  //climb toggle 
+  if (m_controllerInputs->driver_AButton)
+  {
+    m_climb.Toggle(); //these might have issue since they orinitate from solenoid classe s
   }
 
 }
-
-
-
-
 
 #ifndef RUNNING_FRC_TESTS
 

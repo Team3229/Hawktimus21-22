@@ -25,10 +25,14 @@ public:
     void LightOff();
     void LightOn();
     void LightToggle();
+
+    void GetValues();
     
 
     bool IsTargeting();
     void SeekTarget(double setPower);  
+
+    void PivotGoalDistance();
    
 private:
  
@@ -65,6 +69,7 @@ private:
   bool lightToggle = true; 
 
   double angleForPivot;
+
 
 
 };

@@ -32,26 +32,16 @@ void Limelight::LightOn(){
 
  if (IsTargeting() == true){
          debugCons("Object found?: YES" << "\n");
-         debugCons("XOFFSET: " << m_xOffset << "\n");
-         debugCons("YOFFSET: " << m_yOffset);
 
-        //calculate distance 
-       angleToGoalDegrees = limelightMountAngleDegrees + m_yOffset;
-       angleToGoalRadians = angleToGoalDegrees * (3.14159 / 180.0);
-       distanceFromLimelightToGoalInches = (goalHeightInches - limelightLensHeightInches)/(tan(angleToGoalRadians));
-       angleForPivot = (0.81*(distanceFromLimelightToGoalInches)+5.09);
-
-        debugCons("DISTANCE IN INCHES: " << distanceFromLimelightToGoalInches << "\n");
-        debugCons("ANGLE FOR PIVOT " << angleForPivot << "\n");
-
-
-        SeekTarget(true); //being seeking target and get aligned
-        visionShooter->runShooter(); //begin reving up shooter
-
+          SeekTarget(true);
+           //make sure to add pivot angle when encoder reads values
+          visionShooter->runShooter();
             }
     else{
         debugCons("Object found?: NO" << "\n"); 
-        visionShooter->stopShooter(); //still try to get aligned and look for target
+
+        SeekTarget(true);
+        visionShooter->stopShooter(); //stop running shooter if no target found
                 }
     
 }
@@ -64,6 +54,7 @@ bool Limelight::IsTargeting()
 		return false;
 }
 
+//seeking methods for limelight turret turning
 void Limelight::SeekTarget(double setPower){ //make sure to add turret turning for seeking pivot angles 
 
 if (abs(m_xOffset) < TARGET_RANGE){
@@ -92,5 +83,16 @@ void Limelight::LightToggle(){
 
 }
 
+void Limelight::GetValues(){
+//calculate distance to target
+       angleToGoalDegrees = limelightMountAngleDegrees + m_yOffset;
+       angleToGoalRadians = angleToGoalDegrees * (3.14159 / 180.0);
+       distanceFromLimelightToGoalInches = (goalHeightInches - limelightLensHeightInches)/(tan(angleToGoalRadians));
+       angleForPivot = (0.81*(distanceFromLimelightToGoalInches)+5.09);
+
+        debugCons("DISTANCE IN INCHES: " << distanceFromLimelightToGoalInches << "\n");
+        debugCons("ANGLE FOR PIVOT " << angleForPivot << "\n");
+
+}
 
 
