@@ -5,7 +5,6 @@ Limelight::Limelight(Turret * m_turret, Pivot * m_pivot, Shooter * m_shooter){
     visionTurret = m_turret;
     visionPivot = m_pivot; 
     visionShooter = m_shooter;
-    LightOff();
 }
 
 Limelight::~Limelight(){
@@ -15,12 +14,9 @@ delete visionPivot;
 delete visionShooter;
 }
 
-void Limelight::LightOff(){
-    nt::NetworkTableInstance::GetDefault().GetTable("limelight")->PutNumber("ledMode", 1);
-    //debugCons("LimelighOFf\n");
-}
 
-void Limelight::LightOn(){
+
+void Limelight::Targetting(){
     nt::NetworkTableInstance::GetDefault().GetTable("limelight")->PutNumber("ledMode", 3);
    // debugCons("LimelightOn\n");
    
@@ -75,23 +71,28 @@ void Limelight::LightToggle(){
 
   if (lightToggle == true)
     {
-      LightOn();
+          Targetting();
+          nt::NetworkTableInstance::GetDefault().GetTable("limelight")->PutNumber("ledMode", 3);
+
     }
-  else {
-      LightOff();
+  else
+  {
+        nt::NetworkTableInstance::GetDefault().GetTable("limelight")->PutNumber("ledMode", 1);
+
   }
 
 }
 
 void Limelight::GetValues(){
 //calculate distance to target
-       angleToGoalDegrees = limelightMountAngleDegrees + m_yOffset;
-       angleToGoalRadians = angleToGoalDegrees * (3.14159 / 180.0);
-       distanceFromLimelightToGoalInches = (goalHeightInches - limelightLensHeightInches)/(tan(angleToGoalRadians));
-       angleForPivot = (0.81*(distanceFromLimelightToGoalInches)+5.09);
 
-        debugCons("DISTANCE IN INCHES: " << distanceFromLimelightToGoalInches << "\n");
-        debugCons("ANGLE FOR PIVOT " << angleForPivot << "\n");
+       m_yOffset = nt::NetworkTableInstance::GetDefault().GetTable("limelight")->GetNumber("ty",0.0); //Get vertical offset from target
+       double angleToGoalDegrees = limelightMountAngleDegrees + m_yOffset;
+       double angleToGoalRadians = angleToGoalDegrees * (3.14159 / 180.0);
+       double distanceFromLimelightToGoalInches = (goalHeightInches - limelightLensHeightInches)/(tan(angleToGoalRadians));
+       double angleForPivot = (0.81*(distanceFromLimelightToGoalInches)+5.09);
+
+        
 
 }
 

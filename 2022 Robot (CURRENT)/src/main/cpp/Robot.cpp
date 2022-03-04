@@ -9,7 +9,8 @@
 #include "wpi/span.h"
 
 void Robot::RobotInit(){
-  m_limelight.LightOff();
+ nt::NetworkTableInstance::GetDefault().GetTable("limelight")->PutNumber("ledMode", 1);
+
 }
 
 void Robot::RobotPeriodic() {}
@@ -100,7 +101,7 @@ void Robot::DisabledInit()
 void Robot::ExecuteControls()
 {
 
-  //chasis  h aving some weird turning issues. 
+
 if(abs(DEAD_BAND > std::abs(m_controllerInputs->driver_rightY) && DEAD_BAND > std::abs(m_controllerInputs->driver_leftX)))
 		{
         chassis.Stop();
@@ -178,14 +179,23 @@ if(abs(DEAD_BAND > std::abs(m_controllerInputs->driver_rightY) && DEAD_BAND > st
     }
 
     //limelight toggle auto seeking //auto shooter is x per nathan from mechanical 
-  if (m_controllerInputs->mani_AButton)
+  if (m_controllerInputs->mani_XButton)
   {
    m_limelight.LightToggle();
+
    
   }
 
-  m_limelight.GetValues(); //aim to get values even though limelight is off 
+  if (m_controllerInputs->driver_POV > .1){
+
+    m_feeder.reverseFeeder(); //temporary in driver controller 
+  }
   
+  //limelight getvalues loop
+  m_limelight.GetValues();
+  debugCons("Limelight Distance " << distanceFromLimelightToGoalInches << "\n");
+
+ 
   
   //climb toggle 
   if (m_controllerInputs->driver_AButton)

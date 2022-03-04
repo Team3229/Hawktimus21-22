@@ -70,6 +70,22 @@ class Robot : public frc::TimedRobot
   double m_shortDistance = nt::NetworkTableInstance::GetDefault().GetTable("limelight")->GetNumber("tv", 0.0);
 
 
+//mounting angle of the limelight from perfectly vertical 
+  double limelightMountAngleDegrees = 35.0;
+
+  //distance fromt he center of the limelight lens to the floor
+  double limelightLensHeightInches = 36.5;
+
+  double goalHeightInches = 104.0;
+
+  double angleToGoalDegrees = limelightMountAngleDegrees + m_yOffset;
+  double angleToGoalRadians = angleToGoalDegrees * (3.14159 / 180.0);
+
+  //calculate distance 
+  double distanceFromLimelightToGoalInches = (goalHeightInches - limelightLensHeightInches)/tan(angleToGoalRadians);
+
+  double angleForPivot;
+
   
   Intake m_intake;
   Turret m_turret;
