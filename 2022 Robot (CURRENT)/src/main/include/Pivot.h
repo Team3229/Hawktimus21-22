@@ -29,27 +29,17 @@ class Pivot
     private:
 
         ctre::phoenix::motorcontrol::can::WPI_TalonSRX * m_pivotMotor;
-         // m_pivotMotor->configSelectedFeedbackSensor(FeedbackDevice.CTRE_MagEncoder_Relative, 0, 10);
 
         frc2::PIDController * m_pivotPID;
-        frc::AnalogEncoder * m_pivotEncoder;
 
-
-        // m_pivotMotor.configSelectedFeedbackSensor(FeedbackDevice.CTRE_MagEncoder_Relative, 0, 100);
-
-
-
-
-        //const int kPivotEncoderID = 1;
-       // frc::AnalogInput pivotEncID{kPivotEncoderID}; //Analog Input
         const int kPivotMotorID = 8;
 
         //Turret turn rate limit
               //max pivot turn power 2 percent
         const double kMAX_PIVOT_CORRECT_POWER = .1;    //correct when turret goes beyond max range
-        //Turret Limits
+
+        //Pivot Limits
         const units::degree_t kMAX_RANGE = 10_deg;
-        const double kENCODER_RATIO = 73.17;
         const double kNOMINAL_TX_ERROR = 1;
 
         //PID

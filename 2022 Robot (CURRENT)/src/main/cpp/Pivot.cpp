@@ -1,14 +1,16 @@
 #include "Pivot.h"
 
+
 Pivot::Pivot()
 {
 
     m_pivotMotor = new ctre::phoenix::motorcontrol::can::WPI_TalonSRX(kPivotMotorID);
     m_pivotPID = new frc2::PIDController(kP,kI,kD);
 
-    //m_pivotEncoder = new frc::AnalogEncoder(pivotEncID);
+    //pivot encoder 
 
-
+    m_pivotMotor->ConfigSelectedFeedbackSensor(FeedbackDevice::CTRE_MagEncoder_Relative, 0, 10); //ctre mag encoder 
+    m_pivotMotor->SetSensorPhase(true);
 
     m_pivotMotor->ClearStickyFaults();
 
@@ -19,11 +21,11 @@ Pivot::~Pivot()
 {;
     delete m_pivotMotor;
     delete m_pivotPID;
-    delete m_pivotEncoder;
+   \
 }
 
 
-void Pivot::Turn(double setPower)
+void Pivot::Turn(double setPower) //make sure to implement before competitions! 
 {
     //limits pivot turn range
     if (std::abs(GetAngle()) < kMAX_RANGE.to<double>()){
@@ -35,6 +37,7 @@ void Pivot::Turn(double setPower)
     }
 }
 
+
 /**
  * ratio of angle:encoder is 73.17:1
  * GetDistance() start: 0, left 90: -1.23, right 90: 1.23
@@ -44,5 +47,8 @@ void Pivot::Turn(double setPower)
  */
 double Pivot::GetAngle()
 {
-    return m_pivotEncoder->GetDistance() * kENCODER_RATIO;
+
+    debugCons("PIVOT POSITION: " << m_pivotMotor->GetSelectedSensorPosition());
+
+    
 }

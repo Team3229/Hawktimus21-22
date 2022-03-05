@@ -196,6 +196,7 @@ if(abs(DEAD_BAND > std::abs(m_controllerInputs->driver_rightY) && DEAD_BAND > st
    nt::NetworkTableInstance::GetDefault().GetTable("limelight")->PutNumber("ledMode", 3); //turn limelight on 
 
    m_limelight.GetValues();
+   m_pivot.GetAngle();
   }
   else 
   {

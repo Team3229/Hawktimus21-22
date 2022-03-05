@@ -38,7 +38,8 @@ private:
 	rev::CANSparkMax * leftFollower; //Back left, follower
 	rev::CANSparkMax * rightFollower; //Back right, follower
 
-	frc::DifferentialDrive * driveTrain; 
+	frc::DifferentialDrive * driveTrain; //this might be the cause of our issue 
+
 
     
     //Constants for ports and unique id
