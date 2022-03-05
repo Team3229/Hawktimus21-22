@@ -5,12 +5,14 @@ Pivot::Pivot()
 
     m_pivotMotor = new ctre::phoenix::motorcontrol::can::WPI_TalonSRX(kPivotMotorID);
     m_pivotPID = new frc2::PIDController(kP,kI,kD);
-    m_pivotEncoder = new frc::AnalogEncoder(pivotEncID);
-    m_pivotPID->SetTolerance(kNOMINAL_TX_ERROR);
-    debugCons("\nEncoder Reset")   
-    m_pivotEncoder->Reset();
+
+    //m_pivotEncoder = new frc::AnalogEncoder(pivotEncID);
+
+
 
     m_pivotMotor->ClearStickyFaults();
+
+
 }
 
 Pivot::~Pivot()

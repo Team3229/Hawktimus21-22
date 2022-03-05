@@ -78,13 +78,8 @@ class Robot : public frc::TimedRobot
 
   double goalHeightInches = 104.0;
 
-  double angleToGoalDegrees = limelightMountAngleDegrees + m_yOffset;
-  double angleToGoalRadians = angleToGoalDegrees * (3.14159 / 180.0);
-
-  //calculate distance 
-  double distanceFromLimelightToGoalInches = (goalHeightInches - limelightLensHeightInches)/tan(angleToGoalRadians);
-
   double angleForPivot;
+
 
   
   Intake m_intake;

@@ -31,6 +31,7 @@ void Shooter::stopShooter()
 
 //run shooter
 void Shooter::runShooter() {
+  
     flyWheelUpperOne->Set(SHOOTER_POWERONE);
     flyWheelUpperTwo->Set(SHOOTER_POWERTWO);
    

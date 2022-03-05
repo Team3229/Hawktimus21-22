@@ -108,7 +108,7 @@ if(abs(DEAD_BAND > std::abs(m_controllerInputs->driver_rightY) && DEAD_BAND > st
 		}
 		else
 		{
-			 chassis.Drive(m_controllerInputs->driver_rightY, m_controllerInputs->driver_rightX, m_controllerInputs->driver_leftX);
+			 chassis.Drive(m_controllerInputs->driver_rightY, m_controllerInputs->driver_rightX);
     }
   
   // speed changer 
@@ -130,11 +130,13 @@ if(abs(DEAD_BAND > std::abs(m_controllerInputs->driver_rightY) && DEAD_BAND > st
     m_lastUsedSpeed = 3;
   }
 
-   //Run the intake
+   //Run the intake it'll run both the feeder and intake
   if (m_controllerInputs->mani_LeftBumper) {
     m_intake.runIntake();
+    m_feeder.runFeeder();
   } else {
     m_intake.stopIntake(); 
+    m_feeder.stopFeeder();
   }
 
   //Run polycoord feeder forwards
@@ -143,6 +145,14 @@ if(abs(DEAD_BAND > std::abs(m_controllerInputs->driver_rightY) && DEAD_BAND > st
   } else {
     m_feeder.stopFeeder(); 
   }
+
+  //run feeder backwards 
+
+  if (m_controllerInputs->mani_AButton > .1){
+
+    m_feeder.reverseFeeder(); //temporary in driver controller 
+  }
+    
 
   //Run upper feeder 
    if (std::abs(m_controllerInputs->mani_RightTriggerAxis > .1)) 
@@ -162,9 +172,11 @@ if(abs(DEAD_BAND > std::abs(m_controllerInputs->driver_rightY) && DEAD_BAND > st
       m_turret.Turn(0);
     }
 
-    //shooter
+    // manual shooter
 
   if (std::abs(m_controllerInputs->mani_LeftTriggerAxis > .1)){
+      m_shooter.SHOOTER_POWERONE = 0.4;
+      m_shooter.SHOOTER_POWERTWO = -0.4;
       m_shooter.runShooter();
   }
   else{
@@ -178,25 +190,20 @@ if(abs(DEAD_BAND > std::abs(m_controllerInputs->driver_rightY) && DEAD_BAND > st
       m_pivot.Turn(0);
     }
 
-    //limelight toggle auto seeking //auto shooter is x per nathan from mechanical 
+   //limelight toggle auto seeking //auto shooter is x per nathan from mechanical 
   if (m_controllerInputs->mani_XButton)
   {
-   m_limelight.LightToggle();
+   nt::NetworkTableInstance::GetDefault().GetTable("limelight")->PutNumber("ledMode", 3); //turn limelight on 
 
-   
+   m_limelight.GetValues();
+  }
+  else 
+  {
+   nt::NetworkTableInstance::GetDefault().GetTable("limelight")->PutNumber("ledMode", 1); //turn limelight off
   }
 
-  if (m_controllerInputs->driver_POV > .1){
-
-    m_feeder.reverseFeeder(); //temporary in driver controller 
-  }
-  
-  //limelight getvalues loop
-  m_limelight.GetValues();
-  debugCons("Limelight Distance " << distanceFromLimelightToGoalInches << "\n");
 
  
-  
   //climb toggle 
   if (m_controllerInputs->driver_AButton)
   {

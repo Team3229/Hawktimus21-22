@@ -24,7 +24,7 @@ public:
     ~DriveSystem();
 
 	
-    void Drive(double& Y, double& X, double& Z);
+    void Drive(double& Y, double& X);
     void Stop();
     void ChangeSpeed(int choice);
 

@@ -32,6 +32,7 @@ public:
     void SeekTarget(double setPower);  
 
     void PivotGoalDistance();
+
    
 private:
  
@@ -45,6 +46,7 @@ private:
   double m_skew = nt::NetworkTableInstance::GetDefault().GetTable("limelight")->GetNumber("ts",0.0);              //Get skew of target
   double m_shortDistance = nt::NetworkTableInstance::GetDefault().GetTable("limelight")->GetNumber("tv", 0.0);
 
+  
   //mounting angle of the limelight from perfectly vertical 
   double limelightMountAngleDegrees = 35.0;
 
@@ -52,12 +54,6 @@ private:
   double limelightLensHeightInches = 36.5;
 
   double goalHeightInches = 104.0;
-
-  double angleToGoalDegrees = limelightMountAngleDegrees + m_yOffset;
-  double angleToGoalRadians = angleToGoalDegrees * (3.14159 / 180.0);
-
-  //calculate distance 
-  double distanceFromLimelightToGoalInches = (goalHeightInches - limelightLensHeightInches)/tan(angleToGoalRadians);
 
   //threshold for turning 
   const float TARGET_RANGE = 4.0;
@@ -68,6 +64,8 @@ private:
   bool lightToggle = true; 
 
   double angleForPivot;
+
+  
 
 
 
