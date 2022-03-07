@@ -24,7 +24,7 @@ public:
     ~DriveSystem();
 
 	
-    void Drive(double& Y, double& X);
+    void Drive(double& Y, double& X, double& Z);
     void Stop();
     void ChangeSpeed(int choice);
 
@@ -38,8 +38,7 @@ private:
 	rev::CANSparkMax * leftFollower; //Back left, follower
 	rev::CANSparkMax * rightFollower; //Back right, follower
 
-	frc::DifferentialDrive * driveTrain; //this might be the cause of our issue 
-
+	frc::DifferentialDrive * driveTrain; 
 
     
     //Constants for ports and unique id

@@ -22,18 +22,13 @@ public:
     Limelight(Turret * m_turret, Pivot * m_pivot, Shooter * m_shooter);
     ~Limelight();
 
-    void LightOn();
-    void LightOff();
-    void LightToggle();
-
-    void GetValues();
-    
-
+    void Targetting();
+    void LightToggle();  
+  
     bool IsTargeting();
     void SeekTarget(double setPower);  
 
-    void PivotGoalDistance();
-
+   
    
 private:
  
@@ -41,20 +36,8 @@ private:
  Pivot * visionPivot; 
  Shooter * visionShooter;
 
-  double m_xOffset = nt::NetworkTableInstance::GetDefault().GetTable("limelight")->GetNumber("tx",0.0);      //Get horizontal off set from target
-  double m_yOffset = nt::NetworkTableInstance::GetDefault().GetTable("limelight")->GetNumber("ty",0.0);      //Get vertical offset from target
-  double m_targetDistance = nt::NetworkTableInstance::GetDefault().GetTable("limelight")->GetNumber("ta",0.0);   //Get area of target on screen
-  double m_skew = nt::NetworkTableInstance::GetDefault().GetTable("limelight")->GetNumber("ts",0.0);              //Get skew of target
-  double m_shortDistance = nt::NetworkTableInstance::GetDefault().GetTable("limelight")->GetNumber("tv", 0.0);
 
-  
-  //mounting angle of the limelight from perfectly vertical 
-  double limelightMountAngleDegrees = 35.0;
-
-  //distance fromt he center of the limelight lens to the floor
-  double limelightLensHeightInches = 36.5;
-
-  double goalHeightInches = 104.0;
+  //calculate distance 
 
   //threshold for turning 
   const float TARGET_RANGE = 4.0;
@@ -64,11 +47,7 @@ private:
 
   bool lightToggle = true; 
 
-  double angleForPivot;
-
-  
-
-
+  double desiredPivotAngle;
 
 };
 

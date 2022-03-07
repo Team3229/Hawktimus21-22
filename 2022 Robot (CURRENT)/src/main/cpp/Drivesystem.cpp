@@ -50,7 +50,7 @@ DriveSystem::~DriveSystem()
 
 }
 
-void DriveSystem::Drive(double& Y, double& X)
+void DriveSystem::Drive(double& Y, double& X, double& Z)
 {
     //Drive function
 	//Y = Y; // invert Y
@@ -82,21 +82,3 @@ void DriveSystem::ChangeSpeed(int choice)
 	}
 }
 
-void DriveSystem::AutoPlaybackSwitch(){
-
-	rightFollower->SetInverted(false);
-	rightLead->SetInverted(false);
-
-	leftFollower->SetInverted(true);
-	leftLead->SetInverted(true);
-
-}
-
-void DriveSystem::TeleopModeSwitch(){
-
-	rightFollower->SetInverted(true);
-	rightLead->SetInverted(true);
-
-	leftFollower->SetInverted(false);
-	leftLead->SetInverted(false);
-}

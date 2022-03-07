@@ -108,7 +108,7 @@ if(abs(DEAD_BAND > std::abs(m_controllerInputs->driver_rightY) && DEAD_BAND > st
 		}
 		else
 		{
-			 chassis.Drive(m_controllerInputs->driver_rightY, m_controllerInputs->driver_rightX);
+			 chassis.Drive(m_controllerInputs->driver_rightY, m_controllerInputs->driver_rightX, m_controllerInputs->driver_leftX);
     }
   
   // speed changer 
@@ -130,13 +130,11 @@ if(abs(DEAD_BAND > std::abs(m_controllerInputs->driver_rightY) && DEAD_BAND > st
     m_lastUsedSpeed = 3;
   }
 
-   //Run the intake it'll run both the feeder and intake
+   //Run the intake
   if (m_controllerInputs->mani_LeftBumper) {
     m_intake.runIntake();
-    m_feeder.runFeeder();
   } else {
     m_intake.stopIntake(); 
-    m_feeder.stopFeeder();
   }
 
   //Run polycoord feeder forwards
@@ -145,39 +143,32 @@ if(abs(DEAD_BAND > std::abs(m_controllerInputs->driver_rightY) && DEAD_BAND > st
     m_intake.runIntake();
   } else {
     m_feeder.stopFeeder(); 
+    m_intake.stopIntake();
   }
 
-  //run feeder backwards 
-
-  if (m_controllerInputs->mani_AButton > .1){
-
-    m_feeder.reverseFeeder(); //temporary in driver controller 
+  
+//Run Polycoord feeder downwards 
+  if (m_controllerInputs->mani_AButton){
+    m_feeder.reverseFeeder(); 
   }
-    
 
   //Run upper feeder 
-   if (std::abs(m_controllerInputs->mani_RightTriggerAxis > .1)) 
-   {
+   if (std::abs(m_controllerInputs->mani_RightTriggerAxis > .1)) {
     m_upperFeeder.runUpperFeeder();
-
   }
-   else 
-   {
+   else  {
     m_upperFeeder.stopUpperFeeder(); 
   }
 
-  //turret
+  //turret manual turning
   if (std::abs(m_controllerInputs->mani_rightX) > .1) {
       m_turret.Turn(m_controllerInputs->mani_rightX/5);
     } else {
       m_turret.Turn(0);
     }
 
-    // manual shooter
-
-  if (std::abs(m_controllerInputs->mani_LeftTriggerAxis > .1)){
-      m_shooter.SHOOTER_POWERONE = 0.4;
-      m_shooter.SHOOTER_POWERTWO = -0.4;
+ //shooter manual turning 
+  if (std::abs(m_controllerInputs->mani_LeftBumper)){
       m_shooter.runShooter();
   }
   else{
@@ -191,71 +182,93 @@ if(abs(DEAD_BAND > std::abs(m_controllerInputs->driver_rightY) && DEAD_BAND > st
       m_pivot.Turn(0);
     }
 
-
-  //limeliht distance calculations 
-
-  
-      
-  
-   //limelight toggle auto seeking //auto shooter is x per nathan from mechanical 
+   //limelight hold down button
   if (m_controllerInputs->mani_XButton)
   {
-    m_limelight.LightOn();
-   nt::NetworkTableInstance::GetDefault().GetTable("limelight")->PutNumber("ledMode", 3); //turn limelight on 
+  nt::NetworkTableInstance::GetDefault().GetTable("limelight")->PutNumber("ledMode", 3);
+
+ m_xOffset = nt::NetworkTableInstance::GetDefault().GetTable("limelight")->GetNumber("tx",0.0);         //Get horizontal off set from target
+ m_yOffset = nt::NetworkTableInstance::GetDefault().GetTable("limelight")->GetNumber("ty",0.0);                   //Get vertical offset from target
+ m_targetDistance = nt::NetworkTableInstance::GetDefault().GetTable("limelight")->GetNumber("ta",0.0);                   //Get area of target on screen
+ m_skew = nt::NetworkTableInstance::GetDefault().GetTable("limelight")->GetNumber("ts",0.0);                   //Get skew of target
+ m_shortDistance = nt::NetworkTableInstance::GetDefault().GetTable("limelight")->GetNumber("tv", 0.0);
+
+
+// limelight seeking
+  if (abs(m_xOffset) < TARGET_RANGE)
+  {
+   m_turret.Turn(0);
   }
-  /*
+  else if (m_xOffset > 0) {
+
+   m_turret.TurnLimelightRight(1);
+
+  }
+  else if (m_xOffset < 0){
+
+    m_turret.TurnLimelightLeft(1);
+  }
+
+  //limelight distance calculations 
+   double angleToGoalDegrees = limelightMountAngleDegrees + m_yOffset;
+   double angleToGoalRadians = angleToGoalDegrees * (3.14159 / 180.0);
+   double distanceFromLimelightToGoalInches = (goalHeightInches - limelightLensHeightInches)/(tan(angleToGoalRadians));
+  // double angleForPivot = (0.81*(distanceFromLimelightToGoalInches)+5.09);
+
+        //debugCons("Limelight Distance " << distanceFromLimelightToGoalInches << "\n");
+       
+
+    if (distanceFromLimelightToGoalInches >= 208 && distanceFromLimelightToGoalInches <= 220) {
+         m_shooter.SHOOTER_POWERONEAUTO = .40;
+         m_shooter.SHOOTER_POWERTWOAUTO = -.40;
+         desiredPivotAngle = abs(15320);
+    
+       }
+
+       else if (distanceFromLimelightToGoalInches >= 100 && distanceFromLimelightToGoalInches <= 150){
+        m_shooter.SHOOTER_POWERONEAUTO = .30;
+        m_shooter.SHOOTER_POWERTWOAUTO = -.30;
+       
+       }
+
+       else{
+         m_shooter.SHOOTER_POWERONEAUTO = .6;
+         m_shooter.SHOOTER_POWERTWOAUTO = -.6;
+          }
+  //run shooter after values gathered
+   m_shooter.runShooterAuto();
+
    
-
-
-      if (distanceFromLimelightToGoalInches <= 68 &&  distanceFromLimelightToGoalInches >= 82)
+      if (m_pivot.m_pivotMotor->GetSelectedSensorPosition() == abs(desiredPivotAngle))
       {
-          m_shooter.SHOOTER_POWERONE = .3;
-          m_shooter.SHOOTER_POWERTWO = -.3;
-           m_shooter.runShooter();
-
-
-          //call in pivot angle 
-          
+        //lock pivot in location
+      m_pivot.TurnUp(0);
+      m_pivot.TurnDown(0);
       }
 
-      else if (distanceFromLimelightToGoalInches <= 79 && distanceFromLimelightToGoalInches >= 93)
+      else if (m_pivot.m_pivotMotor->GetSelectedSensorPosition() > abs(desiredPivotAngle))
       {
-          m_shooter.SHOOTER_POWERONE = .3;
-          m_shooter.SHOOTER_POWERTWO = -.3;
-           m_shooter.runShooter();
-
-                    //call in pivot angle 
-
+        m_pivot.TurnDown(1);
       }
+
+      else if (m_pivot.m_pivotMotor->GetSelectedSensorPosition() < abs(desiredPivotAngle))
+      {
+        m_pivot.TurnUp(1);
+      }
+
+      else {}
       
-      else if (distanceFromLimelightToGoalInches <= 125 && distanceFromLimelightToGoalInches >= 139)
-      {
-           m_shooter.SHOOTER_POWERONE = .3;
-          m_shooter.SHOOTER_POWERTWO = -.3;
-           m_shooter.runShooter();
-                  //call in pivot angle 
-
-      }
-
-      else (distanceFromLimelightToGoalInches > 145);
-      {
-          m_shooter.SHOOTER_POWERONE = 1.0;
-          m_shooter.SHOOTER_POWERTWO = -1.0;
-           m_shooter.runShooter();
-      }*/
-      /*
   }
+
   else 
   {
-   nt::NetworkTableInstance::GetDefault().GetTable("limelight")->PutNumber("ledMode", 1); //turn limelight off
-  }*/
-
-
- 
+  nt::NetworkTableInstance::GetDefault().GetTable("limelight")->PutNumber("ledMode", 1);
+  }
+  
   //climb toggle 
   if (m_controllerInputs->driver_AButton)
   {
-    m_climb.Toggle(); //these might have issue since they orinitate from solenoid classe s
+    m_climb.Toggle(); 
   }
 
 }

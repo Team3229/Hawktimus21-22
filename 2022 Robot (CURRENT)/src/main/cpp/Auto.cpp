@@ -47,6 +47,7 @@ void Auto::ReadFile(cmd * inputs) {
 
     // Read controller inputs
     cmdFile.Read(inputs, sizeof(*inputs));
+
   }
 }
 

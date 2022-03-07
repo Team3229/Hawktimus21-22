@@ -13,33 +13,41 @@
 #include "Debug.h"
 #include "Drivesystem.h" //for gyro
 
+
 class Pivot
 {
     public:
         Pivot();
         ~Pivot();
 
+        void TurnUp(double setPower);
+        void TurnDown(double setPower);
+
+        //void LimelightPivotAdjust();
     
         void Turn(double setPower);
         double GetAngle();
 
         bool canReverse;
+        
+        //moved from pivate
+    ctre::phoenix::motorcontrol::can::WPI_TalonSRX * m_pivotMotor;
 
-         const double kMAX_PIVOT_POWER = .15;   //changed this to a global variable   changed form previously 15 
     private:
 
-        ctre::phoenix::motorcontrol::can::WPI_TalonSRX * m_pivotMotor;
-
         frc2::PIDController * m_pivotPID;
+        frc::AnalogEncoder * m_pivotEncoder;
 
+        const int kPivotEncoderID = 1;
+        frc::AnalogInput pivotEncID{kPivotEncoderID}; //Analog Input
         const int kPivotMotorID = 8;
 
         //Turret turn rate limit
-              //max pivot turn power 2 percent
-        const double kMAX_PIVOT_CORRECT_POWER = .1;    //correct when turret goes beyond max range
-
-        //Pivot Limits
+        const double kMAX_PIVOT_POWER = .15;            //max pivot turn power 2 percent
+        const double kMAX_PIVOT_CORRECT_POWER = .15;    //correct when turret goes beyond max range
+        //Turret Limits
         const units::degree_t kMAX_RANGE = 10_deg;
+        const double kENCODER_RATIO = 73.17;
         const double kNOMINAL_TX_ERROR = 1;
 
         //PID
@@ -49,5 +57,7 @@ class Pivot
 
         //Turret find target
         bool reverseDirection;
+
+        double desiredPivotAngle; 
 };
 #endif

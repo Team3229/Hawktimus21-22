@@ -23,7 +23,10 @@ private:
     const int kUpperFWOneID = 5; 
     const int kUpperFWTwoID = 6;  
 
-
+   
+  
+    
+    
 public:
     Shooter();
     ~Shooter();
@@ -31,11 +34,15 @@ public:
 
     void runShooter();
     void stopShooter();
+    void runShooterAuto();
     void shooterDash();
 
-      //these needs to be variable speeds for limelight
-   double SHOOTER_POWERONE; //speed works very good at 50 
-   double SHOOTER_POWERTWO;
+    const float SHOOTER_POWERONE = .50;
+    const float SHOOTER_POWERTWO = -.50;
+
+    double SHOOTER_POWERONEAUTO;
+    double SHOOTER_POWERTWOAUTO;
+
 };
 
 #endif

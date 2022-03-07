@@ -14,8 +14,8 @@ private:
     ctre::phoenix::motorcontrol::can::WPI_TalonSRX * m_intakeMotor;
     
     const int kIntakeMotorID = 7;
-    const double INTAKE_POWER_IN = .6; //80 percent power
-    const double INTAKE_POWER_OUT = -.6;
+    const double INTAKE_POWER_IN = .8; //80 percent power
+    const double INTAKE_POWER_OUT = -.8;
 public:
     Intake();
     ~Intake();
@@ -24,7 +24,6 @@ public:
     void reverseIntake();
 
     void stopIntake();
-    void GetValues();
 };
 
 

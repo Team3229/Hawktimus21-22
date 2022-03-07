@@ -63,12 +63,6 @@ class Robot : public frc::TimedRobot
   // Controller variables
   int m_lastUsedSpeed = 2;
 
-  double m_xOffset = nt::NetworkTableInstance::GetDefault().GetTable("limelight")->GetNumber("tx",0.0);      //Get horizontal off set from target
-  double m_yOffset = nt::NetworkTableInstance::GetDefault().GetTable("limelight")->GetNumber("ty",0.0);      //Get vertical offset from target
-  double m_targetDistance = nt::NetworkTableInstance::GetDefault().GetTable("limelight")->GetNumber("ta",0.0);   //Get area of target on screen
-  double m_skew = nt::NetworkTableInstance::GetDefault().GetTable("limelight")->GetNumber("ts",0.0);              //Get skew of target
-  double m_shortDistance = nt::NetworkTableInstance::GetDefault().GetTable("limelight")->GetNumber("tv", 0.0);
-
 
 //mounting angle of the limelight from perfectly vertical 
   double limelightMountAngleDegrees = 35.0;
@@ -78,7 +72,26 @@ class Robot : public frc::TimedRobot
 
   double goalHeightInches = 104.0;
 
+  double angleToGoalDegrees = limelightMountAngleDegrees + m_yOffset;
+  double angleToGoalRadians = angleToGoalDegrees * (3.14159 / 180.0);
+
+  //calculate distance 
+  //double distanceFromLimelightToGoalInches = (goalHeightInches - limelightLensHeightInches)/tan(angleToGoalRadians);
+
   double angleForPivot;
+
+  double SHOOTER_POWERONE;
+  double SHOOTER_POWERTWO;
+  const float TARGET_RANGE = 4.0;
+
+
+  double m_xOffset = nt::NetworkTableInstance::GetDefault().GetTable("limelight")->GetNumber("tx",0.0);      //Get horizontal off set from target
+  double m_yOffset = nt::NetworkTableInstance::GetDefault().GetTable("limelight")->GetNumber("ty",0.0);      //Get vertical offset from target
+  double m_targetDistance = nt::NetworkTableInstance::GetDefault().GetTable("limelight")->GetNumber("ta",0.0);   //Get area of target on screen
+  double m_skew = nt::NetworkTableInstance::GetDefault().GetTable("limelight")->GetNumber("ts",0.0);              //Get skew of target
+  double m_shortDistance = nt::NetworkTableInstance::GetDefault().GetTable("limelight")->GetNumber("tv", 0.0);
+
+  double desiredPivotAngle;
 
 
   
