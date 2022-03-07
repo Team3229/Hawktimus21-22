@@ -23,15 +23,7 @@ private:
     const int kUpperFWOneID = 5; 
     const int kUpperFWTwoID = 6;  
 
-  
 
-    
-
-    
-
-
-       
-    
 public:
     Shooter();
     ~Shooter();

@@ -142,6 +142,7 @@ if(abs(DEAD_BAND > std::abs(m_controllerInputs->driver_rightY) && DEAD_BAND > st
   //Run polycoord feeder forwards
    if (m_controllerInputs->mani_RightBumper) {
     m_feeder.runFeeder();
+    m_intake.runIntake();
   } else {
     m_feeder.stopFeeder(); 
   }
@@ -190,18 +191,64 @@ if(abs(DEAD_BAND > std::abs(m_controllerInputs->driver_rightY) && DEAD_BAND > st
       m_pivot.Turn(0);
     }
 
+
+  //limeliht distance calculations 
+
+  
+      
+  
    //limelight toggle auto seeking //auto shooter is x per nathan from mechanical 
   if (m_controllerInputs->mani_XButton)
   {
+    m_limelight.LightOn();
    nt::NetworkTableInstance::GetDefault().GetTable("limelight")->PutNumber("ledMode", 3); //turn limelight on 
+  }
+  /*
+   
 
-   m_limelight.GetValues();
-   m_pivot.GetAngle();
+
+      if (distanceFromLimelightToGoalInches <= 68 &&  distanceFromLimelightToGoalInches >= 82)
+      {
+          m_shooter.SHOOTER_POWERONE = .3;
+          m_shooter.SHOOTER_POWERTWO = -.3;
+           m_shooter.runShooter();
+
+
+          //call in pivot angle 
+          
+      }
+
+      else if (distanceFromLimelightToGoalInches <= 79 && distanceFromLimelightToGoalInches >= 93)
+      {
+          m_shooter.SHOOTER_POWERONE = .3;
+          m_shooter.SHOOTER_POWERTWO = -.3;
+           m_shooter.runShooter();
+
+                    //call in pivot angle 
+
+      }
+      
+      else if (distanceFromLimelightToGoalInches <= 125 && distanceFromLimelightToGoalInches >= 139)
+      {
+           m_shooter.SHOOTER_POWERONE = .3;
+          m_shooter.SHOOTER_POWERTWO = -.3;
+           m_shooter.runShooter();
+                  //call in pivot angle 
+
+      }
+
+      else (distanceFromLimelightToGoalInches > 145);
+      {
+          m_shooter.SHOOTER_POWERONE = 1.0;
+          m_shooter.SHOOTER_POWERTWO = -1.0;
+           m_shooter.runShooter();
+      }*/
+      /*
   }
   else 
   {
    nt::NetworkTableInstance::GetDefault().GetTable("limelight")->PutNumber("ledMode", 1); //turn limelight off
-  }
+  }*/
 
 
  

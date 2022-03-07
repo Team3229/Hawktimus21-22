@@ -16,31 +16,27 @@ delete visionShooter;
 
 
 
-void Limelight::Targetting(){
+void Limelight::LightOn(){
     nt::NetworkTableInstance::GetDefault().GetTable("limelight")->PutNumber("ledMode", 3);
    // debugCons("LimelightOn\n");
-   
- m_xOffset = nt::NetworkTableInstance::GetDefault().GetTable("limelight")->GetNumber("tx",0.0);         //Get horizontal off set from target
- m_yOffset = nt::NetworkTableInstance::GetDefault().GetTable("limelight")->GetNumber("ty",0.0);                   //Get vertical offset from target
- m_targetDistance = nt::NetworkTableInstance::GetDefault().GetTable("limelight")->GetNumber("ta",0.0);                   //Get area of target on screen
- m_skew = nt::NetworkTableInstance::GetDefault().GetTable("limelight")->GetNumber("ts",0.0);                   //Get skew of target
- m_shortDistance = nt::NetworkTableInstance::GetDefault().GetTable("limelight")->GetNumber("tv", 0.0);
 
  if (IsTargeting() == true){
          debugCons("Object found?: YES" << "\n");
 
           SeekTarget(true);
-          GetValues();
-           //make sure to add pivot angle when encoder reads values
-          //visionShooter->runShooter();
+          visionShooter->runShooter();
             }
     else{
         debugCons("Object found?: NO" << "\n"); 
-
         SeekTarget(true);
-        visionShooter->stopShooter(); //stop running shooter if no target found
+        visionShooter->stopShooter();
                 }
     
+}
+
+void Limelight::LightOff(){
+
+
 }
 
 bool Limelight::IsTargeting() 
@@ -53,6 +49,8 @@ bool Limelight::IsTargeting()
 
 //seeking methods for limelight turret turning
 void Limelight::SeekTarget(double setPower){ //make sure to add turret turning for seeking pivot angles 
+
+GetValues();
 
 if (abs(m_xOffset) < TARGET_RANGE){
     visionTurret->Turn(0);
@@ -68,12 +66,12 @@ else if (m_xOffset < 0){
   }
 }
 
-/*
+
 void Limelight::LightToggle(){
 
   if (lightToggle == true)
     {
-          Targetting();
+          LightOn();
           nt::NetworkTableInstance::GetDefault().GetTable("limelight")->PutNumber("ledMode", 3);
 
     }
@@ -84,57 +82,74 @@ void Limelight::LightToggle(){
   }
 
 }
-*/
+
 
 void Limelight::GetValues(){
-//calculate distance to target - outputs the distance to the center 
+//calculate distance to target
+     
 
+      
        m_yOffset = nt::NetworkTableInstance::GetDefault().GetTable("limelight")->GetNumber("ty",0.0); //Get vertical offset from target
        double angleToGoalDegrees = limelightMountAngleDegrees + m_yOffset;
        double angleToGoalRadians = angleToGoalDegrees * (3.14159 / 180.0);
        double distanceFromLimelightToGoalInches = (goalHeightInches - limelightLensHeightInches)/(tan(angleToGoalRadians));
        double angleForPivot = (0.81*(distanceFromLimelightToGoalInches)+5.09);
+         debugCons("DISTANCE IN INCHES: " << distanceFromLimelightToGoalInches << "\n");
+        debugCons("ANGLE FOR PIVOT " << angleForPivot << "\n");
 
-      debugCons("Limelight Distance " << distanceFromLimelightToGoalInches << "\n");
 
-      if (distanceFromLimelightToGoalInches <= 68 &&  distanceFromLimelightToGoalInches >= 82)
+         if (distanceFromLimelightToGoalInches <= 68 &&  distanceFromLimelightToGoalInches >= 82)
       {
           visionShooter->SHOOTER_POWERONE = .3;
           visionShooter->SHOOTER_POWERTWO = -.3;
-          visionShooter->runShooter();
+           visionShooter->runShooter();
+
+           debugCons("FIRST DISTANCE");
+
+
 
           //call in pivot angle 
+          
       }
 
-      else if (distanceFromLimelightToGoalInches <= 79 && distanceFromLimelightToGoalInches >= 93)
+      else if (distanceFromLimelightToGoalInches <= 79 || distanceFromLimelightToGoalInches >= 93)
       {
           visionShooter->SHOOTER_POWERONE = .3;
           visionShooter->SHOOTER_POWERTWO = -.3;
-          visionShooter->runShooter();
+           visionShooter->runShooter();
+
+           debugCons("SECOND DISTANCE\n");
 
                     //call in pivot angle 
 
       }
       
-      else if (distanceFromLimelightToGoalInches <= 125 && distanceFromLimelightToGoalInches >= 139)
+      else if (distanceFromLimelightToGoalInches <= 125 || distanceFromLimelightToGoalInches >= 139)
       {
-          visionShooter->SHOOTER_POWERONE = .3;
+           visionShooter->SHOOTER_POWERONE = .3;
           visionShooter->SHOOTER_POWERTWO = -.3;
-          visionShooter->runShooter();
+           visionShooter->runShooter();
                   //call in pivot angle 
+                             debugCons("THIRD DISTANCE\n");
+
 
       }
 
-      else (distanceFromLimelightToGoalInches > 145);
+      else if  (distanceFromLimelightToGoalInches > 145)
       {
-        visionShooter->SHOOTER_POWERONE = .80;
-          visionShooter->SHOOTER_POWERTWO = -80;
-          visionShooter->runShooter();
-
-                    //call in pivot angle 
+          visionShooter->SHOOTER_POWERONE = 1.0;
+          visionShooter->SHOOTER_POWERTWO = -1.0;
+           visionShooter->runShooter();
+                      debugCons("VERY FAR AWAY\n");
 
       }
 
-      
+      else {
+
+        debugCons("NOTHING");
+      }
+
+
 
 }
+

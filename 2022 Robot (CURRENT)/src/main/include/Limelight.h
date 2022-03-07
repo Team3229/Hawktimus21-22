@@ -22,7 +22,8 @@ public:
     Limelight(Turret * m_turret, Pivot * m_pivot, Shooter * m_shooter);
     ~Limelight();
 
-    void Targetting();
+    void LightOn();
+    void LightOff();
     void LightToggle();
 
     void GetValues();

@@ -48,7 +48,6 @@ void Pivot::Turn(double setPower) //make sure to implement before competitions!
 double Pivot::GetAngle()
 {
 
-    debugCons("PIVOT POSITION: " << m_pivotMotor->GetSelectedSensorPosition());
 
     
 }
