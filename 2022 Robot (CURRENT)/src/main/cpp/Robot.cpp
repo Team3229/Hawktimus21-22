@@ -102,13 +102,14 @@ void Robot::ExecuteControls()
 {
 
 
-if(abs(DEAD_BAND > std::abs(m_controllerInputs->driver_rightY) && DEAD_BAND > std::abs(m_controllerInputs->driver_leftX)))
+if ((std::abs(m_controllerInputs->driver_rightY) > DEAD_BAND) || (std::abs(m_controllerInputs->driver_leftX) > DEAD_BAND))
 		{
-        chassis.Stop();
+       chassis.Drive(m_controllerInputs->driver_rightY, m_controllerInputs->driver_rightX, m_controllerInputs->driver_leftX);
+        
 		}
-		else
+else
 		{
-			 chassis.Drive(m_controllerInputs->driver_rightY, m_controllerInputs->driver_rightX, m_controllerInputs->driver_leftX);
+			chassis.Stop();
     }
   
   // speed changer 
@@ -182,6 +183,122 @@ if(abs(DEAD_BAND > std::abs(m_controllerInputs->driver_rightY) && DEAD_BAND > st
       m_pivot.Turn(0);
     }
 
+  //limelight
+    if (m_controllerInputs->mani_XButton)
+  {
+	bool haveTarget = false;
+	bool turretAligned = false;
+	bool pivotAligned = false;
+	double SHOOTER_POWERONE = 0.0;
+	double SHOOTER_POWERTWO = 0.0;
+	double desiredPivotAngle = 0;
+	  
+    	m_limelight.LightOn(); // turn limelight on
+	
+	if (m_limelight.GetValues()) // if limelight has a target
+	{
+	   haveTarget = true;
+	}
+	
+    m_xOffset = nt::NetworkTableInstance::GetDefault().GetTable("limelight")->GetNumber("tx",0.0); //Get horizontal offset from target
+    m_yOffset = nt::NetworkTableInstance::GetDefault().GetTable("limelight")->GetNumber("ty",0.0); //Get vertical offset from target
+
+	//calculate horizontal turn to target
+	double angleToGoalDegrees = limelightMountAngleDegrees + m_yOffset;
+  double angleToGoalRadians = angleToGoalDegrees * (3.14159 / 180.0);
+  double distanceFromLimelightToGoalInches = (goalHeightInches - limelightLensHeightInches)/(tan(angleToGoalRadians));
+
+	//calculate angle for the pivot
+	double angleForPivot = (0.81*(distanceFromLimelightToGoalInches)+5.09);
+	
+	 // set shooter power and pivot angle based on distance
+     	 if (distanceFromLimelightToGoalInches <= 68)
+       	 {
+          SHOOTER_POWERONE = 0.5;
+	        SHOOTER_POWERTWO = -0.5;
+	        desiredPivotAngle = 5;
+	        debugCons("FIRST DISTANCE");          
+     	 }
+
+         else if (distanceFromLimelightToGoalInches > 68 && distanceFromLimelightToGoalInches <= 93)
+         {
+          SHOOTER_POWERONE = 0.6;
+	        SHOOTER_POWERTWO = -0.6;
+	        desiredPivotAngle = 10;
+	         debugCons("SECOND DISTANCE");          
+     	 }
+	  
+         else if (distanceFromLimelightToGoalInches > 93 && distanceFromLimelightToGoalInches <= 125)
+         {
+          SHOOTER_POWERONE = 0.7;
+	         SHOOTER_POWERTWO = -0.7;
+	        desiredPivotAngle = 15;
+	          debugCons("THIRD DISTANCE");          
+     	 }
+	  
+         else if (distanceFromLimelightToGoalInches > 125 && distanceFromLimelightToGoalInches <= 139)
+         {
+          SHOOTER_POWERONE = 0.8;
+	      SHOOTER_POWERTWO = -0.8;
+	      desiredPivotAngle = 20;
+	      debugCons("FOURTH DISTANCE");          
+     	 }
+	  
+         else if (distanceFromLimelightToGoalInches > 139)
+         {
+          SHOOTER_POWERONE = 1.0;
+	      SHOOTER_POWERTWO = -1.0;
+	      desiredPivotAngle = 20;
+	      debugCons("VERY FAR");          
+     	 }
+
+	// check alignment of turret
+	if (abs(m_limelight.horizontalAngleToTarget < TARGET_RANGE))
+	{
+	   m_turret.Turn(0); // stop turning
+	   turretAligned = true;
+	}
+	else if (m_limelight.horizontalAngleToTarget > 0)
+	{
+	   m_turret.TurnLimelightRight(1);// turn right
+	}
+	else if (m_limelight.horizontalAngleToTarget < 0)
+	{
+	   m_turret.TurnLimelightLeft(1); // turn left
+	}
+	
+	// check alignment of pivot
+	if ((abs(m_pivot.GetAngle() - desiredPivotAngle)) < 1) // +- 1 degree to avoid oscillating
+	{
+	   m_pivot.Turn(0); // stop pivoting
+	   pivotAligned = true;
+	}
+	else if (m_pivot.GetAngle() < desiredPivotAngle)
+	{
+	   m_pivot.TurnDown(1); // pivot down
+	}
+	else if (m_pivot.GetAngle() > desiredPivotAngle)
+	{
+	   m_pivot.TurnUp(1);// pivot up
+	}
+	
+	 // if we're ready to shoot, shoot dependent upon distance
+	 // if the drivers don't want to auto-shoot, this could be a visual indication for them to shoot
+	 // BUT make sure it's a different button or it will shoot at default power!
+	if (haveTarget && turretAligned && pivotAligned)
+	{  
+	   m_shooter.runShooter();
+	   debugCons("TAKING A SHOT");
+	}
+  }
+	
+  // no limelight pressed, turn it off
+  else 
+  {
+   nt::NetworkTableInstance::GetDefault().GetTable("limelight")->PutNumber("ledMode", 1); //turn limelight off
+  } 
+
+/*
    //limelight hold down button
   if (m_controllerInputs->mani_XButton)
   {
@@ -213,11 +330,10 @@ if(abs(DEAD_BAND > std::abs(m_controllerInputs->driver_rightY) && DEAD_BAND > st
    double angleToGoalDegrees = limelightMountAngleDegrees + m_yOffset;
    double angleToGoalRadians = angleToGoalDegrees * (3.14159 / 180.0);
    double distanceFromLimelightToGoalInches = (goalHeightInches - limelightLensHeightInches)/(tan(angleToGoalRadians));
-  // double angleForPivot = (0.81*(distanceFromLimelightToGoalInches)+5.09);
-
-        //debugCons("Limelight Distance " << distanceFromLimelightToGoalInches << "\n");
+ 
        
 
+       //restructure these 
     if (distanceFromLimelightToGoalInches >= 208 && distanceFromLimelightToGoalInches <= 220) {
          m_shooter.SHOOTER_POWERONEAUTO = .40;
          m_shooter.SHOOTER_POWERTWOAUTO = -.40;
@@ -264,7 +380,7 @@ if(abs(DEAD_BAND > std::abs(m_controllerInputs->driver_rightY) && DEAD_BAND > st
   {
   nt::NetworkTableInstance::GetDefault().GetTable("limelight")->PutNumber("ledMode", 1);
   }
-  
+  */
   //climb toggle 
   if (m_controllerInputs->driver_AButton)
   {

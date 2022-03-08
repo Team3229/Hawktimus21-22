@@ -82,7 +82,7 @@ class Robot : public frc::TimedRobot
 
   double SHOOTER_POWERONE;
   double SHOOTER_POWERTWO;
-  const float TARGET_RANGE = 4.0;
+  
 
 
   double m_xOffset = nt::NetworkTableInstance::GetDefault().GetTable("limelight")->GetNumber("tx",0.0);      //Get horizontal off set from target
@@ -93,6 +93,9 @@ class Robot : public frc::TimedRobot
 
   double desiredPivotAngle;
 
+  const float TARGET_RANGE = 4.0;
+
+
 
   
   Intake m_intake;
@@ -100,7 +103,7 @@ class Robot : public frc::TimedRobot
   Feeder m_feeder;
   UpperFeeder m_upperFeeder;
   Shooter m_shooter;
-  Limelight m_limelight{&m_turret,&m_pivot,&m_shooter};
+  Limelight m_limelight{};
   Pivot m_pivot; //make sure to add to autonomous
   Climb m_climb; 
 

@@ -55,7 +55,13 @@ void Pivot::TurnDown(double setPower){
 
 double Pivot::GetAngle()
 {
-     m_pivotMotor->GetSelectedSensorPosition();
+     double pivotAngleActual = 0.0;
+    
+    pivotAngleActual = m_pivotMotor->GetSelectedSensorPosition();
+    
+    //add angle to encoder comparisons
+
+    return (pivotAngleActual);
    
 }
 
