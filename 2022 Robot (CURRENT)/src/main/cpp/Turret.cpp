@@ -20,22 +20,6 @@ Turret::~Turret()
     delete m_turEncoder;
 }
 
-/**
- * Turn based on Limelight tx Value
- * @return true if tx is within error range
- */ 
-bool Turret::VisionTurn(double tX)
-{
-    //it should output 0 when error is reduced to kNOMINAL_TX_ERROR with the setTolarence
-    double output = -m_turretPID->Calculate(tX,0);   //negative output if -tx doesn't work in aimOperation()
-    if(m_turretPID->AtSetpoint()){
-        Turn(0);
-        return true;
-    }else{
-        Turn(output);
-        return false;
-    }
-}
 
 /**
  * turn with set motor power

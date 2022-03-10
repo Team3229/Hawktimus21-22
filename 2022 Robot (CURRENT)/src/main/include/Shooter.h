@@ -37,8 +37,8 @@ public:
     void runShooterAuto();
     void shooterDash();
 
-    const float SHOOTER_POWERONE = .50;
-    const float SHOOTER_POWERTWO = -.50;
+    const float SHOOTER_POWERONE = .45;
+    const float SHOOTER_POWERTWO = -.45;
 
     double SHOOTER_POWERONEAUTO;
     double SHOOTER_POWERTWOAUTO;

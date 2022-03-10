@@ -40,6 +40,7 @@ void Pivot::Turn(double setPower)
     }
 }
 
+/*
 
 void Pivot::TurnUp(double setPower)
 {
@@ -51,7 +52,7 @@ void Pivot::TurnDown(double setPower){
  m_pivotMotor->Set(std::clamp(setPower,-kMAX_PIVOT_CORRECT_POWER,kMAX_PIVOT_CORRECT_POWER));
  
 }
-
+*/
 
 double Pivot::GetAngle()
 {
@@ -60,6 +61,7 @@ double Pivot::GetAngle()
     pivotAngleActual = m_pivotMotor->GetSelectedSensorPosition();
     
     //add angle to encoder comparisons
+    debugCons("PIVOT VALUES: " << pivotAngleActual  << "\n");
 
     return (pivotAngleActual);
    

@@ -44,7 +44,7 @@ class Turret
         const double kMAX_TURRET_POWER = .2;            //max turret turn power 20 percent
         const double kMAX_TURRET_CORRECT_POWER = .1;    //correct when turret goes beyond max range
         //Turret Limits
-        const units::degree_t kMAX_RANGE = 90_deg;
+        const units::degree_t kMAX_RANGE = 180_deg;
         const double kENCODER_RATIO = 73.17;
         const double kNOMINAL_TX_ERROR = 1;
 

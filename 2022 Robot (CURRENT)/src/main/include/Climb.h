@@ -3,6 +3,7 @@
 
 #include <rev/CANSparkMax.h>
 #include "Debug.h"
+#include <rev/SparkMaxRelativeEncoder.h>
 
 class Climb
 {
@@ -10,19 +11,24 @@ public:
     Climb();
     ~Climb();
 
-	
-    void Toggle();
+    void ClimbUp();
+    void ClimbDown();
+    void ClimbSync(double up, double down);
+    void Pivot(double speed);
+    void ClimbStop();
 
 private:
     //SparkMax's
 	rev::CANSparkMax * climbLead;
 	rev::CANSparkMax * climbFollower;
-    rev::SparkMaxRelativeEncoder * m_encoder;
+    rev::CANSparkMax * climbPivot;
 
-    const int LEAD_ID = 12;
+    const int LEAD_ID = 14;
 	const int FOLLOWER_ID = 13;
-    const int CLIMB_ROTATIONS = 5.5;
-    bool climbState = false;
+    const int PIVOT_ID = 16;
+    const double CLIMB_SPEED = 1.0;
+    const double CLIMB_SPEED2 = -1.0;
+    const double PIVOT_SPEED = 0.09;
 };
 
 #endif
