@@ -43,7 +43,10 @@ private:
   std::string stationFileList = "crossLineAndShoot.aut, crossLine.aut";
   std::string defaultFileName = "defaultAutoPath.aut";
   std::string stationText = "Auto file path: /home/lvuser/";
-  std::string inputFileName = "crossLineAndShoot"; //other was crossLine
+  std::string inputFileName = "crossLineAndShoot4"; //other was crossLine
+
+  //crossLineAndShoot 2 ball auto
+  //crossLineAndShoot4
 
   const bool WRITE = true;
   const bool READ = false;

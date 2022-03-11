@@ -22,8 +22,8 @@ private:
     const double INTAKE_PIVOT_POWER_IN = .15;
     const double INTAKE_PIVOT_POWER_OUT = -.15;
 
-    const double INTAKE_POWER_IN = .8; //80 percent power
-    const double INTAKE_POWER_OUT = -.8;
+    const double INTAKE_POWER_IN = .7; //80 percent power
+    const double INTAKE_POWER_OUT = -.7;
 public:
     Intake();
     ~Intake();

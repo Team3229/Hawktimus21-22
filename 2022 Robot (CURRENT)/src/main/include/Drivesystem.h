@@ -48,18 +48,15 @@ private:
 	const int RIGHT_FOLLOWER_ID = 4;
 
     //Changable powers
-	const float MAX_OUTPUT = 0.5;
-	const float LOW_OUTPUT = 0.2;
-	const float HIGH_OUTPUT = 0.6;
-  	const float DRIVE_RAMP_TIME = 0.7;
+	const float MAX_OUTPUT = 0.1;
+	const float LOW_OUTPUT = 0.1;
+	const float HIGH_OUTPUT = 0.2;
+  	const float DRIVE_RAMP_TIME = 5.0;
 
 	const float SMOOTH_TIME = 0.4;
 	const float SAFETY_TIMEOUT = 2.0;
 
-	//Turning powers
-	double m_leftAdjPow = -0.3; //turn
-    double m_rightAdjPow = 0.3; //turn
-	double m_stillPow = 0.0;
+	
 };
 
 #endif // DRIVESYSTEM_H

@@ -62,23 +62,3 @@ void DriveSystem::Stop()
 {
     driveTrain->StopMotor();
 }
-
-void DriveSystem::ChangeSpeed(int choice)
-{
-    if (choice == 1)
-	{
-        driveTrain->SetMaxOutput(LOW_OUTPUT);
-    	//debugCons("Slow speed\n");
-	}
-    else if (choice == 2)
-	{
-        driveTrain->SetMaxOutput(MAX_OUTPUT);
-    	//debugCons("Normal speed\n");
-	}
-    else if (choice == 3)
-	{
-        driveTrain->SetMaxOutput(HIGH_OUTPUT);
-    	//debugCons("Fast speed\n"); 
-	}
-}
-

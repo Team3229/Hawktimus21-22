@@ -82,6 +82,8 @@ class Robot : public frc::TimedRobot
 
   double SHOOTER_POWERONE;
   double SHOOTER_POWERTWO;
+
+  
   
 
 
