@@ -111,25 +111,6 @@ else
 		{
 			chassis.Stop();
     }
-  /*
-  // speed changer 
-  if (m_driveController.GetAButton())
-  {
-    chassis.ChangeSpeed(2); // normal speed
-    m_lastUsedSpeed = 2;
-  }
-
-  if (m_driveController.GetBButton())
-  {
-    chassis.ChangeSpeed(1); // slow speed
-    m_lastUsedSpeed = 1;
-  }
-
-  if (m_driveController.GetXButton())
-  {
-    chassis.ChangeSpeed(3); // fast
-    m_lastUsedSpeed = 3;
-  }*/
 
    //Run the intake
   if (m_controllerInputs->mani_LeftBumper) {
@@ -234,8 +215,8 @@ else
    debugCons("DISTANCE AWAY: " << distanceFromLimelightToGoalInches << "\n");
      	 if (distanceFromLimelightToGoalInches <= 68)
        	 {
-          m_shooter.SHOOTER_POWERONEAUTO = 0.8;
-	        m_shooter.SHOOTER_POWERTWOAUTO = -0.8;
+          m_shooter.SHOOTER_POWERONEAUTO = 0.37;
+	        m_shooter.SHOOTER_POWERTWOAUTO = -0.37;
 	        desiredPivotAngle = 21659;
 
 	        debugCons("FIRST DISTANCE\n");          
@@ -243,39 +224,56 @@ else
 
          else if (distanceFromLimelightToGoalInches > 68 && distanceFromLimelightToGoalInches <= 93)
          {
-          m_shooter.SHOOTER_POWERONEAUTO = 0.9;
-	        m_shooter.SHOOTER_POWERTWOAUTO = -0.9;
+          m_shooter.SHOOTER_POWERONEAUTO = 0.45;
+	        m_shooter.SHOOTER_POWERTWOAUTO = -0.45;
 	        desiredPivotAngle = 27206;
 
 	         debugCons("SECOND DISTANCE\n");          
      	 }
 	  
-         else if (distanceFromLimelightToGoalInches > 93 && distanceFromLimelightToGoalInches <= 125)
+         else if (distanceFromLimelightToGoalInches > 93 && distanceFromLimelightToGoalInches <= 109)
          {
-          m_shooter.SHOOTER_POWERONEAUTO = 1.0;
-	        m_shooter.SHOOTER_POWERTWOAUTO = -1.0;//was 60
+          m_shooter.SHOOTER_POWERONEAUTO = .48;
+	        m_shooter.SHOOTER_POWERTWOAUTO = -.48;//was 60
 	        desiredPivotAngle = 41219;
 
 	          debugCons("THIRD DISTANCE\n");          
      	 }
+
+        else if (distanceFromLimelightToGoalInches > 109 && distanceFromLimelightToGoalInches <= 125)
+        {
+             m_shooter.SHOOTER_POWERONEAUTO = .58;
+	        m_shooter.SHOOTER_POWERTWOAUTO = -.58;
+	        desiredPivotAngle = 41219;
+           debugCons("Fourth Distance\n");    
+
+        }
 	  
-         else if (distanceFromLimelightToGoalInches > 125 && distanceFromLimelightToGoalInches <= 139)
+         else if (distanceFromLimelightToGoalInches > 125 && distanceFromLimelightToGoalInches <= 141)
          {
-         m_shooter.SHOOTER_POWERONEAUTO = 1.0;// 80
-	      m_shooter.SHOOTER_POWERTWOAUTO = -1.0;
+         m_shooter.SHOOTER_POWERONEAUTO = .60;// 80
+	      m_shooter.SHOOTER_POWERTWOAUTO = -.60;
 	      desiredPivotAngle = 42790;
 
-	      debugCons("FOURTH DISTANCE\n");          
+	      debugCons("Fifth distance\n");          
      	 }
+        else if (distanceFromLimelightToGoalInches > 139 && distanceFromLimelightToGoalInches <= 155)
+        {
+           m_shooter.SHOOTER_POWERONEAUTO = .68;// 80
+	      m_shooter.SHOOTER_POWERTWOAUTO = -.68;
+	      desiredPivotAngle = 42790;
+	      debugCons("sixth distance\n");       
+        }
 	  
-         else if (distanceFromLimelightToGoalInches > 139)
+         else if (distanceFromLimelightToGoalInches > 156)
          {
            //4004
-          m_shooter.SHOOTER_POWERONEAUTO = 1.0;
-	      m_shooter.SHOOTER_POWERTWOAUTO = -1.0;
+          m_shooter.SHOOTER_POWERONEAUTO =.90;
+	      m_shooter.SHOOTER_POWERTWOAUTO = -.90;
 	      desiredPivotAngle = 52825;
 	      debugCons("VERY FAR\n");          
      	 }
+
   if (abs(m_xOffset) < TARGET_RANGE)
   {
    m_turret.Turn(0);
@@ -324,91 +322,6 @@ else
    //nt::NetworkTableInstance::GetDefault().GetTable("limelight")->PutNumber("ledMode", 1); //turn limelight off
   } 
 
-/*
-   //limelight hold down button
-  if (m_controllerInputs->mani_XButton)
-  {
-  nt::NetworkTableInstance::GetDefault().GetTable("limelight")->PutNumber("ledMode", 3);
-
- m_xOffset = nt::NetworkTableInstance::GetDefault().GetTable("limelight")->GetNumber("tx",0.0);         //Get horizontal off set from target
- m_yOffset = nt::NetworkTableInstance::GetDefault().GetTable("limelight")->GetNumber("ty",0.0);                   //Get vertical offset from target
- m_targetDistance = nt::NetworkTableInstance::GetDefault().GetTable("limelight")->GetNumber("ta",0.0);                   //Get area of target on screen
- m_skew = nt::NetworkTableInstance::GetDefault().GetTable("limelight")->GetNumber("ts",0.0);                   //Get skew of target
- m_shortDistance = nt::NetworkTableInstance::GetDefault().GetTable("limelight")->GetNumber("tv", 0.0);
-
-
-// limelight seeking
-  if (abs(m_xOffset) < TARGET_RANGE)
-  {
-   m_turret.Turn(0);
-  }
-  else if (m_xOffset > 0) {
-
-   m_turret.TurnLimelightRight(1);
-
-  }
-  else if (m_xOffset < 0){
-
-    m_turret.TurnLimelightLeft(1);
-  }
-
-  //limelight distance calculations 
-   double angleToGoalDegrees = limelightMountAngleDegrees + m_yOffset;
-   double angleToGoalRadians = angleToGoalDegrees * (3.14159 / 180.0);
-   double distanceFromLimelightToGoalInches = (goalHeightInches - limelightLensHeightInches)/(tan(angleToGoalRadians));
- 
-       
-
-       //restructure these 
-    if (distanceFromLimelightToGoalInches >= 208 && distanceFromLimelightToGoalInches <= 220) {
-         m_shooter.SHOOTER_POWERONEAUTO = .40;
-         m_shooter.SHOOTER_POWERTWOAUTO = -.40;
-         desiredPivotAngle = abs(15320);
-    
-       }
-
-       else if (distanceFromLimelightToGoalInches >= 100 && distanceFromLimelightToGoalInches <= 150){
-        m_shooter.SHOOTER_POWERONEAUTO = .30;
-        m_shooter.SHOOTER_POWERTWOAUTO = -.30;
-       
-       }
-
-       else{
-         m_shooter.SHOOTER_POWERONEAUTO = .6;
-         m_shooter.SHOOTER_POWERTWOAUTO = -.6;
-          }
-  //run shooter after values gathered
-   m_shooter.runShooterAuto();
-
-   
-      if (m_pivot.m_pivotMotor->GetSelectedSensorPosition() == abs(desiredPivotAngle))
-      {
-        //lock pivot in location
-      m_pivot.TurnUp(0);
-      m_pivot.TurnDown(0);
-      }
-
-      else if (m_pivot.m_pivotMotor->GetSelectedSensorPosition() > abs(desiredPivotAngle))
-      {
-        m_pivot.TurnDown(1);
-      }
-
-      else if (m_pivot.m_pivotMotor->GetSelectedSensorPosition() < abs(desiredPivotAngle))
-      {
-        m_pivot.TurnUp(1);
-      }
-
-      else {}
-      
-  }
-
-  else 
-  {
-  nt::NetworkTableInstance::GetDefault().GetTable("limelight")->PutNumber("ledMode", 1);
-  }
-  */
-  //climb toggle 
-  
   if (m_driveController.GetRightTriggerAxis() > 0.5) {
     m_climb.ClimbUp();
   }
@@ -419,8 +332,6 @@ else
   if (m_driveController.GetLeftTriggerAxis() > 0.5) {
     m_climb.ClimbDown();
   }
-  
-  
 
 }
 

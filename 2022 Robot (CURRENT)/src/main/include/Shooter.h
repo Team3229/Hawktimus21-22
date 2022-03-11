@@ -38,10 +38,10 @@ public:
     void shooterDash();
 
     const float SHOOTER_POWERONE = .55;
-    const float SHOOTER_POWERTWO = -.55;
+    const float SHOOTER_POWERTWO = -.55; //manual shooter power 
 
     double SHOOTER_POWERONEAUTO;
-    double SHOOTER_POWERTWOAUTO;
+    double SHOOTER_POWERTWOAUTO; //shooter global variable for auto turret 
 
 };
 
