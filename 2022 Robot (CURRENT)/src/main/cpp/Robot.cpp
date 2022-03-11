@@ -112,11 +112,21 @@ else
 			chassis.Stop();
     }
 
+
    //Run the intake
   if (m_controllerInputs->mani_LeftBumper) {
     m_intake.runIntake();
   } else {
     m_intake.stopIntake(); 
+  }
+
+  if (m_controllerInputs->mani_YButton)
+  {
+    m_feeder.reverseFeeder();
+  }
+  else
+  {
+    m_feeder.stopFeeder();
   }
 
   //Run polycoord feeder forwards
@@ -224,17 +234,17 @@ else
 
          else if (distanceFromLimelightToGoalInches > 68 && distanceFromLimelightToGoalInches <= 93)
          {
-          m_shooter.SHOOTER_POWERONEAUTO = 0.45;
-	        m_shooter.SHOOTER_POWERTWOAUTO = -0.45;
-	        desiredPivotAngle = 27206;
+          m_shooter.SHOOTER_POWERONEAUTO = 0.48;
+	        m_shooter.SHOOTER_POWERTWOAUTO = -0.58;
+	        desiredPivotAngle = 28206;
 
 	         debugCons("SECOND DISTANCE\n");          
      	 }
 	  
          else if (distanceFromLimelightToGoalInches > 93 && distanceFromLimelightToGoalInches <= 109)
          {
-          m_shooter.SHOOTER_POWERONEAUTO = .48;
-	        m_shooter.SHOOTER_POWERTWOAUTO = -.48;//was 60
+          m_shooter.SHOOTER_POWERONEAUTO = .45;//was 48
+	        m_shooter.SHOOTER_POWERTWOAUTO = -.45;//was 60
 	        desiredPivotAngle = 41219;
 
 	          debugCons("THIRD DISTANCE\n");          
@@ -242,8 +252,8 @@ else
 
         else if (distanceFromLimelightToGoalInches > 109 && distanceFromLimelightToGoalInches <= 125)
         {
-             m_shooter.SHOOTER_POWERONEAUTO = .58;
-	        m_shooter.SHOOTER_POWERTWOAUTO = -.58;
+             m_shooter.SHOOTER_POWERONEAUTO = .48;//was 58
+	        m_shooter.SHOOTER_POWERTWOAUTO = -.48;
 	        desiredPivotAngle = 41219;
            debugCons("Fourth Distance\n");    
 
@@ -251,16 +261,16 @@ else
 	  
          else if (distanceFromLimelightToGoalInches > 125 && distanceFromLimelightToGoalInches <= 141)
          {
-         m_shooter.SHOOTER_POWERONEAUTO = .60;// 80
-	      m_shooter.SHOOTER_POWERTWOAUTO = -.60;
+         m_shooter.SHOOTER_POWERONEAUTO = .58;// 80
+	      m_shooter.SHOOTER_POWERTWOAUTO = -.58;
 	      desiredPivotAngle = 42790;
 
 	      debugCons("Fifth distance\n");          
      	 }
-        else if (distanceFromLimelightToGoalInches > 139 && distanceFromLimelightToGoalInches <= 155)
+        else if (distanceFromLimelightToGoalInches > 141 && distanceFromLimelightToGoalInches <= 155)
         {
-           m_shooter.SHOOTER_POWERONEAUTO = .68;// 80
-	      m_shooter.SHOOTER_POWERTWOAUTO = -.68;
+           m_shooter.SHOOTER_POWERONEAUTO = .52;// 80
+	      m_shooter.SHOOTER_POWERTWOAUTO = -.52;
 	      desiredPivotAngle = 42790;
 	      debugCons("sixth distance\n");       
         }
@@ -268,8 +278,8 @@ else
          else if (distanceFromLimelightToGoalInches > 156)
          {
            //4004
-          m_shooter.SHOOTER_POWERONEAUTO =.90;
-	      m_shooter.SHOOTER_POWERTWOAUTO = -.90;
+          m_shooter.SHOOTER_POWERONEAUTO =.74;
+	      m_shooter.SHOOTER_POWERTWOAUTO = -.74;
 	      desiredPivotAngle = 52825;
 	      debugCons("VERY FAR\n");          
      	 }
@@ -291,7 +301,7 @@ else
 
 	
 	// check alignment of pivot
-	if ((abs(m_pivot.GetAngle() - desiredPivotAngle)) < 1) // +- 1 degree to avoid oscillating
+	if ((abs(m_pivot.GetAngle() - desiredPivotAngle)) < 5) // +- 1 degree to avoid oscillating
 	{
 	   m_pivot.Turn(0); // stop pivoting
 	   pivotAligned = true;

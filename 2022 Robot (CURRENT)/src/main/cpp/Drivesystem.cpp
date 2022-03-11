@@ -11,6 +11,8 @@ DriveSystem::DriveSystem()
 	leftFollower = new rev::CANSparkMax(LEFT_FOLLOWER_ID,rev::CANSparkMax::MotorType::kBrushless);
 	rightFollower = new rev::CANSparkMax(RIGHT_FOLLOWER_ID,rev::CANSparkMax::MotorType::kBrushless);
 
+
+
 	//Restore Facory Defaults 
 	leftLead->RestoreFactoryDefaults();
 	rightLead->RestoreFactoryDefaults();
@@ -26,6 +28,7 @@ DriveSystem::DriveSystem()
     //Set followers
 	leftFollower->Follow(*leftLead);
 	rightFollower->Follow(*rightLead);
+
 
 	rightFollower->SetInverted(true);
 	rightLead->SetInverted(true);
