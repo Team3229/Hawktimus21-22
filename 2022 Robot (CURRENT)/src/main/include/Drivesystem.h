@@ -44,9 +44,9 @@ public:
 
   //change these speeds for testing
 
-  static constexpr units::meters_per_second_t kMaxSpeed = 8.0_mps;  //max speed it is allowed to calculate
+  static constexpr units::meters_per_second_t kMaxSpeed = 4.0_mps;  //max speed it is allowed to calculate
   static constexpr units::radians_per_second_t kMaxAngularSpeed{wpi::math::pi*2};  // 1/2 rotation per second
-  static constexpr units::meters_per_second_t kSlowMaxSpeed = 4.0_mps;
+  static constexpr units::meters_per_second_t kSlowMaxSpeed = 2.0_mps;
 
 	/*
     void Drive(double& Y, double& X, double& Z);

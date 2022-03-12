@@ -111,6 +111,7 @@ void DriveSystem::Drive(units::meters_per_second_t speed, units::radians_per_sec
 /**
  * update robot's position on the field
  */ 
+/*
 void DriveSystem::UpdateOdometry() 
 {
   //1 enc report = 1 full motor rotation
@@ -118,7 +119,7 @@ void DriveSystem::UpdateOdometry()
   m_rightPosition = units::meter_t(rightLead->GetEncoder().GetPosition() * (2*wpi::math::pi*kWheelRadius)/kEncToWheel);
 
   m_odometry.Update(GetAngle(), m_leftPosition,m_rightPosition);
-}
+}*/
 
 /**
  * stops DriveSystem

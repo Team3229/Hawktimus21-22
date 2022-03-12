@@ -112,7 +112,7 @@ void Robot::ExecuteControls()
    {
     chassis.Drive(m_controllerInputs->driver_rightY*chassis.kMaxSpeed, -m_controllerInputs->driver_leftX*chassis.kMaxAngularSpeed);
   }
-  chassis.UpdateOdometry();
+  
   //slow mode - 4mps (affects acceleration and fine control)
   if(m_controllerInputs->driver_AButton){
     m_slowDriveMode = true;
@@ -350,7 +350,7 @@ else
   // no limelight pressed, turn it off
   else 
   {
-   //nt::NetworkTableInstance::GetDefault().GetTable("limelight")->PutNumber("ledMode", 1); //turn limelight off
+   nt::NetworkTableInstance::GetDefault().GetTable("limelight")->PutNumber("ledMode", 1); //turn limelight off
   } 
 
   if (m_driveController.GetRightTriggerAxis() > 0.5) {
