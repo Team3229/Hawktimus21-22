@@ -101,6 +101,27 @@ void Robot::DisabledInit()
 void Robot::ExecuteControls()
 {
 
+ if (kDRIVEDEADBAND > std::abs(m_controllerInputs->driver_rightY) && kDRIVEDEADBAND > std::abs(m_controllerInputs->driver_leftX)) {
+    chassis.StopMotor();
+
+  } 
+  else if(m_slowDriveMode){
+    chassis.Drive(m_controllerInputs->driver_rightY*chassis.kSlowMaxSpeed, -m_controllerInputs->driver_leftX*chassis.kMaxAngularSpeed);
+  } 
+  else
+   {
+    chassis.Drive(m_controllerInputs->driver_rightY*chassis.kMaxSpeed, -m_controllerInputs->driver_leftX*chassis.kMaxAngularSpeed);
+  }
+  chassis.UpdateOdometry();
+  //slow mode - 4mps (affects acceleration and fine control)
+  if(m_controllerInputs->driver_AButton){
+    m_slowDriveMode = true;
+  }
+  //fast mode - 8 mps (affects acceleration and fine control)
+  if(m_controllerInputs->driver_BButton){
+    m_slowDriveMode = false;
+  }
+/*
 
 if ((std::abs(m_controllerInputs->driver_rightY) > DEAD_BAND) || (std::abs(m_controllerInputs->driver_leftX) > DEAD_BAND)) //might need to switch to right 
 		{
@@ -110,7 +131,7 @@ if ((std::abs(m_controllerInputs->driver_rightY) > DEAD_BAND) || (std::abs(m_con
 else
 		{
 			chassis.Stop();
-    }
+    }*/
 
 
    //Run the intake

@@ -119,4 +119,10 @@ class Robot : public frc::TimedRobot
   frc::XboxController m_driveController {XBOX_USB_DRIVER_1}; //Chassis driver
   frc::XboxController m_maniController {XBOX_USB_DRIVER_2}; //Manipulation driver
 
+  bool m_slowDriveMode = false;
+
+  const int kDRIVEDEADBAND = .15; 
+
+
+
 };
