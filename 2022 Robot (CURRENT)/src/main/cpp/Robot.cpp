@@ -101,27 +101,6 @@ void Robot::DisabledInit()
 void Robot::ExecuteControls()
 {
 
- if (kDRIVEDEADBAND > std::abs(m_controllerInputs->driver_rightY) && kDRIVEDEADBAND > std::abs(m_controllerInputs->driver_leftX)) {
-    chassis.StopMotor();
-
-  } 
-  else if(m_slowDriveMode){
-    chassis.Drive(m_controllerInputs->driver_rightY*chassis.kSlowMaxSpeed, -m_controllerInputs->driver_leftX*chassis.kMaxAngularSpeed);
-  } 
-  else
-   {
-    chassis.Drive(m_controllerInputs->driver_rightY*chassis.kMaxSpeed, -m_controllerInputs->driver_leftX*chassis.kMaxAngularSpeed);
-  }
-  
-  //slow mode - 4mps (affects acceleration and fine control)
-  if(m_controllerInputs->driver_AButton){
-    m_slowDriveMode = true;
-  }
-  //fast mode - 8 mps (affects acceleration and fine control)
-  if(m_controllerInputs->driver_BButton){
-    m_slowDriveMode = false;
-  }
-/*
 
 if ((std::abs(m_controllerInputs->driver_rightY) > DEAD_BAND) || (std::abs(m_controllerInputs->driver_leftX) > DEAD_BAND)) //might need to switch to right 
 		{
@@ -131,7 +110,7 @@ if ((std::abs(m_controllerInputs->driver_rightY) > DEAD_BAND) || (std::abs(m_con
 else
 		{
 			chassis.Stop();
-    }*/
+    }
 
 
    //Run the intake
@@ -143,7 +122,7 @@ else
 
   if (m_controllerInputs->mani_YButton)
   {
-    m_feeder.reverseFeeder();
+    m_feeder.runFeeder();
   }
   else
   {
@@ -190,18 +169,18 @@ else
 
   if (m_controllerInputs->mani_YButton)
   {
-    m_intake.runIntakePivot(); //extend 
+    m_intakePivot.runIntakePivot(); //extend 
   }
   else
   {
-    m_intake.stopPivot();
+    m_intakePivot.stopPivot();
   }
 
   if (m_controllerInputs->mani_BButton){
-    m_intake.reverseIntakePivot();
+    m_intakePivot.reverseIntakePivot();
   }
   else {
-    m_intake.stopPivot();
+    m_intakePivot.stopPivot();
   }
 
   //pivot turning
@@ -220,7 +199,7 @@ else
 	//double SHOOTER_POWERONE = 0.3;
 	//double SHOOTER_POWERTWO = -0.3;
 	double desiredPivotAngle = 0;
-	  
+
    nt::NetworkTableInstance::GetDefault().GetTable("limelight")->PutNumber("ledMode", 3); //turn limelight off
 	
 	if (m_limelight.GetValues()) // if limelight has a target
@@ -244,67 +223,70 @@ else
 
 	 // set shooter power and pivot angle based on distance
    debugCons("DISTANCE AWAY: " << distanceFromLimelightToGoalInches << "\n");
-     	 if (distanceFromLimelightToGoalInches <= 68)
-       	 {
-          m_shooter.SHOOTER_POWERONEAUTO = 0.37;
-	        m_shooter.SHOOTER_POWERTWOAUTO = -0.37;
+     	 if (distanceFromLimelightToGoalInches <= 68) {
+
+          //m_shooter.SetPointOne = 2554;
+         // m_shooter.SetPointTwo = -2667; 
 	        desiredPivotAngle = 21659;
 
 	        debugCons("FIRST DISTANCE\n");          
      	 }
 
-         else if (distanceFromLimelightToGoalInches > 68 && distanceFromLimelightToGoalInches <= 93)
-         {
-          m_shooter.SHOOTER_POWERONEAUTO = 0.48;
-	        m_shooter.SHOOTER_POWERTWOAUTO = -0.58;
-	        desiredPivotAngle = 28206;
+         else if (distanceFromLimelightToGoalInches > 68 && distanceFromLimelightToGoalInches <= 93) {
+
+         // m_shooter.SetPointOne = 3008;
+	       // m_shooter.SetPointTwo= -3575;
+	        desiredPivotAngle = 41219; 
 
 	         debugCons("SECOND DISTANCE\n");          
      	 }
 	  
-         else if (distanceFromLimelightToGoalInches > 93 && distanceFromLimelightToGoalInches <= 109)
-         {
-          m_shooter.SHOOTER_POWERONEAUTO = .45;//was 48
-	        m_shooter.SHOOTER_POWERTWOAUTO = -.45;//was 60
+         else if (distanceFromLimelightToGoalInches > 93 && distanceFromLimelightToGoalInches <= 109){
+
+         // m_shooter.SetPointOne= 3008;
+	       // m_shooter.SetPointTwo = -3575;
 	        desiredPivotAngle = 41219;
 
 	          debugCons("THIRD DISTANCE\n");          
      	 }
 
-        else if (distanceFromLimelightToGoalInches > 109 && distanceFromLimelightToGoalInches <= 125)
-        {
-             m_shooter.SHOOTER_POWERONEAUTO = .48;//was 58
-	        m_shooter.SHOOTER_POWERTWOAUTO = -.48;
+        else if (distanceFromLimelightToGoalInches > 109 && distanceFromLimelightToGoalInches <= 125){
+
+         // m_shooter.SetPointOne = 2951;
+	       // m_shooter.SetPointTwo = -2838;  
 	        desiredPivotAngle = 41219;
            debugCons("Fourth Distance\n");    
 
-        }
+      }
 	  
-         else if (distanceFromLimelightToGoalInches > 125 && distanceFromLimelightToGoalInches <= 141)
-         {
-         m_shooter.SHOOTER_POWERONEAUTO = .58;// 80
-	      m_shooter.SHOOTER_POWERTWOAUTO = -.58;
+         else if (distanceFromLimelightToGoalInches > 125 && distanceFromLimelightToGoalInches <= 141){
+
+       //  m_shooter.SetPointOne = 3178;
+	     // m_shooter.SetPointTwo = -3405; 
 	      desiredPivotAngle = 42790;
 
 	      debugCons("Fifth distance\n");          
      	 }
-        else if (distanceFromLimelightToGoalInches > 141 && distanceFromLimelightToGoalInches <= 155)
-        {
-           m_shooter.SHOOTER_POWERONEAUTO = .52;// 80
-	      m_shooter.SHOOTER_POWERTWOAUTO = -.52;
-	      desiredPivotAngle = 42790;
-	      debugCons("sixth distance\n");       
-        }
-	  
-         else if (distanceFromLimelightToGoalInches > 156)
-         {
-           //4004
-          m_shooter.SHOOTER_POWERONEAUTO =.74;
-	      m_shooter.SHOOTER_POWERTWOAUTO = -.74;
-	      desiredPivotAngle = 52825;
-	      debugCons("VERY FAR\n");          
-     	 }
 
+        else if (distanceFromLimelightToGoalInches > 141 && distanceFromLimelightToGoalInches <= 155){
+
+       // m_shooter.SetPointOne = 3235;
+	      //m_shooter.SetPointTwo = -3462;
+	      desiredPivotAngle = 42790;
+
+	      debugCons("sixth distance\n");       
+       }
+	  
+        else if (distanceFromLimelightToGoalInches > 156) {
+          
+       // m_shooter.SetPointOne = 3462;
+	     // m_shooter.SetPointTwo = -3746; 
+	      desiredPivotAngle = 52825;
+
+	    debugCons("VERY FAR\n");          
+     	}
+
+  //limelight moves to target if target on screen
   if (abs(m_xOffset) < TARGET_RANGE)
   {
    m_turret.Turn(0);
@@ -336,31 +318,34 @@ else
 	   m_pivot.Turn(1);// pivot up
 	}
 	
-	 // if we're ready to shoot, shoot dependent upon distance
-	 // if the drivers don't want to auto-shoot, this could be a visual indication for them to shoot
-	 // BUT make sure it's a different button or it will shoot at default power!
-	if (haveTarget && turretAligned && pivotAligned)
-	{  
+	 
+	if (haveTarget && turretAligned && pivotAligned){  //auto shoot without driver input wehn all values are true they start shooting 
 	   debugCons("TAKING A SHOT\n");
+    // m_feeder.runFeeder();
+   //  m_upperFeeder.runUpperFeeder();
 	}
-
+  else{
+     // m_upperFeeder.stopUpperFeeder();
+      //m_feeder.stopFeeder();
   }
 
   }
-  // no limelight pressed, turn it off
+
+  }
   else 
   {
    nt::NetworkTableInstance::GetDefault().GetTable("limelight")->PutNumber("ledMode", 1); //turn limelight off
   } 
 
-  if (m_driveController.GetRightTriggerAxis() > 0.5) {
+  if (m_controllerInputs->driver_RightTriggerAxis > 0.5) {
     m_climb.ClimbUp();
   }
   else {
     m_climb.ClimbStop();
   }
 
-  if (m_driveController.GetLeftTriggerAxis() > 0.5) {
+  if (m_controllerInputs->driver_LeftTriggerAxis > 0.5)
+   { 
     m_climb.ClimbDown();
   }
 

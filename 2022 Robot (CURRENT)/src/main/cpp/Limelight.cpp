@@ -9,21 +9,18 @@ Limelight::~Limelight(){
 
 void Limelight::LightOn(){
     nt::NetworkTableInstance::GetDefault().GetTable("limelight")->PutNumber("ledMode", 3);
-    
-   // debugCons("LimelightOn\n");
+
 }
 
 void Limelight::LightOff(){
     nt::NetworkTableInstance::GetDefault().GetTable("limelight")->PutNumber("ledMode", 1);
-   // debugCons("LimelightOff\n");
 }
 
 bool Limelight::GetValues(){
      
     double m_target = nt::NetworkTableInstance::GetDefault().GetTable("limelight")->GetNumber("tv",0.0); //Does the limelight have a target (0 or 1)?
 	
-    if (m_target > 0) // has a target
-    {
+    if (m_target > 0) {
        double m_xOffset = nt::NetworkTableInstance::GetDefault().GetTable("limelight")->GetNumber("tx",0.0); //Get horizontal offset from target
        double m_yOffset = nt::NetworkTableInstance::GetDefault().GetTable("limelight")->GetNumber("ty",0.0); //Get vertical offset from target
 
@@ -45,8 +42,8 @@ bool Limelight::GetValues(){
 	return true;
     }
 
-    else 
-    { // no target
+    else{ // no target
+    
 	    debugCons("NO TARGET" << "\n");
 	    return false;
     }

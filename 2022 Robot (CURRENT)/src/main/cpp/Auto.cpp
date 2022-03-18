@@ -2,13 +2,14 @@
 
 #include "Auto.h"
 
-Auto::Auto(DriveSystem *c, Intake *i, Turret *t, Feeder *f, UpperFeeder *u, Shooter *s, Limelight *l, Pivot * p) 
+Auto::Auto(DriveSystem *c, Intake *i, IntakePivot *j, Turret *t, Feeder *f, UpperFeeder *u, Shooter *s, Limelight *l, Pivot * p) 
 {
   // Passes in subsystems from Robot
   autoChassis = c;
   autoTurret = t;
   autoShooter = s;
   autoIntake = i;
+  autoIntakePivot = j;
   autoFeeder = f;
   autoUpperFeeder = u;
   autoLimelight = l;
@@ -24,6 +25,7 @@ Auto::~Auto() {
   delete autoTurret;
   delete autoShooter;
   delete autoIntake;
+  delete autoIntakePivot; 
   delete autoFeeder;
   delete autoUpperFeeder;
   delete autoLimelight; 

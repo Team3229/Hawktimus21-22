@@ -6,13 +6,12 @@ Intake::Intake()
     m_intakeMotor = new ctre::phoenix::motorcontrol::can::WPI_TalonSRX(kIntakeMotorID);
     m_intakeMotor->ClearStickyFaults();
 
-    m_intakePivot = new rev::CANSparkMax(kIntakePivotMotorID,rev::CANSparkMax::MotorType::kBrushless);
-
 }
 
 Intake::~Intake()
 {
     delete m_intakeMotor;
+   
 }
 
 void Intake::runIntake()
@@ -30,16 +29,27 @@ void Intake::stopIntake()
     m_intakeMotor->StopMotor();
 }
 
-void Intake::runIntakePivot()
+IntakePivot::IntakePivot(){
+
+      m_intakePivot = new rev::CANSparkMax(kIntakePivotMotorID,rev::CANSparkMax::MotorType::kBrushless);
+      
+}
+
+IntakePivot::~IntakePivot(){
+
+ delete m_intakePivot;
+}
+
+void IntakePivot::runIntakePivot()
     {
         m_intakePivot->Set(INTAKE_PIVOT_POWER_IN);
     }
 
 
-void Intake::reverseIntakePivot(){
+void IntakePivot::reverseIntakePivot(){
         m_intakePivot->Set(INTAKE_PIVOT_POWER_OUT);
 }
-void Intake::stopPivot()
+void IntakePivot::stopPivot()
 {
 
     m_intakePivot->StopMotor();

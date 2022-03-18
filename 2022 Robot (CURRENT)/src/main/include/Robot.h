@@ -97,10 +97,9 @@ class Robot : public frc::TimedRobot
 
   const float TARGET_RANGE = 4.0;
 
-
-
   
   Intake m_intake;
+  IntakePivot m_intakePivot;
   Turret m_turret;
   Feeder m_feeder;
   UpperFeeder m_upperFeeder;
@@ -113,16 +112,10 @@ class Robot : public frc::TimedRobot
   // Objects of subsystems
   DriveSystem chassis;
 
-  Auto m_auto{&chassis,&m_intake,&m_turret,&m_feeder,&m_upperFeeder,&m_shooter, &m_limelight,&m_pivot}; //populate these for testing make sure to change them! 
+  Auto m_auto{&chassis,&m_intake,&m_intakePivot,&m_turret,&m_feeder,&m_upperFeeder,&m_shooter, &m_limelight,&m_pivot}; //populate these for testing make sure to change them! 
   const bool m_recordMode = true; // use this to force disable recording, useful at competitions
   
   frc::XboxController m_driveController {XBOX_USB_DRIVER_1}; //Chassis driver
   frc::XboxController m_maniController {XBOX_USB_DRIVER_2}; //Manipulation driver
-
-  bool m_slowDriveMode = false;
-
-  const int kDRIVEDEADBAND = .15; 
-
-
 
 };

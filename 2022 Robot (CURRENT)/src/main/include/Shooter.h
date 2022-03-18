@@ -20,13 +20,11 @@ private:
     rev::CANSparkMax * flyWheelUpperOne;
     rev::CANSparkMax * flyWheelUpperTwo;
 
+    
+
     const int kUpperFWOneID = 5; 
     const int kUpperFWTwoID = 6;  
 
-   
-  
-    
-    
 public:
     Shooter();
     ~Shooter();
@@ -37,11 +35,22 @@ public:
     void runShooterAuto();
     void shooterDash();
 
-    const float SHOOTER_POWERONE = .55;
-    const float SHOOTER_POWERTWO = -.55; //manual shooter power 
+    double SHOOTER_POWERONE;
+    double SHOOTER_POWERTWO; //manual shooter power 
 
     double SHOOTER_POWERONEAUTO;
     double SHOOTER_POWERTWOAUTO; //shooter global variable for auto turret 
+
+    //PID Coeefificents
+    double kP = 6e-5, kI = 1e-6, kD = 0, kIz = 0, kFF = 0.000015, kMaxOutput = 1.0, kMinOutput = -1.0;
+
+    double SetPointOne = 0.0;
+    double SetPointTwo = 0.0;
+
+    const double MaxRPM = 5676; 
+
+
+  
 
 };
 

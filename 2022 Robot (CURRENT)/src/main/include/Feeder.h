@@ -14,8 +14,8 @@ private:
     ctre::phoenix::motorcontrol::can::WPI_TalonSRX * m_feederMotor;
     
     const int kfeederMotorID = 11; 
-    const double FEEDER_POWER_IN = -.6; //80 percent power
-    const double FEEDER_POWER_OUT = .6;
+    const double FEEDER_POWER_IN = -.8; //80 percent power
+    const double FEEDER_POWER_OUT = .8;
 public:
     Feeder();
     ~Feeder();

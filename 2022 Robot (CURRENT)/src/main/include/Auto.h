@@ -31,6 +31,7 @@ private:
   // MAKE SURE TO UPDATE CONSTRUCTOR ARGS AND SUBSYSTEMS FOR THIS YEAR
   DriveSystem * autoChassis;
   Intake * autoIntake;
+  IntakePivot * autoIntakePivot;
   Turret * autoTurret;
   Feeder * autoFeeder;
   UpperFeeder *autoUpperFeeder;
@@ -43,7 +44,7 @@ private:
   std::string stationFileList = "crossLineAndShoot.aut, crossLine.aut";
   std::string defaultFileName = "defaultAutoPath.aut";
   std::string stationText = "Auto file path: /home/lvuser/";
-  std::string inputFileName = "crossLineAndShoot"; //other was crossLineAndShoot4
+  std::string inputFileName = "crossLineAndShoot"; //other was crossLine
 
   //crossLineAndShoot 2 ball auto
   //crossLineAndShoot4
@@ -53,7 +54,7 @@ private:
   CaptureFile cmdFile {};
 
 public:
-  Auto(DriveSystem *c, Intake *i, Turret *t, Feeder *f, UpperFeeder *u, Shooter *s, Limelight *l, Pivot *p); //make sure to pass in subsystems 
+  Auto(DriveSystem *c, Intake *i, IntakePivot *j, Turret *t, Feeder *f, UpperFeeder *u, Shooter *s, Limelight *l, Pivot *p); //make sure to pass in subsystems 
   ~Auto();
   void SetupPlayback();
   void ReadFile(cmd * inputs);
