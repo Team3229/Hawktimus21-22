@@ -97,7 +97,6 @@ class Robot : public frc::TimedRobot
 
   const float TARGET_RANGE = 4.0;
 
-  
   Intake m_intake;
   IntakePivot m_intakePivot;
   Turret m_turret;

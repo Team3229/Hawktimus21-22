@@ -46,6 +46,7 @@ void Robot::TeleopPeriodic()
   m_controllerInputs->driver_BButton = m_driveController.GetBButton();
   m_controllerInputs->driver_XButton = m_driveController.GetXButton();
   m_controllerInputs->driver_YButton = m_driveController.GetYButton();
+  m_controllerInputs->driver_StartButton = m_driveController.GetStartButton();
   m_controllerInputs->driver_RightBumper =
       m_driveController.GetRightBumper();
   m_controllerInputs->driver_LeftBumper =
@@ -63,6 +64,7 @@ void Robot::TeleopPeriodic()
   m_controllerInputs->mani_BButton = m_maniController.GetBButton();
   m_controllerInputs->mani_XButton = m_maniController.GetXButton();
   m_controllerInputs->mani_YButton = m_maniController.GetYButton();
+  m_controllerInputs->mani_StartButton = m_maniController.GetStartButton();
   m_controllerInputs->mani_RightBumper =
  m_maniController.GetRightBumper();
   m_controllerInputs->mani_LeftBumper =
@@ -75,7 +77,6 @@ void Robot::TeleopPeriodic()
 
     ExecuteControls();
   
-    
 }
 
 void Robot::TestInit() 
@@ -319,14 +320,15 @@ else
 	}
 	
 	 
-	if (haveTarget && turretAligned && pivotAligned){  //auto shoot without driver input wehn all values are true they start shooting 
+	if (haveTarget && turretAligned && pivotAligned){  //auto shoot without driver input wehn all values are true they start shooting, manip driver just has to perss X and robot does everything 
 	   debugCons("TAKING A SHOT\n");
-    // m_feeder.runFeeder();
-   //  m_upperFeeder.runUpperFeeder();
+     
+    m_feeder.runFeeder();
+    m_upperFeeder.runUpperFeeder();
 	}
   else{
-     // m_upperFeeder.stopUpperFeeder();
-      //m_feeder.stopFeeder();
+      m_upperFeeder.stopUpperFeeder();
+      m_feeder.stopFeeder();
   }
 
   }

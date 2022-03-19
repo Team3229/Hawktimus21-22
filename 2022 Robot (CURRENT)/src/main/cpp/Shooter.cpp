@@ -88,8 +88,6 @@ else{
     SetPointOne = frc::SmartDashboard::GetNumber("Shooter Power 2", SetPointTwo);
 
     
-
-
     frc::SmartDashboard::PutNumber("Shooter Power 1", SetPointOne);
     frc::SmartDashboard::PutNumber("Shooter Power 2", SetPointTwo);
 

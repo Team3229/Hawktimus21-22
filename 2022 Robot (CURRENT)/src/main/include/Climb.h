@@ -26,9 +26,14 @@ private:
     const int LEAD_ID = 14;
 	const int FOLLOWER_ID = 13;
     const int PIVOT_ID = 16;
+
+    
     const double CLIMB_SPEED = 1.0;
     const double CLIMB_SPEED2 = -1.0;
-    const double PIVOT_SPEED = 0.09;
+
+
+    const double PIVOT_SPEED = 1.0;
+
 };
 
 #endif

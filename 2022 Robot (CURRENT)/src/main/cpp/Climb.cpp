@@ -16,8 +16,6 @@ Climb::Climb()
     climbLead->RestoreFactoryDefaults();
     climbFollower->RestoreFactoryDefaults();
     climbPivot->RestoreFactoryDefaults();
-
-
 }
 
 Climb::~Climb()

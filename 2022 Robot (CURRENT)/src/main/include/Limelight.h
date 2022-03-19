@@ -54,7 +54,7 @@ private:
   //threshold for turning 
   const float TARGET_RANGE = 4.0;
 
-  const double kMAX_TURRET_POWER = .2;            //max turret turn power 20 percent
+  const double kMAX_TURRET_POWER = .5;            //max turret turn power 20 percent
   const double kMAX_TURRET_CORRECT_POWER = .1;
 
   bool lightToggle = true; 
