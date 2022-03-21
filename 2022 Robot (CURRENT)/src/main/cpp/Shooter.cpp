@@ -14,9 +14,8 @@ Shooter::Shooter(){
     rev::SparkMaxPIDController m_pidControllerShooterOne = flyWheelUpperOne->GetPIDController();
     rev::SparkMaxPIDController m_pidControllerShooterTwo = flyWheelUpperTwo->GetPIDController();
 
-    //Get encoder for flywheels
-    
-
+    m_pidControllerShooterOne.SetReference(SetPointOne, rev::ControlType::kVelocity);
+    m_pidControllerShooterTwo.SetReference(SetPointTwo, rev::ControlType::kVelocity);
 
 
     //Shooter PID coefficients
