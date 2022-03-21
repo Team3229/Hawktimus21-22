@@ -16,14 +16,21 @@ class Shooter
 {
     private:
     
+     const int kUpperFWOneID = 5; 
+    const int kUpperFWTwoID = 6;  
 
-        rev::CANSparkMax * flyWheelUpperOne;
-        rev::CANSparkMax * flyWheelUpperTwo;
+    rev::CANSparkMax flyWheelUpperOne{kUpperFWOneID, rev::CANSparkMax::MotorType::kBrushless};
+    rev::CANSparkMax flyWheelUpperTwo{kUpperFWTwoID, rev::CANSparkMax::MotorType::kBrushless};
 
-        
 
-        const int kUpperFWOneID = 5; 
-        const int kUpperFWTwoID = 6;  
+    //flyWheelUpperOne = new rev::CANSparkMax(kUpperFWOneID,rev::CANSparkMax::MotorType::kBrushless);
+    //flyWheelUpperTwo = new rev::CANSparkMax(kUpperFWTwoID,rev::CANSparkMax::MotorType::kBrushless);
+
+
+        rev::SparkMaxRelativeEncoder m_encoderShooterOne = flyWheelUpperOne.GetEncoder();
+        rev::SparkMaxRelativeEncoder m_encoderShooterTwo = flyWheelUpperTwo.GetEncoder();
+
+
 
     public:
         Shooter();
@@ -35,7 +42,9 @@ class Shooter
         void runShooterAuto();
         void shooterDash();
 
-        void GetRPM();
+        double getRPMS();
+
+      
         
 
         double SHOOTER_POWERONE;
@@ -47,13 +56,16 @@ class Shooter
         //PID Coeefificents
         double kP = 6e-5, kI = 1e-6, kD = 0, kIz = 0, kFF = 0.000015, kMaxOutput = 1.0, kMinOutput = -1.0;
 
-        double SetPointOne = 0.0;
-        double SetPointTwo = 0.0;
+        double SetPointOne;
+        double SetPointTwo;
 
         const double MaxRPM = 5676; 
 
-        rev::SparkMaxRelativeEncoder m_encoderShooterOne = flyWheelUpperOne->GetEncoder();
-        rev::SparkMaxRelativeEncoder m_encoderShooterTwo = flyWheelUpperTwo->GetEncoder();
+
+         rev::SparkMaxPIDController m_pidControllerShooterOne = flyWheelUpperOne.GetPIDController();
+         rev::SparkMaxPIDController m_pidControllerShooterTwo = flyWheelUpperTwo.GetPIDController();
+        
+    //restore for facotry defaults
 
 
 

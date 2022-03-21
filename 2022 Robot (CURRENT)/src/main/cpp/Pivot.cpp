@@ -63,6 +63,8 @@ double Pivot::GetAngle()
     //add angle to encoder comparisons
     debugCons("PIVOT VALUES: " << pivotAngleActual  << "\n");
 
+    //63651 is 30 degrees
+
     return (pivotAngleActual);
    
 }
