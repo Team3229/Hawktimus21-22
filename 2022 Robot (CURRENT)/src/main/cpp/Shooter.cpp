@@ -10,12 +10,14 @@ Shooter::Shooter(){
     flyWheelUpperTwo->RestoreFactoryDefaults();
 
     //PID Control for shooter motors
+
     rev::SparkMaxPIDController m_pidControllerShooterOne = flyWheelUpperOne->GetPIDController();
     rev::SparkMaxPIDController m_pidControllerShooterTwo = flyWheelUpperTwo->GetPIDController();
 
     //Get encoder for flywheels
-    rev::SparkMaxRelativeEncoder m_encoderShooterTwo =  flyWheelUpperOne->GetEncoder();
-    rev::SparkMaxRelativeEncoder m_encoderShooterOne = flyWheelUpperTwo->GetEncoder();
+    
+
+
 
     //Shooter PID coefficients
 
@@ -32,11 +34,10 @@ Shooter::Shooter(){
     m_pidControllerShooterTwo.SetIZone(kIz);
     m_pidControllerShooterTwo.SetFF(kFF);
     m_pidControllerShooterTwo.SetOutputRange(kMinOutput, kMaxOutput);
-    
 
-    //control types for the shooter PID
-    m_pidControllerShooterOne.SetReference(SetPointOne, rev::ControlType::kVelocity);
-    m_pidControllerShooterTwo.SetReference(SetPointTwo, rev::ControlType::kVelocity);
+    flyWheelUpperOne->BurnFlash();
+    flyWheelUpperTwo->BurnFlash();
+    
 
 }
 
@@ -44,6 +45,12 @@ Shooter::~Shooter(){
     delete flyWheelUpperOne;
     delete flyWheelUpperTwo;
 
+}
+void Shooter::GetRPM(){
+
+
+    debugCons("SHOOTER RPM FOR FIRST FLYWHEEL: " <<  m_encoderShooterOne.GetVelocity() << "\n");
+    debugCons("SHOOTER RPM FOR FIRST FLYWHEEL: " <<  m_encoderShooterTwo.GetVelocity() << "\n");
 }
 
 //stop shooter
@@ -65,6 +72,7 @@ void Shooter::runShooter() {
 }
 
 
+
 //based on rpms
 void Shooter::runShooterAuto(){
 
@@ -81,6 +89,8 @@ if (shooter_type == 0){
 
     frc::SmartDashboard::PutNumber("Shooter Power 1", SetPointOne);
     frc::SmartDashboard::PutNumber("Shooter Power 2", SetPointTwo);
+
+
 }
 else{
 

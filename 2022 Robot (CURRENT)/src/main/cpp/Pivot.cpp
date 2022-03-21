@@ -61,7 +61,7 @@ double Pivot::GetAngle()
     pivotAngleActual = m_pivotMotor->GetSelectedSensorPosition();
     
     //add angle to encoder comparisons
-    //debugCons("PIVOT VALUES: " << pivotAngleActual  << "\n");
+    debugCons("PIVOT VALUES: " << pivotAngleActual  << "\n");
 
     return (pivotAngleActual);
    

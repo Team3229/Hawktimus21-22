@@ -162,7 +162,11 @@ else
 
  //shooter manual turning 
   if (std::abs(m_controllerInputs->mani_LeftBumper)){
-      m_shooter.runShooter();
+     m_shooter.SetPointOne = 25;
+      m_shooter.SetPointTwo = -26; 
+
+     
+      m_shooter.runShooterAuto();
   }
   else{
       m_shooter.stopShooter();
