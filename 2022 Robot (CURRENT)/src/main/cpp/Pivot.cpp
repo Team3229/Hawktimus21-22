@@ -16,10 +16,6 @@ Pivot::Pivot()
     m_pivotMotor->SetSelectedSensorPosition(0); //resets encoder to 0 and makes sure the values is zero upon startup 
 
     
-    
-    
-
-
     m_pivotMotor->ClearStickyFaults();
 }
 Pivot::~Pivot()
@@ -61,7 +57,7 @@ double Pivot::GetAngle()
     pivotAngleActual = m_pivotMotor->GetSelectedSensorPosition();
     
     //add angle to encoder comparisons
-    debugCons("PIVOT VALUES: " << pivotAngleActual  << "\n");
+    //debugCons("PIVOT VALUES: " << pivotAngleActual  << "\n");
 
     //63651 is 30 degrees
 

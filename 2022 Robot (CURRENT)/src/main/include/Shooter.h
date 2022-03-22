@@ -39,14 +39,13 @@ class Shooter
 
         void runShooter();
         void stopShooter();
-        void runShooterAuto();
+        void runShooterAuto(double RPM1, double RPM2);
         void shooterDash();
 
         double getRPMS();
 
-      
-        
-
+    
+    
         double SHOOTER_POWERONE;
         double SHOOTER_POWERTWO; //manual shooter power 
 

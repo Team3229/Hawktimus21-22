@@ -23,11 +23,7 @@ Shooter::Shooter(){
     m_pidControllerShooterTwo.SetFF(kFF);
     m_pidControllerShooterTwo.SetOutputRange(kMinOutput, kMaxOutput);
 
-    flyWheelUpperOne.BurnFlash();
-    flyWheelUpperTwo.BurnFlash();
-
-
-    
+ 
 
 }
 
@@ -44,16 +40,6 @@ void Shooter::stopShooter(){
     
 }
 
-//run shooter based on power
-void Shooter::runShooter() {
-
-
-    SHOOTER_POWERONE = frc::SmartDashboard::GetNumber("Shooter Power 1", SHOOTER_POWERONE);
-    SHOOTER_POWERTWO = frc::SmartDashboard::GetNumber("Shooter Power 2", SHOOTER_POWERTWO);
-  
-    flyWheelUpperOne.Set(SHOOTER_POWERONE);
-    flyWheelUpperTwo.Set(SHOOTER_POWERTWO);
-}
 
 double Shooter::getRPMS(){
 
@@ -62,18 +48,17 @@ double Shooter::getRPMS(){
 
 
 //based on rpms
-void Shooter::runShooterAuto(){
+void Shooter::runShooterAuto(double RPM1, double RPM2){
 
     
 int shooter_type = frc::SmartDashboard::GetNumber("Shooter Power/RPM", 0);
 
 if (shooter_type == 0){
 
-    SetPointOne = frc::SmartDashboard::GetNumber("Shooter Power 1", SetPointOne);
-    SetPointTwo = frc::SmartDashboard::GetNumber("Shooter Power 2", SetPointTwo);
+    //SetPointOne = frc::SmartDashboard::GetNumber("Shooter Power 1", RPM1);
+  //  SetPointTwo = frc::SmartDashboard::GetNumber("Shooter Power 2", RPM2);
 
-    SetPointOne = 5000;
-    SetPointTwo = -3000; 
+
 
     //pivot encoder 44495 with 2536;
     //SetPointTwo = -2636;
@@ -82,11 +67,11 @@ if (shooter_type == 0){
 
 
 
-    m_pidControllerShooterOne.SetReference(SetPointOne, rev::CANSparkMax::ControlType::kVelocity);
-    m_pidControllerShooterTwo.SetReference(SetPointTwo, rev::CANSparkMax::ControlType::kVelocity);
+    m_pidControllerShooterOne.SetReference(RPM1, rev::CANSparkMax::ControlType::kVelocity);
+    m_pidControllerShooterTwo.SetReference(RPM2, rev::CANSparkMax::ControlType::kVelocity);
 
-    frc::SmartDashboard::PutNumber("Shooter Power 1", SetPointOne);
-    frc::SmartDashboard::PutNumber("Shooter Power 2", SetPointTwo);
+    //frc::SmartDashboard::PutNumber("Shooter Power 1", SetPointOne);
+    //frc::SmartDashboard::PutNumber("Shooter Power 2", SetPointTwo);
 
      
 
@@ -94,12 +79,12 @@ if (shooter_type == 0){
 }
 else{
 
-    SetPointOne = frc::SmartDashboard::GetNumber("Shooter Power 1", SetPointOne);
-    SetPointOne = frc::SmartDashboard::GetNumber("Shooter Power 2", SetPointTwo);
+  //  SetPointOne = frc::SmartDashboard::GetNumber("Shooter Power 1", SetPointOne);
+    //SetPointOne = frc::SmartDashboard::GetNumber("Shooter Power 2", SetPointTwo);
 
     
-    frc::SmartDashboard::PutNumber("Shooter Power 1", SetPointOne);
-    frc::SmartDashboard::PutNumber("Shooter Power 2", SetPointTwo);
+ //  frc::SmartDashboard::PutNumber("Shooter Power 1", SetPointOne);
+  // frc::SmartDashboard::PutNumber("Shooter Power 2", SetPointTwo);
 
 
 }
