@@ -11,6 +11,7 @@
 #include <frc/Servo.h>
 
 #include "Debug.h"
+#include "Shooter.h"
 
 class Shooter
 {
@@ -45,7 +46,6 @@ class Shooter
         double getRPMS();
 
     
-    
         double SHOOTER_POWERONE;
         double SHOOTER_POWERTWO; //manual shooter power 
 
@@ -54,9 +54,6 @@ class Shooter
 
         //PID Coeefificents
         double kP = 6e-5, kI = 1e-6, kD = 0, kIz = 0, kFF = 0.000015, kMaxOutput = 1.0, kMinOutput = -1.0;
-
-        double SetPointOne;
-        double SetPointTwo;
 
         const double MaxRPM = 5676; 
 

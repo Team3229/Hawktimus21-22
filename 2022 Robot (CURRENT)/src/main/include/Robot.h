@@ -59,6 +59,9 @@ class Robot : public frc::TimedRobot
   const int XBOX_USB_DRIVER_1 = 0;
   const int  XBOX_USB_DRIVER_2 = 1;
   const float DEAD_BAND = 0.1;
+   const int kDRIVEDEADBAND = .15; 
+
+   bool m_slowDriveMode = false;
 
   // Controller variables
   int m_lastUsedSpeed = 2;

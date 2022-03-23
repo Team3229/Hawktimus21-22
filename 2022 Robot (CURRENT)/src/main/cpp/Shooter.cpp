@@ -28,7 +28,6 @@ Shooter::Shooter(){
 }
 
 Shooter::~Shooter(){
-  
 
 
 }
@@ -55,38 +54,13 @@ int shooter_type = frc::SmartDashboard::GetNumber("Shooter Power/RPM", 0);
 
 if (shooter_type == 0){
 
-    //SetPointOne = frc::SmartDashboard::GetNumber("Shooter Power 1", RPM1);
-  //  SetPointTwo = frc::SmartDashboard::GetNumber("Shooter Power 2", RPM2);
-
-
-
-    //pivot encoder 44495 with 2536;
-    //SetPointTwo = -2636;
-
-    //very far at max angle 4000 and -3600
-
-
-
     m_pidControllerShooterOne.SetReference(RPM1, rev::CANSparkMax::ControlType::kVelocity);
     m_pidControllerShooterTwo.SetReference(RPM2, rev::CANSparkMax::ControlType::kVelocity);
 
-    //frc::SmartDashboard::PutNumber("Shooter Power 1", SetPointOne);
-    //frc::SmartDashboard::PutNumber("Shooter Power 2", SetPointTwo);
-
-     
-
+    debugCons("RPM VALUES: " << m_encoderShooterOne.GetVelocity() << "\n");
 
 }
 else{
-
-  //  SetPointOne = frc::SmartDashboard::GetNumber("Shooter Power 1", SetPointOne);
-    //SetPointOne = frc::SmartDashboard::GetNumber("Shooter Power 2", SetPointTwo);
-
-    
- //  frc::SmartDashboard::PutNumber("Shooter Power 1", SetPointOne);
-  // frc::SmartDashboard::PutNumber("Shooter Power 2", SetPointTwo);
-
-
 }
 
 
