@@ -46,9 +46,12 @@ class Pivot
         const double kMAX_PIVOT_POWER = .15;            //max pivot turn power 2 percent
         const double kMAX_PIVOT_CORRECT_POWER = .15;    //correct when turret goes beyond max range
         //Turret Limits
-        const units::degree_t kMAX_RANGE = 10_deg;
+        const units::degree_t kMAX_RANGE = 30_deg;
         const double kENCODER_RATIO = 73.17;
         const double kNOMINAL_TX_ERROR = 1;
+
+        const int MIN_PIVOT_ANGLE = 0;
+        const int MAX_PIVOT_ANGLE = 58700;
 
         //PID
         const double kP = .05;

@@ -15,6 +15,7 @@
 // Our needed includes
 #include <frc/XboxController.h>
 #include <Math.h>
+#include <frc/timer.h>
 #include "ControllerInputs.h"
 
 // Subsystem includes
@@ -58,10 +59,18 @@ class Robot : public frc::TimedRobot
   // Constants
   const int XBOX_USB_DRIVER_1 = 0;
   const int  XBOX_USB_DRIVER_2 = 1;
-  const float DEAD_BAND = 0.1;
+  const float DEAD_BAND = 0.15;
    const int kDRIVEDEADBAND = .15; 
 
-   bool m_slowDriveMode = false;
+
+   const float DRIVE_REGULAR = 0.7;
+  const float DRIVE_SLOW = 0.4;
+  	const float DRIVE_RAMP_TIME = 5.0;
+
+
+     bool m_slowDriveMode = false;
+     float drive_speed = DRIVE_REGULAR;
+
 
   // Controller variables
   int m_lastUsedSpeed = 2;

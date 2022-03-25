@@ -105,6 +105,46 @@ void Robot::ExecuteControls()
 {
 
 
+
+
+  //slow mode - 4mps (affects acceleration and fine control)
+  if(m_controllerInputs->driver_AButton){
+    m_slowDriveMode = true;
+    drive_speed = DRIVE_SLOW;
+  }
+  //fast mode - 8 mps (affects acceleration and fine control)
+  if(m_controllerInputs->driver_BButton){
+    m_slowDriveMode = false;
+    drive_speed = DRIVE_REGULAR;
+  }
+
+
+  if ((std::abs(m_controllerInputs->driver_rightY) > DEAD_BAND) || (std::abs(m_controllerInputs->driver_leftX) > DEAD_BAND)) //might need to switch to right 
+  {
+    //debugCons("RIGHT Y OUTPUT: " << m_controllerInputs->driver_rightY << "\n" );
+    //debugCons("RIGHT X OUTPUT " <<m_controllerInputs->driver_leftX << "\n" );
+
+     if (m_controllerInputs->driver_rightY > drive_speed) {
+	     m_controllerInputs->driver_rightY = drive_speed;
+       
+     }
+     else if (m_controllerInputs->driver_rightY < -drive_speed) {
+	     m_controllerInputs->driver_rightY = -drive_speed;
+     }
+     if (m_controllerInputs->driver_leftX > drive_speed) {
+	     m_controllerInputs->driver_leftX = drive_speed;
+     }
+     else if (m_controllerInputs->driver_leftX < -drive_speed) {
+	     m_controllerInputs->driver_leftX = -drive_speed;
+     }
+     chassis.Drive(m_controllerInputs->driver_rightY, m_controllerInputs->driver_rightX, m_controllerInputs->driver_leftX);
+        
+  
+  }
+  else	{
+     chassis.Stop();
+  }
+/*
     if (kDRIVEDEADBAND > std::abs(m_controllerInputs->driver_rightY) &&  kDRIVEDEADBAND > std::abs(m_controllerInputs->driver_leftX)) {
 
     chassis.StopMotor();
@@ -120,8 +160,6 @@ void Robot::ExecuteControls()
 
   }
 
-  chassis.UpdateOdometry();
-
   //slow mode - 4mps (affects acceleration and fine control)
   if(m_controllerInputs->driver_AButton){
     m_slowDriveMode = true;
@@ -129,12 +167,35 @@ void Robot::ExecuteControls()
   //fast mode - 8 mps (affects acceleration and fine control)
   if(m_controllerInputs->driver_BButton){
     m_slowDriveMode = false;
-  }
-
+  }*/
 
 /*
 if ((std::abs(m_controllerInputs->driver_rightY) > DEAD_BAND) || (std::abs(m_controllerInputs->driver_leftX) > DEAD_BAND)) //might need to switch to right 
 		{
+      if (m_controllerInputs->driver_rightY > 0.5)
+      {
+          m_controllerInputs->driver_rightY = 0.5;
+
+      }
+
+     else if (m_controllerInputs->driver_rightY < -0.5)
+      {
+          m_controllerInputs->driver_rightY = -0.5;
+
+      }
+
+      if (m_controllerInputs->driver_leftX > 0.5)
+      {
+
+        m_controllerInputs->driver_leftX = 0.5;
+      }
+
+       else if (m_controllerInputs->driver_leftX  < -0.5)
+      {
+          m_controllerInputs->driver_leftX  = -0.5;
+
+      }
+
        chassis.Drive(m_controllerInputs->driver_rightY, m_controllerInputs->driver_rightX, m_controllerInputs->driver_leftX);
         
 		}
@@ -142,7 +203,6 @@ else
 		{
 			chassis.Stop();
     }
-
 */
    //Run the intake
   if (m_controllerInputs->mani_LeftBumper) {
@@ -263,84 +323,11 @@ if (m_controllerInputs->mani_XButton == 0 && m_controllerInputs->mani_LeftBumper
 
   debugCons("DISTANCE AWAY: " << distanceFromLimelightToGoalInches << "\n");
 
-
-  if (RPM1 >= 5000)
+  //for human player station shots
+  if (RPM1 >= 5100)
   {
-    m_shooter.runShooterAuto(5000, -5000 * 0.6);
+    m_shooter.runShooterAuto(5100, -5100 * 0.6);
   }
-/*
-     	 if (distanceFromLimelightToGoalInches <= 68) {
-  
-          m_shooter.runShooterAuto(RPM1, RPM2);
-          //m_shooter.runShooterAuto(2960, -2960 * 0.6);
-	        desiredPivotAngle = 58700;
-
-	        debugCons("FIRST DISTANCE\n");          
-     	 }
-
-         else if (distanceFromLimelightToGoalInches > 68 && distanceFromLimelightToGoalInches <= 93) {
-
-          //m_shooter.runShooterAuto(3100, -3100 * 0.6);
-	        desiredPivotAngle = 58700; 
-
-	         debugCons("SECOND DISTANCE\n");          
-     	 }
-	  
-         else if (distanceFromLimelightToGoalInches > 93 && distanceFromLimelightToGoalInches <= 109){
-
-         m_shooter.runShooterAuto(3300, -3300 * 0.6);
-	        desiredPivotAngle = 58700;
-
-	          debugCons("THIRD DISTANCE\n");          
-     	 }
-
-        else if (distanceFromLimelightToGoalInches > 109 && distanceFromLimelightToGoalInches <= 125){
-
-            m_shooter.runShooterAuto(3600, -3600 * 0.6);
-	        desiredPivotAngle = 58700;
-           debugCons("Fourth Distance\n");    
-
-      }
-	  
-         else if (distanceFromLimelightToGoalInches > 125 && distanceFromLimelightToGoalInches <= 141){
-
-        m_shooter.runShooterAuto(3700, -3700 * 0.6);
-	      desiredPivotAngle = 58700;
-
-	      debugCons("Fifth distance\n");          
-     	 }
-
-        else if (distanceFromLimelightToGoalInches > 141 && distanceFromLimelightToGoalInches <= 155){
-
-        m_shooter.runShooterAuto(3800, -3800 * .6);
-	      desiredPivotAngle = 58700;
-
-	      debugCons("sixth distance\n");       
-       }
-	  
-        else if (distanceFromLimelightToGoalInches > 156 && distanceFromLimelightToGoalInches <= 191) {
-          
-         m_shooter.runShooterAuto(3950, -3950 * .6);
-	      desiredPivotAngle = 58700;
-
-	    debugCons("Seventh distance\n");          
-     	}
-
-         else if (distanceFromLimelightToGoalInches > 191 && distanceFromLimelightToGoalInches <= 216) {
-          
-         m_shooter.runShooterAuto(4200, -4200 * .6);
-	      desiredPivotAngle = 58700;
-
-	    debugCons("8 distance\n");          
-     	}
-
-       else if (distanceFromLimelightToGoalInches >  216) {
-          
-         m_shooter.runShooterAuto(4400, -4400 * .6);
-	      desiredPivotAngle = 58700;
-
-	    debugCons("9 distance\n");          
-     	}*/
 
   //limelight moves to target if target on screen
   if (abs(m_xOffset) < TARGET_RANGE)
@@ -360,19 +347,23 @@ if (m_controllerInputs->mani_XButton == 0 && m_controllerInputs->mani_LeftBumper
 
 	
 	// check alignment of pivot
-	if ((abs(m_pivot.GetAngle() - desiredPivotAngle)) < 500) // +- 1 degree to avoid oscillating
+	if ((abs(m_pivot.GetAngle() - desiredPivotAngle)) < 2000) // +- 1 degree to avoid oscillating
 	{
 	   m_pivot.Turn(0); // stop pivoting
 	   pivotAligned = true;
 	}
-	else if (m_pivot.GetAngle() < desiredPivotAngle)
+
+  else{
+
+	if (m_pivot.GetAngle() < desiredPivotAngle)
 	{
-	   m_pivot.Turn(-1); // pivot down
+	   m_pivot.Turn(1); // pivot down
 	}
 	else if (m_pivot.GetAngle() > desiredPivotAngle)
 	{
-	   m_pivot.Turn(1);// pivot up
+	   m_pivot.Turn(-1);// pivot up
 	}
+  }
 	
 	 
 	if (haveTarget && turretAligned && pivotAligned){  //auto shoot without driver input wehn all values are true they start shooting, manip driver just has to perss X and robot does everything 
@@ -412,7 +403,3 @@ if (m_controllerInputs->mani_XButton == 0 && m_controllerInputs->mani_LeftBumper
 
 int main() { return frc::StartRobot<Robot>(); }
 #endif 
-
-
-
-

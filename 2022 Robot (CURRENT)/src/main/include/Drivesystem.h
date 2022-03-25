@@ -4,7 +4,7 @@
 #define DRIVESYSTEM_H
 
 #pragma once
-
+/*
 
 #include <frc/controller/PIDController.h>
 #include <frc/kinematics/DifferentialDriveKinematics.h>
@@ -20,16 +20,17 @@
 #include <frc/smartdashboard/SmartDashboard.h>
 #include <frc/drive/DifferentialDrive.h>
 
-#include "Debug.h"
+#include "Debug.h"*
 
 
 
+*/
 /**
  * Represents a differential drive style drivetrain.
  * See http://docs.wpilib.org/en/latest/docs/software/kinematics-and-odometry/index.html
  */
 
-
+/*
 class DriveSystem {
 	
  public:
@@ -64,6 +65,8 @@ class DriveSystem {
   double m_rightVelocity;
   const float MAX_POWER = 1.0;
   const float DRIVE_RAMP_TIME = 0.7;
+  const float DRIVE_REGULAR = 0.5;
+  const float DRIVE_SLOW = 0.2;
 
   units::meter_t m_leftPosition,m_rightPosition;
   AHRS * navXGyro;
@@ -82,7 +85,14 @@ class DriveSystem {
 
 };
 
-/*
+
+ // rev::SparkMaxRelativeEncoder m_encoderShooterOne = leftLead->GetEncoder();
+  // rev::SparkMaxRelativeEncoder m_encoderShooterTwo = rightLead->GetEncoder();
+
+};*/
+
+
+
 #include <iostream>
 #include <memory>
 #include <Math.h>
@@ -112,6 +122,9 @@ public:
 	void TeleopModeSwitch();
 
 
+  
+
+
 private:
     //SparkMax's
 	rev::CANSparkMax * leftLead; //Front left, leader
@@ -133,18 +146,18 @@ private:
 	const int RIGHT_LEAD_ID = 3;
 	const int RIGHT_FOLLOWER_ID = 4;
 
-    //Changable powers
-	const float MAX_OUTPUT = 0.1;
-	const float LOW_OUTPUT = 0.1;
-	const float HIGH_OUTPUT = 0.2;
-  	const float DRIVE_RAMP_TIME = 5.0;
 
 	const float SMOOTH_TIME = 0.4;
 	const float SAFETY_TIMEOUT = 2.0;
+
+  const float DRIVE_REGULAR = 0.7;
+  const float DRIVE_SLOW = 0.4;
+  	const float DRIVE_RAMP_TIME = 5.0;
 
 
 
 	
 };
-*/
+
+
 #endif // DRIVESYSTEM_H

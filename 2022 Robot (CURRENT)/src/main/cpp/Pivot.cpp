@@ -28,10 +28,12 @@ Pivot::~Pivot()
 
 void Pivot::Turn(double setPower)
 {
-    if (std::abs(GetAngle()) < kMAX_RANGE.to<double>()){
+     if (abs(GetAngle() - MAX_PIVOT_ANGLE) > 500) {
      
         m_pivotMotor->Set(std::clamp(-setPower,-kMAX_PIVOT_POWER,kMAX_PIVOT_POWER));
-    }else{
+    }
+    else if (abs(GetAngle() - MIN_PIVOT_ANGLE > 500)) {
+
         m_pivotMotor->Set(std::clamp(setPower,-kMAX_PIVOT_CORRECT_POWER,kMAX_PIVOT_CORRECT_POWER));
     }
 }
