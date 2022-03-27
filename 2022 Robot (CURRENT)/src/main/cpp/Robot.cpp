@@ -10,8 +10,14 @@
 
 void Robot::RobotInit(){
  nt::NetworkTableInstance::GetDefault().GetTable("limelight")->PutNumber("ledMode", 1);
-     frc::SmartDashboard::PutNumber("Shooter ONE RPM ", m_shooter.getRPMS());
+  frc::SmartDashboard::PutNumber("Shooter ONE RPM ", m_shooter.getRPMS());
 
+  frc::SmartDashboard::PutData(&m_chooser);
+
+  m_chooser.SetDefaultOption("4 Ball Auto From Right Center", kAutoroutineDefault);
+  m_chooser.AddOption("2 Ball Auto From Left", kLeftAuto);
+  m_chooser.AddOption("3 Ball Auto From Center", kCenterAuto);
+  m_chooser.AddOption("3 Ball Auto From Center", kRightAuto);
 
 }
 
@@ -19,6 +25,9 @@ void Robot::RobotPeriodic() {}
 
 void Robot::AutonomousInit() 
 {
+
+  std::string inputFileName = m_chooser.GetSelected();
+ 
   m_auto.SetupPlayback();
    
 }
@@ -27,7 +36,7 @@ void Robot::AutonomousPeriodic()
 {
   m_auto.ReadFile(m_controllerInputs);
   
-
+  
   debugCons("Running Auto");
   ExecuteControls();
 }

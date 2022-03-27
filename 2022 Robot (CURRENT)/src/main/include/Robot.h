@@ -17,6 +17,9 @@
 #include <Math.h>
 #include <frc/timer.h>
 #include "ControllerInputs.h"
+#include <frc/smartdashboard/SendableChooser.h>
+
+
 
 // Subsystem includes
 #include "DriveSystem.h"
@@ -47,7 +50,6 @@ class Robot : public frc::TimedRobot
   void TestPeriodic() override;
 
   void ExecuteControls();
-
 
 
  private:
@@ -127,5 +129,13 @@ class Robot : public frc::TimedRobot
   
   frc::XboxController m_driveController {XBOX_USB_DRIVER_1}; //Chassis driver
   frc::XboxController m_maniController {XBOX_USB_DRIVER_2}; //Manipulation driver
+
+  frc::SendableChooser<std::string> m_chooser;
+
+  const std::string kAutoroutineDefault = "crossLineAndShoot.aut";
+  const std::string kLeftAuto = "REPLACE WITH LEFT 2 BALL AUTO ROUTINE NAME FROM AUTO";
+  const std::string kCenterAuto = "REPLACE WITH Center 3 BALL AUTO ROUTINE NAME FROM AUTO";
+  const std::string kRightAuto = "REPLACE WITH Right 3 BALL AUTO ROUTINE NAME FROM AUTO";
+
 
 };
