@@ -14,25 +14,27 @@ public:
     void ClimbUp();
     void ClimbDown();
     void ClimbSync(double up, double down);
-    void Pivot(double speed);
+    void ClimbHighUP();
+    void ClimbHighDOWN();
+    void ClimbHighStop();
     void ClimbStop();
 
 private:
     //SparkMax's
 	rev::CANSparkMax * climbLead;
 	rev::CANSparkMax * climbFollower;
-    rev::CANSparkMax * climbPivot;
+    rev::CANSparkMax * climbHigh;
 
     const int LEAD_ID = 14;
 	const int FOLLOWER_ID = 13;
-    const int PIVOT_ID = 16;
+    const int HIGH_ID = 16;
 
     
     const double CLIMB_SPEED = 1.0;
     const double CLIMB_SPEED2 = -1.0;
 
 
-    const double PIVOT_SPEED = 1.0;
+    const double CLIMBHIGH_SPEED = 1.0;
 
 };
 

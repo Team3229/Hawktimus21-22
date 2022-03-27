@@ -56,10 +56,9 @@ DriveSystem::~DriveSystem()
 void DriveSystem::Drive(double& Y, double& X, double& Z)
 {
     //Drive function
-	//Y = Y; // invert Y
-    driveTrain->ArcadeDrive(Y, X); //might cause issues due to update? needs testing
-	//debugCons("Y: " << Y << "\n" << " X: " << X << "\n");
-	//debugCons("Drive mode: With Gyro\n");
+
+    driveTrain->ArcadeDrive(Y, X); 
+	
 }
 
 void DriveSystem::Stop()

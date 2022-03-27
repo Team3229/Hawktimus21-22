@@ -24,9 +24,7 @@ class Shooter
     rev::CANSparkMax flyWheelUpperTwo{kUpperFWTwoID, rev::CANSparkMax::MotorType::kBrushless};
 
 
-    //flyWheelUpperOne = new rev::CANSparkMax(kUpperFWOneID,rev::CANSparkMax::MotorType::kBrushless);
-    //flyWheelUpperTwo = new rev::CANSparkMax(kUpperFWTwoID,rev::CANSparkMax::MotorType::kBrushless);
-
+ 
 
         rev::SparkMaxRelativeEncoder m_encoderShooterOne = flyWheelUpperOne.GetEncoder();
         rev::SparkMaxRelativeEncoder m_encoderShooterTwo = flyWheelUpperTwo.GetEncoder();
@@ -61,47 +59,6 @@ class Shooter
          rev::SparkMaxPIDController m_pidControllerShooterOne = flyWheelUpperOne.GetPIDController();
          rev::SparkMaxPIDController m_pidControllerShooterTwo = flyWheelUpperTwo.GetPIDController();
         
-    //restore for facotry defaults
-
-
-
-        //easier ways to grab values for calculations
-
-/*
-        struct shooterValues
-        {
-
-            double power;
-            double rpm;
-            double pivot;
-
-        };
-
-            int MAX_DISTANCE = 20; // in tens of inches 
-    
-            int shooterValue = shooterValues[MAX_DISTANCE]; 
-
-            shooterValues[0] = {0.3, 2500, 21659}; 
-            shooterValues[1] = {0.3, 2500, 21659}; 
-            shooterValues[2] = {0.3, 2500, 21659}; 
-            shooterValues[3] = {0.4, 3500, 41219}; 
-            shooterValues[4] = {0.4, 3500, 41219}; 
-            shooterValues[5] = {0.5, 3800, 41219}; 
-            shooterValues[6] = {0.5, 3800, 41219}; 
-            shooterValues[7] = {0.6, 4000, 41219}; 
-            shooterValues[8] = {0.6, 4000, 41219}; 
-            shooterValues[9] = {0.6, 4000, 41219}; 
-            shooterValues[10] = {0.7, 4200, 41219}; 
-            shooterValues[11] = {0.7, 4200, 41219}; 
-            shooterValues[12] = {0.7, 4500, 41219}; 
-            shooterValues[13] = {0.7, 4500, 41219}; 
-            shooterValues[14] = {0.8, 5000, 41219}; 
-            shooterValues[15] = {0.8, 5000, 41219}; 
-            shooterValues[16] = {0.8, 5000, 41219}; 
-            shooterValues[17] = {0.9, 5500, 41219}; 
-            shooterValues[18] = {0.9, 5500, 41219}; 
-            shooterValues[19] = {1.0, 6000, 41219};
-*/
 
 
 };

@@ -7,7 +7,6 @@ Pivot::Pivot()
     m_pivotPID = new frc2::PIDController(kP,kI,kD);
     m_pivotEncoder = new frc::AnalogEncoder(pivotEncID);
     m_pivotPID->SetTolerance(kNOMINAL_TX_ERROR);
-    //debugCons("\nEncoder Reset")   
     m_pivotEncoder->Reset();
 
     
@@ -38,19 +37,6 @@ void Pivot::Turn(double setPower)
     }
 }
 
-/*
-
-void Pivot::TurnUp(double setPower)
-{
- m_pivotMotor->Set(std::clamp(-setPower,-kMAX_PIVOT_POWER,kMAX_PIVOT_POWER));
- 
-}
-
-void Pivot::TurnDown(double setPower){
- m_pivotMotor->Set(std::clamp(setPower,-kMAX_PIVOT_CORRECT_POWER,kMAX_PIVOT_CORRECT_POWER));
- 
-}
-*/
 
 double Pivot::GetAngle()
 {
@@ -58,10 +44,8 @@ double Pivot::GetAngle()
     
     pivotAngleActual = m_pivotMotor->GetSelectedSensorPosition();
     
-    //add angle to encoder comparisons
+   
     //debugCons("PIVOT VALUES: " << pivotAngleActual  << "\n");
-
-    //63651 is 30 degrees
 
     return (pivotAngleActual);
    

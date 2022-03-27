@@ -4,25 +4,21 @@
 
 Climb::Climb()
 {
-    /*
-        climbLead = blue
-        climbFollow = white
-        climbPivot = red
-    */
+   
     climbLead = new rev::CANSparkMax(LEAD_ID,rev::CANSparkMax::MotorType::kBrushless);
 	climbFollower = new rev::CANSparkMax(FOLLOWER_ID,rev::CANSparkMax::MotorType::kBrushless);
-    climbPivot = new rev::CANSparkMax(PIVOT_ID,rev::CANSparkMax::MotorType::kBrushless);
+    climbHigh = new rev::CANSparkMax(HIGH_ID,rev::CANSparkMax::MotorType::kBrushless);
 
     climbLead->RestoreFactoryDefaults();
     climbFollower->RestoreFactoryDefaults();
-    climbPivot->RestoreFactoryDefaults();
+    climbHigh->RestoreFactoryDefaults();
 }
 
 Climb::~Climb()
 {
     delete climbLead;
     delete climbFollower;
-    delete climbPivot;
+    delete climbHigh;
 }
 
 void Climb::ClimbUp()
@@ -40,12 +36,24 @@ void Climb::ClimbSync(double up, double down)
     climbFollower->Set(up);
     climbFollower->Set(down);
 }
-void Climb::Pivot(double speed)
-{
-    climbPivot->Set(speed*PIVOT_SPEED);
-}
+
 void Climb::ClimbStop()
 {
 climbLead->StopMotor();
 climbFollower->StopMotor();
+}
+
+void Climb::ClimbHighUP()
+{
+climbHigh->Set(CLIMB_SPEED);
+}
+
+void Climb::ClimbHighDOWN(){
+
+climbHigh->Set(-CLIMBHIGH_SPEED);
+}
+
+void Climb::ClimbHighStop(){
+
+climbHigh->StopMotor();
 }

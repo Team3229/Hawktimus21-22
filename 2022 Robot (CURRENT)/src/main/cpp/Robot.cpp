@@ -119,10 +119,9 @@ void Robot::ExecuteControls()
   }
 
 
-  if ((std::abs(m_controllerInputs->driver_rightY) > DEAD_BAND) || (std::abs(m_controllerInputs->driver_leftX) > DEAD_BAND)) //might need to switch to right 
+  if ((std::abs(m_controllerInputs->driver_rightY) > DEAD_BAND) || (std::abs(m_controllerInputs->driver_rightX) > DEAD_BAND)) //might need to switch to right changed from righY leftX to rightY rightX to actually turn on the sides
   {
-    //debugCons("RIGHT Y OUTPUT: " << m_controllerInputs->driver_rightY << "\n" );
-    //debugCons("RIGHT X OUTPUT " <<m_controllerInputs->driver_leftX << "\n" );
+    
 
      if (m_controllerInputs->driver_rightY > drive_speed) {
 	     m_controllerInputs->driver_rightY = drive_speed;
@@ -144,84 +143,18 @@ void Robot::ExecuteControls()
   else	{
      chassis.Stop();
   }
-/*
-    if (kDRIVEDEADBAND > std::abs(m_controllerInputs->driver_rightY) &&  kDRIVEDEADBAND > std::abs(m_controllerInputs->driver_leftX)) {
 
-    chassis.StopMotor();
-
-
-  } else if(m_slowDriveMode){
-
-    chassis.Drive(m_controllerInputs->driver_rightY*chassis.kSlowMaxSpeed, -m_controllerInputs->driver_leftX*chassis.kMaxAngularSpeed);
-
-  } else {
-    
-    chassis.Drive(m_controllerInputs->driver_rightY*chassis.kMaxSpeed, -m_controllerInputs->driver_leftX*chassis.kMaxAngularSpeed);
-
-  }
-
-  //slow mode - 4mps (affects acceleration and fine control)
-  if(m_controllerInputs->driver_AButton){
-    m_slowDriveMode = true;
-  }
-  //fast mode - 8 mps (affects acceleration and fine control)
-  if(m_controllerInputs->driver_BButton){
-    m_slowDriveMode = false;
-  }*/
-
-/*
-if ((std::abs(m_controllerInputs->driver_rightY) > DEAD_BAND) || (std::abs(m_controllerInputs->driver_leftX) > DEAD_BAND)) //might need to switch to right 
-		{
-      if (m_controllerInputs->driver_rightY > 0.5)
-      {
-          m_controllerInputs->driver_rightY = 0.5;
-
-      }
-
-     else if (m_controllerInputs->driver_rightY < -0.5)
-      {
-          m_controllerInputs->driver_rightY = -0.5;
-
-      }
-
-      if (m_controllerInputs->driver_leftX > 0.5)
-      {
-
-        m_controllerInputs->driver_leftX = 0.5;
-      }
-
-       else if (m_controllerInputs->driver_leftX  < -0.5)
-      {
-          m_controllerInputs->driver_leftX  = -0.5;
-
-      }
-
-       chassis.Drive(m_controllerInputs->driver_rightY, m_controllerInputs->driver_rightX, m_controllerInputs->driver_leftX);
-        
-		}
-else
-		{
-			chassis.Stop();
-    }
-*/
-   //Run the intake
-  if (m_controllerInputs->mani_LeftBumper) {
-    m_intake.runIntake();
-  } else {
-    m_intake.stopIntake(); 
-  }
-
-  if (m_controllerInputs->mani_YButton)
+  /*if (m_controllerInputs->mani_YButton)
   {
     m_feeder.runFeeder();
   }
   else
   {
     m_feeder.stopFeeder();
-  }
+  }*/
 
-  //Run polycoord feeder forwards
-   if (m_controllerInputs->mani_RightBumper) {
+  //Run polycoord feeder and intake forwards driver has this control
+   if (std::abs(m_controllerInputs->driver_leftY > 0.5)) {
     m_feeder.runFeeder();
     m_intake.runIntake();
   } else {
@@ -229,54 +162,64 @@ else
     m_intake.stopIntake();
   }
 
+
+ 
+ if (m_controllerInputs->mani_RightTriggerAxis == 0 && std::abs(m_controllerInputs->driver_leftY) == 0 && m_controllerInputs->mani_AButton == 0)
+ {
+   m_feeder.stopFeeder();
+ }
   
 //Run Polycoord feeder downwards 
-  if (m_controllerInputs->mani_AButton){
+  if (m_controllerInputs->mani_AButton || std::abs(m_controllerInputs->driver_leftY < 0.5) ){
     m_feeder.reverseFeeder(); 
   }
 
-  //Run upper feeder 
+  //Run upper feeder aka basically the shoot button
    if (std::abs(m_controllerInputs->mani_RightTriggerAxis > .1)) {
+
+    m_feeder.runFeeder();
     m_upperFeeder.runUpperFeeder();
   }
    else  {
     m_upperFeeder.stopUpperFeeder(); 
   }
 
+
   //turret manual turning
   if (std::abs(m_controllerInputs->mani_rightX) > .1) {
       m_turret.Turn(m_controllerInputs->mani_rightX/5);
     } else {
-      m_turret.Turn(0);
+      m_turret.Turn(0); //this conflicts with turret turning of the light is left on at all times 
     }
 
  //shooter manual turning 
-  if (std::abs(m_controllerInputs->mani_LeftBumper)){
+  if (std::abs(m_controllerInputs->mani_LeftTriggerAxis > .1)){
      
       m_shooter.runShooterAuto(2600, -2600 * .6);
      
       
   }
   
-if (m_controllerInputs->mani_XButton == 0 && m_controllerInputs->mani_LeftBumper == 0){
+if (m_turretAutoLock = false && std::abs(m_controllerInputs->mani_LeftTriggerAxis = 0 )){ //change this once you create the toggle
       m_shooter.stopShooter();
   }
 
-  if (m_controllerInputs->mani_YButton)
+  if (m_controllerInputs->mani_RightBumper) //retracts pivot 
   {
-    m_intakePivot.runIntakePivot(); //extend 
+    m_intakePivot.reverseIntakePivot(); 
   }
-  else
+  
+
+   if (m_controllerInputs->mani_LeftBumper) //extends pivot
+   { 
+    m_intakePivot.runIntakePivot();
+  }
+
+  if (std::abs(m_controllerInputs->mani_LeftBumper == 0) && std::abs(m_controllerInputs->mani_RightBumper == 0))
   {
     m_intakePivot.stopPivot();
   }
 
-  if (m_controllerInputs->mani_BButton){
-    m_intakePivot.reverseIntakePivot();
-  }
-  else {
-    m_intakePivot.stopPivot();
-  }
 
   //pivot turning
   if (std::abs(m_controllerInputs->mani_leftY) > .1) {
@@ -285,28 +228,38 @@ if (m_controllerInputs->mani_XButton == 0 && m_controllerInputs->mani_LeftBumper
       m_pivot.Turn(0);
     }
 
+  if (m_controllerInputs->mani_XButton){
+
+    m_turretAutoLock = true;
+
+  }
+
+  if (m_controllerInputs->mani_BButton){
+
+    m_turretAutoLock = false;
+  }
+
   //limelight
-    if (m_controllerInputs->mani_XButton)
+    if (m_turretAutoLock = true)
   {
+
 	bool haveTarget = false;
 	bool turretAligned = false;
 	bool pivotAligned = false;
-	//double SHOOTER_POWERONE = 0.3;
-	//double SHOOTER_POWERTWO = -0.3;
+
 	double desiredPivotAngle = 0;
 
    nt::NetworkTableInstance::GetDefault().GetTable("limelight")->PutNumber("ledMode", 3); //turn limelight off
 	
-	if (m_limelight.GetValues()) // if limelight has a target
+	if (m_limelight.GetValues()) 
 	{
 	   haveTarget = true;
-    // debugCons("WE HAVE A TARGET\n");
+    
 	
 	
     m_xOffset = nt::NetworkTableInstance::GetDefault().GetTable("limelight")->GetNumber("tx",0.0); //Get horizontal offset from target
     m_yOffset = nt::NetworkTableInstance::GetDefault().GetTable("limelight")->GetNumber("ty",0.0); //Get vertical offset from target
-    //debugCons("X OFFSET: " << m_xOffset);
-
+  
 	//calculate horizontal turn to target
 	double angleToGoalDegrees = limelightMountAngleDegrees + m_yOffset;
   double angleToGoalRadians = angleToGoalDegrees * (3.14159 / 180.0);
@@ -382,8 +335,10 @@ if (m_controllerInputs->mani_XButton == 0 && m_controllerInputs->mani_LeftBumper
   }
   else 
   {
-  //nt::NetworkTableInstance::GetDefault().GetTable("limelight")->PutNumber("ledMode", 1); //turn limelight off
+    nt::NetworkTableInstance::GetDefault().GetTable("limelight")->PutNumber("ledMode", 1); //turn limelight off
   } 
+
+  //right and left climbers
 
   if (m_controllerInputs->driver_RightTriggerAxis > 0.5) {
     m_climb.ClimbUp();
@@ -397,6 +352,24 @@ if (m_controllerInputs->mani_XButton == 0 && m_controllerInputs->mani_LeftBumper
     m_climb.ClimbDown();
   }
 
+
+//high run climber
+  if (m_controllerInputs->driver_RightBumper > 0.5)
+  {
+    m_climb.ClimbHighUP();
+  }
+
+  else {
+
+    m_climb.ClimbHighStop();
+  }
+
+  if (m_controllerInputs->driver_LeftBumper > 0.5)
+  {
+    m_climb.ClimbHighDOWN();
+
+  }
+ 
 }
 
 #ifndef RUNNING_FRC_TESTS

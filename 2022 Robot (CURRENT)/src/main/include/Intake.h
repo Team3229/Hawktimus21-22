@@ -37,8 +37,8 @@ private:
 
     const int kIntakePivotMotorID = 15;
 
-    const double INTAKE_PIVOT_POWER_IN = .70;
-    const double INTAKE_PIVOT_POWER_OUT = -.70;
+    const double INTAKE_PIVOT_POWER_IN = .80;
+    const double INTAKE_PIVOT_POWER_OUT = -.80;
 
 public:
    

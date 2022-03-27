@@ -29,7 +29,8 @@ void Turret::Turn(double setPower)
 {
     debugDashNum("(Tur) Turret Power", setPower);
     //limits turret turn range
-    if (std::abs(GetAngle()) < kMAX_RANGE.to<double>()){
+    //if (std::abs(GetAngle()) < kMAX_RANGE.to<double>()){
+        if (std::abs(GetAngle()) < 2.46 || std::abs(GetAngle()) > -2.46){
         debugDashNum("(Tur) larger than max range",0);
         m_turretMotor->Set(std::clamp(setPower,-kMAX_TURRET_POWER,kMAX_TURRET_POWER));
     }else{

@@ -1,3 +1,6 @@
+//Author: Sebastian Roman (Programming Lead)
+//Co Author: 3229 Programming
+
 #include "Limelight.h"
 
 
@@ -36,8 +39,7 @@ bool Limelight::GetValues(){
 	double angleForPivot = (0.81*(distanceFromLimelightToGoalInches)+5.09);
 	
     debugCons("DISTANCE IN INCHES: " << distanceFromLimelightToGoalInches << "\n");
-   // debugCons("HORIZONTAL: " << horizontalAngleToTarget << "\n");
-	//debugCons("ANGLE FOR PIVOT " << angleForPivot << "\n");
+
 	
 	return true;
     }

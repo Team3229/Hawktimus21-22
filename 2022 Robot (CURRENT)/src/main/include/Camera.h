@@ -17,7 +17,6 @@ public:
 private:
 
     cs::VideoSource camera; //intake + feeder 
-    cs::VideoSource camera2; //climbing
 
     const int FPS = 15;
     const int BRIGHTNESS = 40;

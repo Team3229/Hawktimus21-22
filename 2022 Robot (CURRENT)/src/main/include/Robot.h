@@ -71,6 +71,8 @@ class Robot : public frc::TimedRobot
      bool m_slowDriveMode = false;
      float drive_speed = DRIVE_REGULAR;
 
+     bool m_turretAutoLock = false; 
+
 
   // Controller variables
   int m_lastUsedSpeed = 2;
