@@ -19,6 +19,9 @@ void Robot::RobotInit(){
   m_chooser.AddOption("3 Ball Auto From Center", kCenterAuto);
   m_chooser.AddOption("3 Ball Auto From Center", kRightAuto);
 
+  navxGyro = new AHRS(frc::SPI::Port::kMXP);
+  //delete navxGyro;
+
 }
 
 void Robot::RobotPeriodic() {}
@@ -230,7 +233,7 @@ if (m_turretAutoLock = false && std::abs(m_controllerInputs->mani_LeftTriggerAxi
 
   //only to be used if necessary, manip driver can increase rpms by 50 using the start button, or subtract by 50 using the back button
 
-  if (m_controllerInputs->mani_BackButton)
+  /*if (m_controllerInputs->mani_BackButton)
   {
     adjustRPM -= 50;
   }
@@ -240,7 +243,7 @@ if (m_turretAutoLock = false && std::abs(m_controllerInputs->mani_LeftTriggerAxi
     adjustRPM += 50;
 
   }
-
+*/
   //pivot turning
   if (std::abs(m_controllerInputs->mani_leftY) > .1) {
       m_pivot.Turn(m_controllerInputs->mani_leftY/5);
@@ -251,12 +254,14 @@ if (m_turretAutoLock = false && std::abs(m_controllerInputs->mani_LeftTriggerAxi
   if (m_controllerInputs->mani_XButton){
 
     m_turretAutoLock = true;
+   nt::NetworkTableInstance::GetDefault().GetTable("limelight")->PutNumber("ledMode", 3); //turn limelight off
 
   }
 
   if (m_controllerInputs->mani_BButton){
 
     m_turretAutoLock = false;
+    nt::NetworkTableInstance::GetDefault().GetTable("limelight")->PutNumber("ledMode", 1); //turn limelight off
   }
 
   //limelight
@@ -268,8 +273,6 @@ if (m_turretAutoLock = false && std::abs(m_controllerInputs->mani_LeftTriggerAxi
 	bool pivotAligned = false;
 
 	double desiredPivotAngle = 0;
-
-   nt::NetworkTableInstance::GetDefault().GetTable("limelight")->PutNumber("ledMode", 3); //turn limelight off
 	
 	if (m_limelight.GetValues()) 
 	{
@@ -286,7 +289,7 @@ if (m_turretAutoLock = false && std::abs(m_controllerInputs->mani_LeftTriggerAxi
   double distanceFromLimelightToGoalInches = (goalHeightInches - limelightLensHeightInches)/(tan(angleToGoalRadians));
 	  
   
-  double RPM1 = (12.9 * distanceFromLimelightToGoalInches) + (2105 + adjustRPM); //note adjust rpm is to add or subtract rpms on a match it's by increments of 50 
+  double RPM1 = (12.9 * distanceFromLimelightToGoalInches) + 2105; //double RPM1 = (12.9 * distanceFromLimelightToGoalInches) + (2105 + adjustRPM); 
   double RPM2 = -RPM1 * 0.6;
 
 
@@ -317,12 +320,14 @@ if (m_turretAutoLock = false && std::abs(m_controllerInputs->mani_LeftTriggerAxi
   }
   else if (m_xOffset > 0) {
 
-   m_turret.TurnLimelightRight(1);
+  // m_turret.TurnLimelightRight(1);
+    m_turret.Turn(1);
 
   }
   else if (m_xOffset < 0){
 
-    m_turret.TurnLimelightLeft(1);
+    //m_turret.TurnLimelightLeft(1);
+    m_turret.Turn(-1);
   }
 
 	
@@ -360,9 +365,27 @@ if (m_turretAutoLock = false && std::abs(m_controllerInputs->mani_LeftTriggerAxi
   }
 
   }
-  else 
+  else //seek for target
   {
-    nt::NetworkTableInstance::GetDefault().GetTable("limelight")->PutNumber("ledMode", 1); //turn limelight off
+    if (abs((m_desiredAngle - 180) - navxGyro->GetYaw()) > ANGLE_THRESH){
+		CanTurn = true;
+    }
+  	else{
+		CanTurn = false;
+    }
+
+    if (CanTurn == true)
+	{
+		if ((m_desiredAngle - 180) > navxGyro->GetYaw())
+		{
+			m_turret.Turn(1); // right turn
+		}
+		else if ((m_desiredAngle - 180) < navxGyro->GetYaw())
+		{
+	  	m_turret.Turn(-1);; // left turn
+		}
+	}
+
   } 
 
   //right and left climbers

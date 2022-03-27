@@ -1,9 +1,3 @@
-/*----------------------------------------------------------------------------*/
-/* Copyright (c) 2017-2020 FIRST. All Rights Reserved.                        */
-/* Open Source Software - may be modified and shared by FRC teams. The code   */
-/* must be accompanied by the FIRST BSD license file in the root directory of */
-/* the project.                                                               */
-/*----------------------------------------------------------------------------*/
 
 #pragma once
 
@@ -18,6 +12,7 @@
 #include <frc/timer.h>
 #include "ControllerInputs.h"
 #include <frc/smartdashboard/SendableChooser.h>
+#include <AHRS.h>
 
 
 
@@ -79,6 +74,12 @@ class Robot : public frc::TimedRobot
 
   // Controller variables
   int m_lastUsedSpeed = 2;
+  
+  const float GOAL_ANGLE[5] = {0.01, 90.0, 180.0, 270.0, 359.9};
+  AHRS * navxGyro; //navX seeking
+  double m_desiredAngle = GOAL_ANGLE[int((navxGyro->GetYaw() + 180)/90)];
+  const float ANGLE_THRESH = 8.0;
+  bool CanTurn = false;
 
 
 //mounting angle of the limelight from perfectly vertical 

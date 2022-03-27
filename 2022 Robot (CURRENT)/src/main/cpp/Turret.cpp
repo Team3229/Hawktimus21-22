@@ -11,6 +11,7 @@ Turret::Turret()
     m_turEncoder->Reset();
 
     m_turretMotor->ClearStickyFaults();
+
 }
 
 Turret::~Turret()
@@ -18,6 +19,7 @@ Turret::~Turret()
     delete m_turretMotor;
     delete m_turretPID;
     delete m_turEncoder;
+    
 }
 
 

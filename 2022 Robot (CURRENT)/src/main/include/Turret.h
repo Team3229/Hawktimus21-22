@@ -14,6 +14,7 @@
 #include "Drivesystem.h" //for gyro
 
 
+
 class Turret
 {
     public:
@@ -26,6 +27,7 @@ class Turret
         void TurnLimelightLeft(double setPower);
         double GetAngle();
         void findTarget(double startPos);
+        
 
         void turretDash();
 
@@ -55,5 +57,7 @@ class Turret
 
         //Turret find target
         bool reverseDirection;
+
+          
 };
 #endif
