@@ -18,6 +18,7 @@ struct cmd
   float driver_LeftTriggerAxis;
   int driver_POV;
   int driver_StartButton;
+  int driver_BackButton;
   // Driver 2 Controls
   float mani_leftX;
   float mani_rightX;
@@ -33,6 +34,7 @@ struct cmd
   float mani_LeftTriggerAxis;
   int mani_POV;
   int mani_StartButton;
+  int mani_BackButton;
 };
 
 #endif // CONTROLLER_INPUTS_H

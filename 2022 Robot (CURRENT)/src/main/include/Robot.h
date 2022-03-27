@@ -73,6 +73,7 @@ class Robot : public frc::TimedRobot
 
      bool m_turretAutoLock = false; 
 
+     int adjustRPM = 0;
 
   // Controller variables
   int m_lastUsedSpeed = 2;
@@ -89,17 +90,13 @@ class Robot : public frc::TimedRobot
   double angleToGoalDegrees = limelightMountAngleDegrees + m_yOffset;
   double angleToGoalRadians = angleToGoalDegrees * (3.14159 / 180.0);
 
-  //calculate distance 
-  //double distanceFromLimelightToGoalInches = (goalHeightInches - limelightLensHeightInches)/tan(angleToGoalRadians);
-
+ 
   double angleForPivot;
 
-  double SHOOTER_POWERONE;
+  double SHOOTER_POWERONE; //for power mode not rpm
   double SHOOTER_POWERTWO;
 
   
-  
-
 
   double m_xOffset = nt::NetworkTableInstance::GetDefault().GetTable("limelight")->GetNumber("tx",0.0);      //Get horizontal off set from target
   double m_yOffset = nt::NetworkTableInstance::GetDefault().GetTable("limelight")->GetNumber("ty",0.0);      //Get vertical offset from target
