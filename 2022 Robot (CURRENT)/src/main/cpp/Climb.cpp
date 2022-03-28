@@ -45,12 +45,12 @@ climbFollower->StopMotor();
 
 void Climb::ClimbHighUP()
 {
-climbHigh->Set(CLIMB_SPEED);
+climbHigh->Set(-CLIMB_SPEED);
 }
 
 void Climb::ClimbHighDOWN(){
 
-climbHigh->Set(-CLIMBHIGH_SPEED);
+climbHigh->Set(CLIMBHIGH_SPEED);
 }
 
 void Climb::ClimbHighStop(){

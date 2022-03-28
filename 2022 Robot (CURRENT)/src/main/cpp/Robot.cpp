@@ -10,17 +10,17 @@
 
 void Robot::RobotInit(){
  nt::NetworkTableInstance::GetDefault().GetTable("limelight")->PutNumber("ledMode", 1);
-  frc::SmartDashboard::PutNumber("Shooter ONE RPM ", m_shooter.getRPMS());
+     frc::SmartDashboard::PutNumber("Shooter ONE RPM ", m_shooter.getRPMS());
+     navxGyro = new AHRS(frc::SPI::Port::kMXP);
 
-  frc::SmartDashboard::PutData(&m_chooser);
+    frc::SmartDashboard::PutData(&m_chooser);
 
   m_chooser.SetDefaultOption("4 Ball Auto From Right Center", kAutoroutineDefault);
   m_chooser.AddOption("2 Ball Auto From Left", kLeftAuto);
   m_chooser.AddOption("3 Ball Auto From Center", kCenterAuto);
   m_chooser.AddOption("3 Ball Auto From Center", kRightAuto);
 
-  navxGyro = new AHRS(frc::SPI::Port::kMXP);
-  //delete navxGyro;
+
 
 }
 
@@ -28,9 +28,7 @@ void Robot::RobotPeriodic() {}
 
 void Robot::AutonomousInit() 
 {
-
   std::string inputFileName = m_chooser.GetSelected();
- 
   m_auto.SetupPlayback();
    
 }
@@ -39,7 +37,7 @@ void Robot::AutonomousPeriodic()
 {
   m_auto.ReadFile(m_controllerInputs);
   
-  
+
   debugCons("Running Auto");
   ExecuteControls();
 }
@@ -61,7 +59,6 @@ void Robot::TeleopPeriodic()
   m_controllerInputs->driver_XButton = m_driveController.GetXButton();
   m_controllerInputs->driver_YButton = m_driveController.GetYButton();
   m_controllerInputs->driver_StartButton = m_driveController.GetStartButton();
-  m_controllerInputs->driver_BackButton = m_driveController.GetBackButton();
   m_controllerInputs->driver_RightBumper =
       m_driveController.GetRightBumper();
   m_controllerInputs->driver_LeftBumper =
@@ -79,8 +76,7 @@ void Robot::TeleopPeriodic()
   m_controllerInputs->mani_BButton = m_maniController.GetBButton();
   m_controllerInputs->mani_XButton = m_maniController.GetXButton();
   m_controllerInputs->mani_YButton = m_maniController.GetYButton();
-  m_controllerInputs->mani_StartButton = m_maniController.GetStartButton(); //this might be the Y button?? im not sure 
-  m_controllerInputs->mani_BackButton = m_maniController.GetBackButton();
+  m_controllerInputs->mani_StartButton = m_maniController.GetStartButton();
   m_controllerInputs->mani_RightBumper =
  m_maniController.GetRightBumper();
   m_controllerInputs->mani_LeftBumper =
@@ -117,6 +113,9 @@ void Robot::DisabledInit()
 
 void Robot::ExecuteControls()
 {
+
+
+
 
   //slow mode - 4mps (affects acceleration and fine control)
   if(m_controllerInputs->driver_AButton){
@@ -193,6 +192,7 @@ void Robot::ExecuteControls()
   }
    else  {
     m_upperFeeder.stopUpperFeeder(); 
+    m_feeder.stopFeeder();
   }
 
 
@@ -207,13 +207,18 @@ void Robot::ExecuteControls()
   if (std::abs(m_controllerInputs->mani_LeftTriggerAxis > .1)){
      
       m_shooter.runShooterAuto(2600, -2600 * .6);
+
+  }
+    else{
+       m_shooter.stopShooter();
+    }
      
       
-  }
   
-if (m_turretAutoLock = false && std::abs(m_controllerInputs->mani_LeftTriggerAxis = 0 )){ //change this once you create the toggle
-      m_shooter.stopShooter();
-  }
+  
+//if (m_turretAutoLock = false && m_controllerInputs->mani_LeftTriggerAxis < .5 ){ //change this once you create the toggle
+  //    m_shooter.stopShooter();
+  //}
 
   if (m_controllerInputs->mani_RightBumper) //retracts pivot 
   {
@@ -231,19 +236,7 @@ if (m_turretAutoLock = false && std::abs(m_controllerInputs->mani_LeftTriggerAxi
     m_intakePivot.stopPivot();
   }
 
-  //only to be used if necessary, manip driver can increase rpms by 50 using the start button, or subtract by 50 using the back button
 
-  /*if (m_controllerInputs->mani_BackButton)
-  {
-    adjustRPM -= 50;
-  }
-
-  if (m_controllerInputs->mani_StartButton)
-  {
-    adjustRPM += 50;
-
-  }
-*/
   //pivot turning
   if (std::abs(m_controllerInputs->mani_leftY) > .1) {
       m_pivot.Turn(m_controllerInputs->mani_leftY/5);
@@ -254,18 +247,20 @@ if (m_turretAutoLock = false && std::abs(m_controllerInputs->mani_LeftTriggerAxi
   if (m_controllerInputs->mani_XButton){
 
     m_turretAutoLock = true;
-   nt::NetworkTableInstance::GetDefault().GetTable("limelight")->PutNumber("ledMode", 3); //turn limelight off
+    debugCons("Turret Toggle On\n");
 
   }
 
   if (m_controllerInputs->mani_BButton){
 
     m_turretAutoLock = false;
+    debugCons("Turret Toggle Off\n");
     nt::NetworkTableInstance::GetDefault().GetTable("limelight")->PutNumber("ledMode", 1); //turn limelight off
   }
 
   //limelight
-    if (m_turretAutoLock = true)
+
+    if (m_turretAutoLock == true)
   {
 
 	bool haveTarget = false;
@@ -273,6 +268,8 @@ if (m_turretAutoLock = false && std::abs(m_controllerInputs->mani_LeftTriggerAxi
 	bool pivotAligned = false;
 
 	double desiredPivotAngle = 0;
+
+   nt::NetworkTableInstance::GetDefault().GetTable("limelight")->PutNumber("ledMode", 3); //turn limelight off
 	
 	if (m_limelight.GetValues()) 
 	{
@@ -289,7 +286,7 @@ if (m_turretAutoLock = false && std::abs(m_controllerInputs->mani_LeftTriggerAxi
   double distanceFromLimelightToGoalInches = (goalHeightInches - limelightLensHeightInches)/(tan(angleToGoalRadians));
 	  
   
-  double RPM1 = (12.9 * distanceFromLimelightToGoalInches) + 2105; //double RPM1 = (12.9 * distanceFromLimelightToGoalInches) + (2105 + adjustRPM); 
+  double RPM1 = (12.9 * distanceFromLimelightToGoalInches) + 2105;
   double RPM2 = -RPM1 * 0.6;
 
 
@@ -300,13 +297,6 @@ if (m_turretAutoLock = false && std::abs(m_controllerInputs->mani_LeftTriggerAxi
   debugCons("DISTANCE AWAY: " << distanceFromLimelightToGoalInches << "\n");
 
   //for human player station shots
-
-  //ninimum rpm cap 
-  if (RPM1 <= 2600){
-     m_shooter.runShooterAuto(2600, -2600 * .6);
-  }
-
-  //maximum rpm cap 
   if (RPM1 >= 5100)
   {
     m_shooter.runShooterAuto(5100, -5100 * 0.6);
@@ -320,13 +310,11 @@ if (m_turretAutoLock = false && std::abs(m_controllerInputs->mani_LeftTriggerAxi
   }
   else if (m_xOffset > 0) {
 
-  // m_turret.TurnLimelightRight(1);
-    m_turret.Turn(1);
+   m_turret.Turn(1);
 
   }
   else if (m_xOffset < 0){
 
-    //m_turret.TurnLimelightLeft(1);
     m_turret.Turn(-1);
   }
 
@@ -365,27 +353,29 @@ if (m_turretAutoLock = false && std::abs(m_controllerInputs->mani_LeftTriggerAxi
   }
 
   }
-  else //seek for target
+  else 
   {
-    if (abs((m_desiredAngle - 180) - navxGyro->GetYaw()) > ANGLE_THRESH){
+   // nt::NetworkTableInstance::GetDefault().GetTable("limelight")->PutNumber("ledMode", 1); //turn limelight off
+    
+    double m_desiredAngle = GOAL_ANGLE[int((navxGyro->GetYaw() + 180)/90)];
+     if (abs((m_desiredAngle - 180) - navxGyro->GetYaw()) > ANGLE_THRESH){
 		CanTurn = true;
     }
   	else{
-		CanTurn = false;
+		CanTurn = false; 
     }
 
     if (CanTurn == true)
 	{
 		if ((m_desiredAngle - 180) > navxGyro->GetYaw())
 		{
-			m_turret.Turn(1); // right turn
+			m_turret.Turn(0.4); // right turn
 		}
 		else if ((m_desiredAngle - 180) < navxGyro->GetYaw())
 		{
-	  	m_turret.Turn(-1);; // left turn
+	  	m_turret.Turn(-0.4);; // left turn
 		}
 	}
-
   } 
 
   //right and left climbers

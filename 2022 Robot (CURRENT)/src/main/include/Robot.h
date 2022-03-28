@@ -1,3 +1,9 @@
+/*----------------------------------------------------------------------------*/
+/* Copyright (c) 2017-2020 FIRST. All Rights Reserved.                        */
+/* Open Source Software - may be modified and shared by FRC teams. The code   */
+/* must be accompanied by the FIRST BSD license file in the root directory of */
+/* the project.                                                               */
+/*----------------------------------------------------------------------------*/
 
 #pragma once
 
@@ -11,10 +17,8 @@
 #include <Math.h>
 #include <frc/timer.h>
 #include "ControllerInputs.h"
-#include <frc/smartdashboard/SendableChooser.h>
 #include <AHRS.h>
-
-
+#include <frc/smartdashboard/SendableChooser.h>
 
 // Subsystem includes
 #include "DriveSystem.h"
@@ -47,6 +51,7 @@ class Robot : public frc::TimedRobot
   void ExecuteControls();
 
 
+
  private:
   
   std::string m_driveSelected;
@@ -70,17 +75,15 @@ class Robot : public frc::TimedRobot
 
      bool m_turretAutoLock = false; 
 
-     int adjustRPM = 0;
 
   // Controller variables
   int m_lastUsedSpeed = 2;
-  
+   
+    AHRS * navxGyro; //navX seeking
+
   const float GOAL_ANGLE[5] = {0.01, 90.0, 180.0, 270.0, 359.9};
-  AHRS * navxGyro; //navX seeking
-  double m_desiredAngle = GOAL_ANGLE[int((navxGyro->GetYaw() + 180)/90)];
   const float ANGLE_THRESH = 8.0;
   bool CanTurn = false;
-
 
 //mounting angle of the limelight from perfectly vertical 
   double limelightMountAngleDegrees = 35.0;
@@ -93,13 +96,17 @@ class Robot : public frc::TimedRobot
   double angleToGoalDegrees = limelightMountAngleDegrees + m_yOffset;
   double angleToGoalRadians = angleToGoalDegrees * (3.14159 / 180.0);
 
- 
+  //calculate distance 
+  //double distanceFromLimelightToGoalInches = (goalHeightInches - limelightLensHeightInches)/tan(angleToGoalRadians);
+
   double angleForPivot;
 
-  double SHOOTER_POWERONE; //for power mode not rpm
+  double SHOOTER_POWERONE;
   double SHOOTER_POWERTWO;
 
   
+  
+
 
   double m_xOffset = nt::NetworkTableInstance::GetDefault().GetTable("limelight")->GetNumber("tx",0.0);      //Get horizontal off set from target
   double m_yOffset = nt::NetworkTableInstance::GetDefault().GetTable("limelight")->GetNumber("ty",0.0);      //Get vertical offset from target
@@ -131,12 +138,11 @@ class Robot : public frc::TimedRobot
   frc::XboxController m_driveController {XBOX_USB_DRIVER_1}; //Chassis driver
   frc::XboxController m_maniController {XBOX_USB_DRIVER_2}; //Manipulation driver
 
-  frc::SendableChooser<std::string> m_chooser;
+   frc::SendableChooser<std::string> m_chooser;
 
   const std::string kAutoroutineDefault = "crossLineAndShoot.aut";
   const std::string kLeftAuto = "REPLACE WITH LEFT 2 BALL AUTO ROUTINE NAME FROM AUTO";
   const std::string kCenterAuto = "REPLACE WITH Center 3 BALL AUTO ROUTINE NAME FROM AUTO";
   const std::string kRightAuto = "REPLACE WITH Right 3 BALL AUTO ROUTINE NAME FROM AUTO";
-
 
 };

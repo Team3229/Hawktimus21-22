@@ -44,8 +44,7 @@ private:
   std::string stationFileList = "crossLineAndShoot.aut, crossLine.aut";
   std::string defaultFileName = "defaultAutoPath.aut";
   std::string stationText = "Auto file path: /home/lvuser/";
-  std::string inputFileName;
- 
+  std::string inputFileName; //other was crossLine  "crossLineAndShoot"
 
   //crossLineAndShoot 2 ball auto
   //crossLineAndShoot4
@@ -62,9 +61,6 @@ public:
   void SetupRecording();
   void Record(cmd * inputs);
   void CloseFile();
-
-  
-
  
 
 };
