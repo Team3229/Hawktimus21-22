@@ -109,6 +109,7 @@ void Robot::TestPeriodic()
 void Robot::DisabledInit() 
 {
   m_auto.CloseFile();
+
 }
 
 void Robot::ExecuteControls()
@@ -207,6 +208,7 @@ void Robot::ExecuteControls()
   if (std::abs(m_controllerInputs->mani_LeftTriggerAxis > .1)){
      
       m_shooter.runShooterAuto(2600, -2600 * .6);
+      m_leds.ChangeLEDColors(-0.55);
 
   }
     else{
@@ -234,6 +236,11 @@ void Robot::ExecuteControls()
   if (std::abs(m_controllerInputs->mani_LeftBumper == 0) && std::abs(m_controllerInputs->mani_RightBumper == 0))
   {
     m_intakePivot.stopPivot();
+  }
+
+  if (m_turretAutoLock == false && m_controllerInputs->driver_RightBumper < 0.5 && m_controllerInputs->driver_LeftBumper < 0.5 && m_controllerInputs->driver_LeftTriggerAxis < 0.5 && m_controllerInputs->driver_RightTriggerAxis < 0.5 && m_controllerInputs->mani_LeftTriggerAxis < .1)
+  {
+     m_leds.ChangeLEDColors(0.99);
   }
 
 
@@ -307,15 +314,19 @@ void Robot::ExecuteControls()
   {
    m_turret.Turn(0);
    turretAligned = true;
+   m_leds.ChangeLEDColors(0.73);
+   
   }
   else if (m_xOffset > 0) {
 
    m_turret.Turn(1);
+    m_leds.ChangeLEDColors(-0.11);
 
   }
   else if (m_xOffset < 0){
 
     m_turret.Turn(-1);
+     m_leds.ChangeLEDColors(-0.11);
   }
 
 	
@@ -350,12 +361,11 @@ void Robot::ExecuteControls()
      // m_feeder.stopFeeder();
   }
 
+  
   }
 
-  }
-  else 
-  {
-   // nt::NetworkTableInstance::GetDefault().GetTable("limelight")->PutNumber("ledMode", 1); //turn limelight off
+  else {
+
     
     double m_desiredAngle = GOAL_ANGLE[int((navxGyro->GetYaw() + 180)/90)];
      if (abs((m_desiredAngle - 180) - navxGyro->GetYaw()) > ANGLE_THRESH){
@@ -370,26 +380,34 @@ void Robot::ExecuteControls()
 		if ((m_desiredAngle - 180) > navxGyro->GetYaw())
 		{
 			m_turret.Turn(0.4); // right turn
+      m_leds.ChangeLEDColors(-0.09); //blue
 		}
 		else if ((m_desiredAngle - 180) < navxGyro->GetYaw())
 		{
 	  	m_turret.Turn(-0.4);; // left turn
+      m_leds.ChangeLEDColors(-0.09); //blue
 		}
-	}
-  } 
+
+      }
+    }
+  }
+  
 
   //right and left climbers
 
   if (m_controllerInputs->driver_RightTriggerAxis > 0.5) {
     m_climb.ClimbUp();
+    m_leds.ChangeLEDColors(0.51);
   }
   else {
     m_climb.ClimbStop();
+    
   }
 
   if (m_controllerInputs->driver_LeftTriggerAxis > 0.5)
    { 
     m_climb.ClimbDown();
+     m_leds.ChangeLEDColors(0.51);
   }
 
 
@@ -397,6 +415,7 @@ void Robot::ExecuteControls()
   if (m_controllerInputs->driver_RightBumper > 0.5)
   {
     m_climb.ClimbHighUP();
+   m_leds.ChangeLEDColors(0.51);
   }
 
   else {
@@ -407,6 +426,7 @@ void Robot::ExecuteControls()
   if (m_controllerInputs->driver_LeftBumper > 0.5)
   {
     m_climb.ClimbHighDOWN();
+     m_leds.ChangeLEDColors(0.51);
 
   }
  

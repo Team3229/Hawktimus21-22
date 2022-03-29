@@ -1,16 +1,28 @@
 #include "Camera.h"
+#include "cameraserver/CameraServer.h"
+
 
 Camera::Camera()
 {
-    cs::UsbCamera camera = frc::CameraServer::GetInstance()->StartAutomaticCapture(); //camera 1
 
-    //camera 1 driver vision
-    camera.SetResolution(352,240);
-    camera.SetFPS(FPS);
-    camera.SetWhiteBalanceAuto();
-    camera.SetExposureAuto();
-    camera.SetBrightness(BRIGHTNESS);
+    frc::CameraServer::StartAutomaticCapture(0);
+     //camera 1 for intake
 
+        // Creates the CvSink and connects it to the UsbCamera
+        cs::CvSink cvSink = frc::CameraServer::GetVideo();
 
-    frc::CameraServer::GetInstance()->StartAutomaticCapture(0);
+        // Creates the CvSource and MjpegServer [2] and connects them
+        cs::CvSource outputStream = frc::CameraServer::PutVideo("Blur", 640, 480);
+
+       /*
+        cs::SetCameraBrightness(BRIGHTNESS);
+
+        cs::SetSourceFPS(FPS);
+
+        cs::SetCameraWhiteBalanceAuto()
+        
+        cs::SetCameraExposureAuto();
+        */
+
+    
 }

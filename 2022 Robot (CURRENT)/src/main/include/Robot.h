@@ -31,6 +31,7 @@
 #include "Pivot.h"
 #include "Limelight.h"
 #include "Climb.h"
+#include "LEDS.h"
 
 
 class Robot : public frc::TimedRobot 
@@ -117,6 +118,8 @@ class Robot : public frc::TimedRobot
   double desiredPivotAngle;
 
   const float TARGET_RANGE = 4.0;
+  
+  double desiredColor;
 
   Intake m_intake;
   IntakePivot m_intakePivot;
@@ -127,12 +130,14 @@ class Robot : public frc::TimedRobot
   Limelight m_limelight{};
   Pivot m_pivot; //make sure to add to autonomous
   Climb m_climb; 
+  LEDS m_leds;
+
 
 
   // Objects of subsystems
   DriveSystem chassis;
 
-  Auto m_auto{&chassis,&m_intake,&m_intakePivot,&m_turret,&m_feeder,&m_upperFeeder,&m_shooter, &m_limelight,&m_pivot}; //populate these for testing make sure to change them! 
+  Auto m_auto{&chassis,&m_intake,&m_intakePivot,&m_turret,&m_feeder,&m_upperFeeder,&m_shooter, &m_limelight,&m_pivot,&m_leds}; //populate these for testing make sure to change them! 
   const bool m_recordMode = true; // use this to force disable recording, useful at competitions
   
   frc::XboxController m_driveController {XBOX_USB_DRIVER_1}; //Chassis driver

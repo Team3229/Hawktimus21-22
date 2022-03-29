@@ -16,8 +16,6 @@ public:
     Camera();
 private:
 
-    cs::VideoSource camera; //intake + feeder 
-
     const int FPS = 15;
     const int BRIGHTNESS = 40;
 };

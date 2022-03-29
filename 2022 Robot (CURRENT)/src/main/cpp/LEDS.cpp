@@ -1,0 +1,18 @@
+#include "LEDS.h"
+#include "Debug.h"
+
+
+LEDS::LEDS(){
+    
+    BlinkLEDDriver = new frc::Spark(BlinkinLEDDriver_PWM);
+}
+
+LEDS::~LEDS(){
+
+    delete BlinkLEDDriver;
+}
+
+void LEDS::ChangeLEDColors(double SetColor){
+
+    BlinkLEDDriver->Set(SetColor);
+}

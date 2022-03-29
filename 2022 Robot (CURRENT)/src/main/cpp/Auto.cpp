@@ -2,7 +2,7 @@
 
 #include "Auto.h"
 
-Auto::Auto(DriveSystem *c, Intake *i, IntakePivot *j, Turret *t, Feeder *f, UpperFeeder *u, Shooter *s, Limelight *l, Pivot * p) 
+Auto::Auto(DriveSystem *c, Intake *i, IntakePivot *j, Turret *t, Feeder *f, UpperFeeder *u, Shooter *s, Limelight *l, Pivot * p, LEDS * x) 
 {
   // Passes in subsystems from Robot
   autoChassis = c;
@@ -14,6 +14,7 @@ Auto::Auto(DriveSystem *c, Intake *i, IntakePivot *j, Turret *t, Feeder *f, Uppe
   autoUpperFeeder = u;
   autoLimelight = l;
   autoPivot = p;
+  autoLeds = x;
 
   // Setup SmartDashboard
   frc::SmartDashboard::PutString("Auto files:\n", stationFileList);
@@ -30,6 +31,7 @@ Auto::~Auto() {
   delete autoUpperFeeder;
   delete autoLimelight; 
   delete autoPivot;
+  delete autoLeds;
  
 }
 
