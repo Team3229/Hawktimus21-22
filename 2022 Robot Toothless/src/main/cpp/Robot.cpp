@@ -178,7 +178,7 @@ void Robot::ExecuteControls()
 
 
  
- if (m_controllerInputs->mani_RightTriggerAxis == 0 && std::abs(m_controllerInputs->driver_leftY) == 0 && m_controllerInputs->mani_AButton == 0)
+ if (std::abs(m_controllerInputs->mani_RightTriggerAxis < .1) && std::abs(m_controllerInputs->driver_leftY) == 0 && m_controllerInputs->mani_AButton == 0)
  {
    m_feeder.stopFeeder();
  }
@@ -192,9 +192,10 @@ void Robot::ExecuteControls()
   //Run upper feeder aka basically the shoot button
    if (std::abs(m_controllerInputs->mani_RightTriggerAxis > .1)) {
 
+      m_leds.ChangeLEDColors(0.91);
     m_feeder.runFeeder();
     m_upperFeeder.runUpperFeeder();
-     m_leds.ChangeLEDColors(-0.57);
+    
   }
    else  {
     m_upperFeeder.stopUpperFeeder(); 
@@ -213,12 +214,37 @@ void Robot::ExecuteControls()
   if (std::abs(m_controllerInputs->mani_LeftTriggerAxis > .1)){
      
       m_shooter.runShooterAuto(2600, -2600 * .6);
-       m_leds.ChangeLEDColors(0.91);
+       
 
   }
     else{
        m_shooter.stopShooter();
+      
     }
+
+  if  (m_controllerInputs->mani_YButton)
+  {
+    	
+
+    	if ((abs(m_turret.GetAngle() - desiredTurretAngle)) < 2) // +- 1 degree to avoid oscillating
+	{
+	   m_turret.Turn(0); // stop pivoting
+	   turretAlignedCLimb = true;
+	}
+
+  else{
+
+	if (m_turret.GetAngle() < desiredTurretAngle)
+	{
+	   m_pivot.Turn(0.3); // pivot down
+	}
+	else if (m_turret.GetAngle() > desiredTurretAngle)
+	{
+	   m_turret.Turn(-0.3);// pivot up
+	}
+  }
+
+  }
      
       
   
@@ -242,7 +268,7 @@ void Robot::ExecuteControls()
     m_intakePivot.stopPivot();
   }
 
-  if (m_turretAutoLock == false && m_controllerInputs->driver_RightBumper < 0.5 && m_controllerInputs->driver_LeftBumper < 0.5 && m_controllerInputs->driver_LeftTriggerAxis < 0.5 && m_controllerInputs->driver_RightTriggerAxis < 0.5 && m_controllerInputs->mani_LeftTriggerAxis < .1)
+  if (m_turretAutoLock == false && m_controllerInputs->driver_RightBumper < 0.5 && m_controllerInputs->driver_LeftBumper < 0.5 && m_controllerInputs->driver_LeftTriggerAxis < 0.5 && m_controllerInputs->driver_RightTriggerAxis < 0.5 && m_controllerInputs->mani_RightTriggerAxis < .1)
   {
      m_leds.ChangeLEDColors(0.99);
   }

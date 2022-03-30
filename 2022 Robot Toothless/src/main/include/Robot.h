@@ -117,6 +117,8 @@ class Robot : public frc::TimedRobot
 
   double desiredPivotAngle;
 
+  double desiredTurretAngle;
+
   const float TARGET_RANGE = 4.0;
   
   double desiredColor;
@@ -151,5 +153,7 @@ class Robot : public frc::TimedRobot
   const std::string kRightAuto = "4BallAutoRight";
 
   const std::string kAutoroutineDefault = kRightAuto;
+
+  bool turretAlignedCLimb = false;
 
 };

@@ -4,13 +4,16 @@
 
 Camera::Camera()
 {
+    /*
     static cs::UsbCamera camera = frc::CameraServer::StartAutomaticCapture();
     camera.SetResolution(352,240);
     camera.SetFPS(FPS);
     camera.SetWhiteBalanceAuto();
     camera.SetExposureAuto();
     camera.SetBrightness(BRIGHTNESS);
-  
+  */
+ 
+    static cs::UsbCamera camera =  frc::CameraServer::StartAutomaticCapture(0);
 
     
 }
