@@ -15,7 +15,7 @@ void Robot::RobotInit(){
 
     frc::SmartDashboard::PutData(&m_chooser);
 
-  m_chooser.SetDefaultOption("4 Ball Auto", kAutoroutineDefault);
+  m_chooser.SetDefaultOption("4 Ball Auto (Default Choice)", kAutoroutineDefault);
   m_chooser.AddOption("2 Ball Auto From Left", kLeftAuto);
   m_chooser.AddOption("3 Ball Auto From Center", kCenterAuto);
   m_chooser.AddOption("4 Ball Auto From Right", kRightAuto);
@@ -169,16 +169,21 @@ void Robot::ExecuteControls()
 
   //Run polycoord feeder and intake forwards driver has this control
    if (std::abs(m_controllerInputs->driver_leftY > 0.15)) {
-    m_feeder.runFeeder();
-    m_intake.runIntake();
-  } else {
-    m_feeder.stopFeeder(); 
-    m_intake.stopIntake();
-  }
+    m_feeder.reverseFeeder();
+  } 
+
+    if (std::abs(m_controllerInputs->driver_leftY < -0.15)){
+        m_intake.runIntake();
+        m_feeder.runFeeder();
+    }
+    else {
+        m_intake.stopIntake();
+    }
+  
 
 
  
- if (std::abs(m_controllerInputs->mani_RightTriggerAxis < .1) && std::abs(m_controllerInputs->driver_leftY) == 0 && m_controllerInputs->mani_AButton == 0)
+ if (std::abs(m_controllerInputs->mani_RightTriggerAxis < .1) && (std::abs(m_controllerInputs->driver_leftY) == 0) && m_controllerInputs->mani_AButton == 0)
  {
    m_feeder.stopFeeder();
  }
@@ -192,7 +197,7 @@ void Robot::ExecuteControls()
   //Run upper feeder aka basically the shoot button
    if (std::abs(m_controllerInputs->mani_RightTriggerAxis > .1)) {
 
-      m_leds.ChangeLEDColors(0.91);
+    m_leds.ChangeLEDColors(-0.57);
     m_feeder.runFeeder();
     m_upperFeeder.runUpperFeeder();
     
@@ -205,7 +210,9 @@ void Robot::ExecuteControls()
 
   //turret manual turning
   if (std::abs(m_controllerInputs->mani_rightX) > .1) {
+
       m_turret.Turn(m_controllerInputs->mani_rightX/5);
+      
     } else {
       m_turret.Turn(0); //this conflicts with turret turning of the light is left on at all times 
     }
@@ -214,37 +221,10 @@ void Robot::ExecuteControls()
   if (std::abs(m_controllerInputs->mani_LeftTriggerAxis > .1)){
      
       m_shooter.runShooterAuto(2600, -2600 * .6);
-       
-
   }
     else{
        m_shooter.stopShooter();
-      
     }
-
-  if  (m_controllerInputs->mani_YButton)
-  {
-    	
-
-    	if ((abs(m_turret.GetAngle() - desiredTurretAngle)) < 2) // +- 1 degree to avoid oscillating
-	{
-	   m_turret.Turn(0); // stop pivoting
-	   turretAlignedCLimb = true;
-	}
-
-  else{
-
-	if (m_turret.GetAngle() < desiredTurretAngle)
-	{
-	   m_pivot.Turn(0.3); // pivot down
-	}
-	else if (m_turret.GetAngle() > desiredTurretAngle)
-	{
-	   m_turret.Turn(-0.3);// pivot up
-	}
-  }
-
-  }
      
       
   
@@ -276,7 +256,9 @@ void Robot::ExecuteControls()
 
   //pivot turning
   if (std::abs(m_controllerInputs->mani_leftY) > .1) {
+
       m_pivot.Turn(m_controllerInputs->mani_leftY/5);
+
     } else {
       m_pivot.Turn(0);
     }
@@ -329,6 +311,103 @@ void Robot::ExecuteControls()
 
   m_shooter.runShooterAuto(RPM1, RPM2);
   desiredPivotAngle = 58700;
+  
+/*
+   if (distanceFromLimelightToGoalInches <= 68) {
+
+          //m_shooter.SetPointOne = 2554;
+         // m_shooter.SetPointTwo = -2667; 
+	        desiredPivotAngle = 21659;
+          m_shooter.runShooterAuto(2960, -2960 * 0.6);
+	        desiredPivotAngle = 58700;
+
+	        debugCons("FIRST DISTANCE\n");          
+     	 }
+
+         else if (distanceFromLimelightToGoalInches > 68 && distanceFromLimelightToGoalInches <= 93) {
+
+         // m_shooter.SetPointOne = 3008;
+	       // m_shooter.SetPointTwo= -3575;
+	        desiredPivotAngle = 41219; 
+          m_shooter.runShooterAuto(3100, -3100 * 0.6);
+	        desiredPivotAngle = 58700; 
+
+	         debugCons("SECOND DISTANCE\n");          
+     	 }
+	  
+         else if (distanceFromLimelightToGoalInches > 93 && distanceFromLimelightToGoalInches <= 109){
+
+         // m_shooter.SetPointOne= 3008;
+	       // m_shooter.SetPointTwo = -3575;
+	        desiredPivotAngle = 41219;
+         m_shooter.runShooterAuto(3300, -3300 * 0.6);
+	        desiredPivotAngle = 58700;
+
+	          debugCons("THIRD DISTANCE\n");          
+     	 }
+
+        else if (distanceFromLimelightToGoalInches > 109 && distanceFromLimelightToGoalInches <= 125){
+
+         // m_shooter.SetPointOne = 2951;
+	       // m_shooter.SetPointTwo = -2838;  
+	        desiredPivotAngle = 41219;
+            m_shooter.runShooterAuto(3600, -3600 * 0.6);
+	        desiredPivotAngle = 58700;
+           debugCons("Fourth Distance\n");    
+
+      }
+	  
+         else if (distanceFromLimelightToGoalInches > 125 && distanceFromLimelightToGoalInches <= 141){
+
+       //  m_shooter.SetPointOne = 3178;
+	     // m_shooter.SetPointTwo = -3405; 
+	      desiredPivotAngle = 42790;
+        m_shooter.runShooterAuto(3700, -3700 * 0.6);
+	      desiredPivotAngle = 58700;
+
+	      debugCons("Fifth distance\n");          
+     	 }
+
+        else if (distanceFromLimelightToGoalInches > 141 && distanceFromLimelightToGoalInches <= 155){
+
+       // m_shooter.SetPointOne = 3235;
+	      //m_shooter.SetPointTwo = -3462;
+	      desiredPivotAngle = 42790;
+        m_shooter.runShooterAuto(3800, -3800 * .6);
+	      desiredPivotAngle = 58700;
+
+	      debugCons("sixth distance\n");       
+       }
+	  
+
+        else if (distanceFromLimelightToGoalInches > 156 && distanceFromLimelightToGoalInches <= 191) {
+          
+         m_shooter.runShooterAuto(3950, -3950 * .6);
+	      desiredPivotAngle = 58700;
+
+	    debugCons("Seventh distance\n");          
+     	}
+
+         else if (distanceFromLimelightToGoalInches > 191 && distanceFromLimelightToGoalInches <= 216) {
+          
+       // m_shooter.SetPointOne = 3462;
+	     // m_shooter.SetPointTwo = -3746; 
+	      desiredPivotAngle = 52825;
+         m_shooter.runShooterAuto(4200, -4200 * .6);
+	      desiredPivotAngle = 58700;
+
+	    debugCons("VERY FAR\n");          
+	    debugCons("8 distance\n");          
+     	}
+
+       else if (distanceFromLimelightToGoalInches >  216) {
+          
+         m_shooter.runShooterAuto(4400, -4400 * .6);
+	      desiredPivotAngle = 58700;
+
+	    debugCons("9 distance\n");          
+     	}
+    */
 
 
   debugCons("DISTANCE AWAY: " << distanceFromLimelightToGoalInches << "\n");

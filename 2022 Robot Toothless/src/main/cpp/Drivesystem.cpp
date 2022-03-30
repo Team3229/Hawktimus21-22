@@ -55,10 +55,9 @@ DriveSystem::~DriveSystem()
 
 void DriveSystem::Drive(double& Y, double& X, double& Z)
 {
-    //Drive function
 
-    float x_adjust = X + -0.20;
-    driveTrain->ArcadeDrive(Y, x_adjust); 
+	Y = -Y;
+	driveTrain->ArcadeDrive(Y, X); 
 	
 }
 

@@ -11,6 +11,9 @@ Turret::Turret()
     m_turEncoder->Reset();
 
     m_turretMotor->ClearStickyFaults();
+
+  
+
 }
 
 Turret::~Turret()
@@ -29,15 +32,19 @@ void Turret::Turn(double setPower)
 {
     debugDashNum("(Tur) Turret Power", setPower);
     //limits turret turn range
-    //if (std::abs(GetAngle()) < kMAX_RANGE.to<double>()){
-        debugCons("TURRET POSITION: " << m_turEncoder->GetDistance() * kENCODER_RATIO << "\n");
-        if (std::abs(GetAngle()) < 2.46 || std::abs(GetAngle()) > -2.46){
-        debugDashNum("(Tur) larger than max range",0);
+   
+        debugCons("TURRET POSITION: " << GetAngle() << "\n");
+
+
+        if ((setPower < 0 && (GetAngle()) > -23) || (setPower > 0 && (GetAngle()) < 155)){
+
         m_turretMotor->Set(std::clamp(setPower,-kMAX_TURRET_POWER,kMAX_TURRET_POWER));
+
+
     }else{
-        debugDashNum("(Tur) larger than max range",1);
+
         //prevent locking of the turret
-        m_turretMotor->Set(std::clamp(-setPower,-kMAX_TURRET_CORRECT_POWER,kMAX_TURRET_CORRECT_POWER));
+        m_turretMotor->StopMotor();
     }
 }
 
@@ -61,9 +68,13 @@ void Turret::TurnLimelightLeft(double setPower){
  */
 double Turret::GetAngle()
 {
-    return m_turEncoder->GetDistance() * kENCODER_RATIO;
+    double encoderAngle = m_turEncoder->GetAbsolutePosition()*360;
+    
+    if (encoderAngle > 180) {
+        encoderAngle = encoderAngle-360;
+    }
+    return encoderAngle;
 
-   
 }
 
 /**

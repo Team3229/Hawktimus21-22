@@ -5,10 +5,12 @@
 
 #include <ctre/Phoenix.h>
 #include <ctre/phoenix/motorcontrol/can/WPI_TalonSRX.h>
+#include <ctre/phoenix/sensors/AbsoluteSensorRange.h>
 #include <frc/controller/PIDController.h>
 #include <frc/smartdashboard/SmartDashboard.h>
 #include <frc/AnalogEncoder.h>
 #include <frc/AnalogInput.h>
+#include <ctre/phoenix/sensors/CANCoder.h>
 
 #include "Debug.h"
 #include "Drivesystem.h" //for gyro
@@ -35,6 +37,8 @@ class Turret
         ctre::phoenix::motorcontrol::can::WPI_TalonSRX * m_turretMotor;
         frc2::PIDController * m_turretPID;
         frc::AnalogEncoder * m_turEncoder;
+
+        
 
         const int kTurretEncoderID = 0;
         frc::AnalogInput turretEncID{kTurretEncoderID}; //Analog Input
