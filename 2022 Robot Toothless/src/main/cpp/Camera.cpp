@@ -13,7 +13,7 @@ Camera::Camera()
     camera.SetBrightness(BRIGHTNESS);
   */
  
-    static cs::UsbCamera camera =  frc::CameraServer::StartAutomaticCapture(0);
+    frc::CameraServer::StartAutomaticCapture(0);
 
     
 }

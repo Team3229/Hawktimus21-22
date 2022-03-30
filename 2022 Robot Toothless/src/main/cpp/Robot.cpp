@@ -173,23 +173,27 @@ void Robot::ExecuteControls()
   } 
 
     if (std::abs(m_controllerInputs->driver_leftY < -0.15)){
+      areweusingIntake = true;
         m_intake.runIntake();
         m_feeder.runFeeder();
+         
     }
     else {
+      areweusingIntake = false;
         m_intake.stopIntake();
+        
     }
   
 
 
  
- if (std::abs(m_controllerInputs->mani_RightTriggerAxis < .1) && (std::abs(m_controllerInputs->driver_leftY) == 0) && m_controllerInputs->mani_AButton == 0)
+ if (std::abs(m_controllerInputs->mani_RightTriggerAxis < .15) && (areweusingIntake == false) && m_controllerInputs->mani_AButton == 0)
  {
    m_feeder.stopFeeder();
  }
   
 //Run Polycoord feeder downwards 
-  if (m_controllerInputs->mani_AButton || std::abs(m_controllerInputs->driver_leftY < 0.15) ){
+  if (m_controllerInputs->mani_AButton){
     m_feeder.reverseFeeder(); 
   }
   else{}
@@ -204,7 +208,7 @@ void Robot::ExecuteControls()
   }
    else  {
     m_upperFeeder.stopUpperFeeder(); 
-    m_feeder.stopFeeder();
+    //m_feeder.stopFeeder();
   }
 
 
@@ -212,18 +216,18 @@ void Robot::ExecuteControls()
   if (std::abs(m_controllerInputs->mani_rightX) > .1) {
 
       m_turret.Turn(m_controllerInputs->mani_rightX/5);
-      
+
     } else {
       m_turret.Turn(0); //this conflicts with turret turning of the light is left on at all times 
     }
 
  //shooter manual turning 
-  if (std::abs(m_controllerInputs->mani_LeftTriggerAxis > .1)){
+  if (std::abs(m_controllerInputs->mani_LeftTriggerAxis > .15)){
      
-      m_shooter.runShooterAuto(2600, -2600 * .6);
+      m_shooter.runShooterAuto(4000, -4000 * .6);
   }
     else{
-       m_shooter.stopShooter();
+      
     }
      
       
@@ -270,6 +274,11 @@ void Robot::ExecuteControls()
 
   }
 
+  if (m_controllerInputs->mani_LeftTriggerAxis < .5 && (m_turretAutoLock == false))
+  {
+    m_shooter.stopShooter();
+  }
+
   if (m_controllerInputs->mani_BButton){
 
     m_turretAutoLock = false;
@@ -305,14 +314,16 @@ void Robot::ExecuteControls()
   double distanceFromLimelightToGoalInches = (goalHeightInches - limelightLensHeightInches)/(tan(angleToGoalRadians));
 	  
   
-  double RPM1 = (12.9 * distanceFromLimelightToGoalInches) + 2105;
+  double RPM1 = (11.9 * distanceFromLimelightToGoalInches) + 2190;
   double RPM2 = -RPM1 * 0.6;
 
-
+  debugCons("DISTANCE: " << distanceFromLimelightToGoalInches << "\n");
+  //debugCons("RPM VALUE: " << RPM1);
+  
   m_shooter.runShooterAuto(RPM1, RPM2);
   desiredPivotAngle = 58700;
-  
-/*
+  /*
+
    if (distanceFromLimelightToGoalInches <= 68) {
 
           //m_shooter.SetPointOne = 2554;
@@ -407,17 +418,16 @@ void Robot::ExecuteControls()
 
 	    debugCons("9 distance\n");          
      	}
-    */
-
+*/
 
   debugCons("DISTANCE AWAY: " << distanceFromLimelightToGoalInches << "\n");
 
   //for human player station shots
-  if (RPM1 >= 5100)
+  /*if (RPM1 >= 5100)
   {
     m_shooter.runShooterAuto(5100, -5100 * 0.6);
   }
-
+*/
   //limelight moves to target if target on screen
   if (abs(m_xOffset) < TARGET_RANGE)
   {
@@ -428,13 +438,13 @@ void Robot::ExecuteControls()
   }
   else if (m_xOffset > 0) {
 
-   m_turret.Turn(0.4);
+   m_turret.Turn(0.3);
     m_leds.ChangeLEDColors(-0.11);
 
   }
   else if (m_xOffset < 0){
 
-    m_turret.Turn(-0.4);
+    m_turret.Turn(-0.3);
      m_leds.ChangeLEDColors(-0.11);
   }
 

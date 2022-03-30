@@ -156,4 +156,6 @@ class Robot : public frc::TimedRobot
 
   bool turretAlignedCLimb = false;
 
+  bool areweusingIntake = false;
+
 };
