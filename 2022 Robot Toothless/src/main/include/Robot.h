@@ -145,9 +145,11 @@ class Robot : public frc::TimedRobot
 
    frc::SendableChooser<std::string> m_chooser;
 
-  const std::string kAutoroutineDefault = "crossLineAndShoot.aut";
-  const std::string kLeftAuto = "REPLACE WITH LEFT 2 BALL AUTO ROUTINE NAME FROM AUTO";
-  const std::string kCenterAuto = "REPLACE WITH Center 3 BALL AUTO ROUTINE NAME FROM AUTO";
-  const std::string kRightAuto = "REPLACE WITH Right 3 BALL AUTO ROUTINE NAME FROM AUTO";
+  
+  const std::string kLeftAuto = "2BallAutoLeft.aut";
+  const std::string kCenterAuto = "3BallAutoCenter.aut";
+  const std::string kRightAuto = "4BallAutoRight";
+
+  const std::string kAutoroutineDefault = kRightAuto;
 
 };

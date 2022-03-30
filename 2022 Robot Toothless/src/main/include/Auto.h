@@ -43,8 +43,7 @@ private:
   
   // files stuff
   // Use .aut file extension
-  std::string stationFileList = "crossLineAndShoot.aut, crossLine.aut";
-  std::string defaultFileName = "defaultAutoPath.aut";
+  
   std::string stationText = "Auto file path: /home/lvuser/";
   std::string inputFileName; //other was crossLine  "crossLineAndShoot"
 
@@ -58,9 +57,9 @@ private:
 public:
   Auto(DriveSystem *c, Intake *i, IntakePivot *j, Turret *t, Feeder *f, UpperFeeder *u, Shooter *s, Limelight *l, Pivot *p, LEDS *x); //make sure to pass in subsystems 
   ~Auto();
-  void SetupPlayback();
+  void SetupPlayback(std::string inputFileName);
   void ReadFile(cmd * inputs);
-  void SetupRecording();
+  void SetupRecording(std::string inputFileName);
   void Record(cmd * inputs);
   void CloseFile();
  

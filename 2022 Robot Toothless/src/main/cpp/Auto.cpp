@@ -16,9 +16,6 @@ Auto::Auto(DriveSystem *c, Intake *i, IntakePivot *j, Turret *t, Feeder *f, Uppe
   autoPivot = p;
   autoLeds = x;
 
-  // Setup SmartDashboard
-  frc::SmartDashboard::PutString("Auto files:\n", stationFileList);
-  frc::SmartDashboard::PutString(stationText, defaultFileName);
 }
 
 Auto::~Auto() {
@@ -35,11 +32,10 @@ Auto::~Auto() {
  
 }
 
-void Auto::SetupPlayback() {
+void Auto::SetupPlayback(std::string inputFileName) {
   // Put in Robot::AutonomousInit
   // Get driver station info and setup
-  inputFileName =
-      frc::SmartDashboard::GetString(stationText, defaultFileName);
+ 
   debugCons("Reading auto instructions from /home/lvuser/" + inputFileName + ".aut\n");
   std::string filePath = "/home/lvuser/" + inputFileName + ".aut";
   cmdFile.Open(filePath, READ);
@@ -55,10 +51,9 @@ void Auto::ReadFile(cmd * inputs) {
   }
 }
 
-void Auto::SetupRecording() {
+void Auto::SetupRecording(std::string inputFileName) {
   // Put in Robot::TestInit()
-  inputFileName =
-      frc::SmartDashboard::GetString(stationText, defaultFileName);
+  
   debugCons("Writing instructions to /home/lvuser/" + inputFileName + ".aut\n");
   std::string filePath = "/home/lvuser/" + inputFileName + ".aut";
   cmdFile.Open(filePath, WRITE);

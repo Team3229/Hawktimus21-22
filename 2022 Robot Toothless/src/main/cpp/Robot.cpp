@@ -15,10 +15,10 @@ void Robot::RobotInit(){
 
     frc::SmartDashboard::PutData(&m_chooser);
 
-  m_chooser.SetDefaultOption("4 Ball Auto From Right Center", kAutoroutineDefault);
+  m_chooser.SetDefaultOption("4 Ball Auto", kAutoroutineDefault);
   m_chooser.AddOption("2 Ball Auto From Left", kLeftAuto);
   m_chooser.AddOption("3 Ball Auto From Center", kCenterAuto);
-  m_chooser.AddOption("3 Ball Auto From Center", kRightAuto);
+  m_chooser.AddOption("4 Ball Auto From Right", kRightAuto);
 
 
 
@@ -29,7 +29,8 @@ void Robot::RobotPeriodic() {}
 void Robot::AutonomousInit() 
 {
   std::string inputFileName = m_chooser.GetSelected();
-  m_auto.SetupPlayback();
+  m_auto.SetupPlayback(inputFileName);
+  
    
 }
 
@@ -93,7 +94,9 @@ void Robot::TeleopPeriodic()
 
 void Robot::TestInit() 
 {
-  m_auto.SetupRecording();
+  std::string inputFileName = m_chooser.GetSelected();
+  m_auto.SetupRecording(inputFileName);
+  
 }
 
 void Robot::TestPeriodic() 
@@ -165,7 +168,7 @@ void Robot::ExecuteControls()
   }*/
 
   //Run polycoord feeder and intake forwards driver has this control
-   if (std::abs(m_controllerInputs->driver_leftY > 0.5)) {
+   if (std::abs(m_controllerInputs->driver_leftY > 0.15)) {
     m_feeder.runFeeder();
     m_intake.runIntake();
   } else {
@@ -181,15 +184,17 @@ void Robot::ExecuteControls()
  }
   
 //Run Polycoord feeder downwards 
-  if (m_controllerInputs->mani_AButton || std::abs(m_controllerInputs->driver_leftY < 0.5) ){
+  if (m_controllerInputs->mani_AButton || std::abs(m_controllerInputs->driver_leftY < 0.15) ){
     m_feeder.reverseFeeder(); 
   }
+  else{}
 
   //Run upper feeder aka basically the shoot button
    if (std::abs(m_controllerInputs->mani_RightTriggerAxis > .1)) {
 
     m_feeder.runFeeder();
     m_upperFeeder.runUpperFeeder();
+     m_leds.ChangeLEDColors(-0.57);
   }
    else  {
     m_upperFeeder.stopUpperFeeder(); 
@@ -208,7 +213,7 @@ void Robot::ExecuteControls()
   if (std::abs(m_controllerInputs->mani_LeftTriggerAxis > .1)){
      
       m_shooter.runShooterAuto(2600, -2600 * .6);
-      m_leds.ChangeLEDColors(-0.55);
+       m_leds.ChangeLEDColors(0.91);
 
   }
     else{
@@ -216,7 +221,6 @@ void Robot::ExecuteControls()
     }
      
       
-  
   
 //if (m_turretAutoLock = false && m_controllerInputs->mani_LeftTriggerAxis < .5 ){ //change this once you create the toggle
   //    m_shooter.stopShooter();
@@ -314,18 +318,18 @@ void Robot::ExecuteControls()
   {
    m_turret.Turn(0);
    turretAligned = true;
-   m_leds.ChangeLEDColors(0.73);
+   m_leds.ChangeLEDColors(0.71);
    
   }
   else if (m_xOffset > 0) {
 
-   m_turret.Turn(1);
+   m_turret.Turn(0.4);
     m_leds.ChangeLEDColors(-0.11);
 
   }
   else if (m_xOffset < 0){
 
-    m_turret.Turn(-1);
+    m_turret.Turn(-0.4);
      m_leds.ChangeLEDColors(-0.11);
   }
 
@@ -379,13 +383,13 @@ void Robot::ExecuteControls()
 	{
 		if ((m_desiredAngle - 180) > navxGyro->GetYaw())
 		{
-			m_turret.Turn(0.4); // right turn
-      m_leds.ChangeLEDColors(-0.09); //blue
+			//m_turret.Turn(0.4); // right turn
+      m_leds.ChangeLEDColors(-0.11); //red
 		}
 		else if ((m_desiredAngle - 180) < navxGyro->GetYaw())
 		{
-	  	m_turret.Turn(-0.4);; // left turn
-      m_leds.ChangeLEDColors(-0.09); //blue
+	  //	m_turret.Turn(-0.4);; // left turn
+      m_leds.ChangeLEDColors(-0.11); //red
 		}
 
       }
@@ -397,7 +401,7 @@ void Robot::ExecuteControls()
 
   if (m_controllerInputs->driver_RightTriggerAxis > 0.5) {
     m_climb.ClimbUp();
-    m_leds.ChangeLEDColors(0.51);
+    m_leds.ChangeLEDColors(-0.7);
   }
   else {
     m_climb.ClimbStop();
@@ -407,7 +411,7 @@ void Robot::ExecuteControls()
   if (m_controllerInputs->driver_LeftTriggerAxis > 0.5)
    { 
     m_climb.ClimbDown();
-     m_leds.ChangeLEDColors(0.51);
+     m_leds.ChangeLEDColors(-0.7);
   }
 
 
@@ -415,7 +419,7 @@ void Robot::ExecuteControls()
   if (m_controllerInputs->driver_RightBumper > 0.5)
   {
     m_climb.ClimbHighUP();
-   m_leds.ChangeLEDColors(0.51);
+   m_leds.ChangeLEDColors(-0.7);
   }
 
   else {
