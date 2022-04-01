@@ -53,7 +53,7 @@ DriveSystem::~DriveSystem()
 
 }
 
-void DriveSystem::Drive(double& Y, double& X, double& Z)
+void DriveSystem::Drive(double Y, double X, double Z)
 {
 
 	Y = -Y;

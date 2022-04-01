@@ -32,6 +32,7 @@
 #include "Limelight.h"
 #include "Climb.h"
 #include "LEDS.h"
+#include "Camera.h"
 
 
 class Robot : public frc::TimedRobot 
@@ -133,6 +134,7 @@ class Robot : public frc::TimedRobot
   Pivot m_pivot; //make sure to add to autonomous
   Climb m_climb; 
   LEDS m_leds;
+  Camera m_camera;
 
 
 

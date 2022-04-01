@@ -201,7 +201,6 @@ void Robot::ExecuteControls()
   //Run upper feeder aka basically the shoot button
    if (std::abs(m_controllerInputs->mani_RightTriggerAxis > .1)) {
 
-    m_leds.ChangeLEDColors(-0.57);
     m_feeder.runFeeder();
     m_upperFeeder.runUpperFeeder();
     
