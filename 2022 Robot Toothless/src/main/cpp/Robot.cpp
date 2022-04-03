@@ -313,7 +313,7 @@ void Robot::ExecuteControls()
   double distanceFromLimelightToGoalInches = (goalHeightInches - limelightLensHeightInches)/(tan(angleToGoalRadians));
 	  
   
-  double RPM1 = (11.9 * distanceFromLimelightToGoalInches) + 2190;
+  double RPM1 = (11.9 * distanceFromLimelightToGoalInches) + 2215; //previoisly 2190
   double RPM2 = -RPM1 * 0.6;
 
   debugCons("DISTANCE: " << distanceFromLimelightToGoalInches << "\n");
