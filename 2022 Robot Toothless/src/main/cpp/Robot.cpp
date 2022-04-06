@@ -200,12 +200,8 @@ void Robot::ExecuteControls()
     m_turret.Turn(-0.4); //was previously 30 percent 
   }
 
-  else {
-      m_turret.Turn(0); //this conflicts with turret turning of the light is left on at all times 
-    }
-  
   }
- 
+  
  if (std::abs(m_controllerInputs->mani_RightTriggerAxis < .15) && (areweusingIntake == false) && m_controllerInputs->mani_AButton == 0)
  {
    m_feeder.stopFeeder();
