@@ -19,6 +19,7 @@
 #include "ControllerInputs.h"
 #include <AHRS.h>
 #include <frc/smartdashboard/SendableChooser.h>
+#include <frc/Timer.h>
 
 // Subsystem includes
 #include "DriveSystem.h"
@@ -60,6 +61,8 @@ class Robot : public frc::TimedRobot
 
    cmd * m_controllerInputs = new cmd; // universal controler variables 
 
+  frc::Timer* timer;
+  
   // Constants
   const int XBOX_USB_DRIVER_1 = 0;
   const int  XBOX_USB_DRIVER_2 = 1;
@@ -159,5 +162,9 @@ class Robot : public frc::TimedRobot
   bool turretAlignedCLimb = false;
 
   bool areweusingIntake = false;
+
+  
+  
+
 
 };

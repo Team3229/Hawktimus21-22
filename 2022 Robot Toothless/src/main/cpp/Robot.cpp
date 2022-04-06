@@ -20,7 +20,7 @@ void Robot::RobotInit(){
   m_chooser.AddOption("3 Ball Auto From Center", kCenterAuto);
   m_chooser.AddOption("4 Ball Auto From Right", kRightAuto);
 
-
+  //timer = new frc::Timer();
 
 }
 
@@ -184,8 +184,27 @@ void Robot::ExecuteControls()
         
     }
   
+  if (m_controllerInputs->mani_YButton){
 
+   double turretAngle = m_turret.GetAngle();
 
+  
+
+ if (turretAngle  > 94) {
+
+   m_turret.Turn(0.4);
+
+  }
+  else if (turretAngle < 86){
+
+    m_turret.Turn(-0.4); //was previously 30 percent 
+  }
+
+  else {
+      m_turret.Turn(0); //this conflicts with turret turning of the light is left on at all times 
+    }
+  
+  }
  
  if (std::abs(m_controllerInputs->mani_RightTriggerAxis < .15) && (areweusingIntake == false) && m_controllerInputs->mani_AButton == 0)
  {
@@ -437,13 +456,13 @@ void Robot::ExecuteControls()
   }
   else if (m_xOffset > 0) {
 
-   m_turret.Turn(0.3);
+   m_turret.Turn(0.4);
     m_leds.ChangeLEDColors(-0.11);
 
   }
   else if (m_xOffset < 0){
 
-    m_turret.Turn(-0.3);
+    m_turret.Turn(-0.4); //was previously 30 percent 
      m_leds.ChangeLEDColors(-0.11);
   }
 

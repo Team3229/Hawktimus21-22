@@ -33,7 +33,10 @@ class IntakePivot
 {
 
 private:
-    ctre::phoenix::motorcontrol::can::WPI_TalonSRX * m_intakePivot;
+  //ctre::phoenix::motorcontrol::can::WPI_TalonSRX * m_intakePivot;
+
+    rev::CANSparkMax * m_intakePivot;
+
 
     const int kIntakePivotMotorID = 15;
 

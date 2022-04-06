@@ -34,10 +34,6 @@ public:
 	void AutoPlaybackSwitch();
 	void TeleopModeSwitch();
 
-
-  
-
-
 private:
     //SparkMax's
 	rev::CANSparkMax * leftLead; //Front left, leader
