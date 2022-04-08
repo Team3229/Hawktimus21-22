@@ -13,7 +13,6 @@ Turret::Turret()
 
     m_turretMotor->ClearStickyFaults();
 
-  
 
 }
 
@@ -40,7 +39,8 @@ void Turret::Turn(double setPower)
    
         
 
-         double encoderAngle = (m_turEncoder->GetAbsolutePosition() * 360) - 172.22;
+         double encoderAngle = (m_turEncoder->GetAbsolutePosition() * 360) - 154;  //-60
+
 
          debugCons("TURRET POSITION: " << encoderAngle << "\n");
     
