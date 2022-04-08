@@ -156,6 +156,11 @@ class Robot : public frc::TimedRobot
   const std::string kLeftAuto = "2BallAutoLeft.aut";
   const std::string kCenterAuto = "3BallAutoCenter.aut";
   const std::string kRightAuto = "4BallAutoRight";
+  const std::string kMainRightAuto = "4MainBallAutoRight";
+  const std::string kMainOneRightAuto = "4MainOneBallAutoRight";
+  const std::string kMainTwoRightAuto = "4MainTwoBallAutoRight";
+  const std::string kMainThirdRightAuto = "4MainThirdBallAutoRight";
+  const std::string kMainFourRightAuto = "4MainFourBallAutoRight";
 
   const std::string kAutoroutineDefault = kRightAuto;
 
@@ -163,7 +168,9 @@ class Robot : public frc::TimedRobot
 
   bool areweusingIntake = false;
 
-  
+   double EXTRARPM = 25;
+   
+  frc::Timer* timeSinceLastShot;
   
 
 

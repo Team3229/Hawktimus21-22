@@ -18,9 +18,25 @@ void Robot::RobotInit(){
   m_chooser.SetDefaultOption("4 Ball Auto (Default Choice)", kAutoroutineDefault);
   m_chooser.AddOption("2 Ball Auto From Left", kLeftAuto);
   m_chooser.AddOption("3 Ball Auto From Center", kCenterAuto);
-  m_chooser.AddOption("4 Ball Auto From Right", kRightAuto);
+  m_chooser.AddOption("4 Ball Auto Alternate", kRightAuto);
+  m_chooser.AddOption("4 Ball Auto Constistent", kMainRightAuto);
+  m_chooser.AddOption("2 Ball Auto From Alternate", kMainOneRightAuto);
+  m_chooser.AddOption("3 Ball Auto From Alternate", kMainTwoRightAuto);
+  m_chooser.AddOption("4 Ball Auto Alternate Mid", kMainThirdRightAuto);
+  m_chooser.AddOption("4 Ball Auto Alternate Yikes", kMainFourRightAuto );
+  
+  m_turret.ResetTurretEncoder();
+  /*
 
-  //timer = new frc::Timer();
+  
+  const std::string kMainRightAuto = "4MainBallAutoRight";
+  const std::string kMainOneRightAuto = "4MainOneBallAutoRight";
+  const std::string kMainTwoRightAuto = "4MainTwoBallAutoRight";
+  const std::string kMainThirdRightAuto = "4MainThirdBallAutoRight";
+  const std::string kMainFourRightAuto = "4MainFourBallAutoRight";
+  */
+
+ // timeSinceLastShot = new frc::Timer();
 
 }
 
@@ -222,6 +238,8 @@ void Robot::ExecuteControls()
   }
    else  {
     m_upperFeeder.stopUpperFeeder(); 
+    
+    
     //m_feeder.stopFeeder();
   }
 
@@ -329,6 +347,8 @@ void Robot::ExecuteControls()
 	  
   
   double RPM1 = (11.9 * distanceFromLimelightToGoalInches) + 2215; //previoisly 2190
+
+   
   double RPM2 = -RPM1 * 0.6;
 
   debugCons("DISTANCE: " << distanceFromLimelightToGoalInches << "\n");
@@ -452,13 +472,13 @@ void Robot::ExecuteControls()
   }
   else if (m_xOffset > 0) {
 
-   m_turret.Turn(0.4);
+   m_turret.Turn(0.3);
     m_leds.ChangeLEDColors(-0.11);
 
   }
   else if (m_xOffset < 0){
 
-    m_turret.Turn(-0.4); //was previously 30 percent 
+    m_turret.Turn(-0.3); //was previously 30 percent 
      m_leds.ChangeLEDColors(-0.11);
   }
 

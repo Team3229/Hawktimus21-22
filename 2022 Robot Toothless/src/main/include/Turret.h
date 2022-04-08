@@ -28,6 +28,7 @@ class Turret
         void TurnLimelightLeft(double setPower);
         double GetAngle();
         void findTarget(double startPos);
+        void ResetTurretEncoder();
 
         void turretDash();
 
@@ -59,5 +60,8 @@ class Turret
 
         //Turret find target
         bool reverseDirection;
+
+         
+
 };
 #endif
