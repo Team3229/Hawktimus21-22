@@ -25,18 +25,6 @@ void Robot::RobotInit(){
   m_chooser.AddOption("4 Ball Auto Alternate Mid", kMainThirdRightAuto);
   m_chooser.AddOption("4 Ball Auto Alternate Yikes", kMainFourRightAuto );
   
-  m_turret.ResetTurretEncoder();
-  /*
-
-  
-  const std::string kMainRightAuto = "4MainBallAutoRight";
-  const std::string kMainOneRightAuto = "4MainOneBallAutoRight";
-  const std::string kMainTwoRightAuto = "4MainTwoBallAutoRight";
-  const std::string kMainThirdRightAuto = "4MainThirdBallAutoRight";
-  const std::string kMainFourRightAuto = "4MainFourBallAutoRight";
-  */
-
- // timeSinceLastShot = new frc::Timer();
 
 }
 
@@ -247,7 +235,7 @@ void Robot::ExecuteControls()
   //turret manual turning
   if (std::abs(m_controllerInputs->mani_rightX) > .1) {
 
-      m_turret.Turn(m_controllerInputs->mani_rightX/5);
+      m_turret.Turn(-m_controllerInputs->mani_rightX/5);
 
     } else {
       m_turret.Turn(0); //this conflicts with turret turning of the light is left on at all times 
@@ -346,7 +334,7 @@ void Robot::ExecuteControls()
   double distanceFromLimelightToGoalInches = (goalHeightInches - limelightLensHeightInches)/(tan(angleToGoalRadians));
 	  
   
-  double RPM1 = (11.9 * distanceFromLimelightToGoalInches) + 2215; //previoisly 2190
+  double RPM1 = (11.9 * distanceFromLimelightToGoalInches) + 2270; //previoisly 2215  //previously 
 
    
   double RPM2 = -RPM1 * 0.6;

@@ -28,7 +28,6 @@ class Turret
         void TurnLimelightLeft(double setPower);
         double GetAngle();
         void findTarget(double startPos);
-        void ResetTurretEncoder();
 
         void turretDash();
 
@@ -38,6 +37,7 @@ class Turret
         ctre::phoenix::motorcontrol::can::WPI_TalonSRX * m_turretMotor;
         frc2::PIDController * m_turretPID;
         frc::AnalogEncoder * m_turEncoder;
+    
 
         
 

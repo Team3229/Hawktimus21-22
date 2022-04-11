@@ -3,17 +3,15 @@
 Turret::Turret()
 {
 
+    
     m_turretMotor = new ctre::phoenix::motorcontrol::can::WPI_TalonSRX(kTurretMotorID);
     m_turretPID = new frc2::PIDController(kP,kI,kD);
     m_turEncoder = new frc::AnalogEncoder(turretEncID);
+   // m_turEncoder->Reset(); 
     m_turretPID->SetTolerance(kNOMINAL_TX_ERROR);
-    debugCons("\nEncoder Reset")   
-
-     m_turEncoder->Reset();
+    debugCons("\nEncoder Reset");
 
     m_turretMotor->ClearStickyFaults();
-
-  
 
 }
 
@@ -24,29 +22,24 @@ Turret::~Turret()
     delete m_turEncoder;
 }
 
-
 /**
  * turn with set motor power
  * @param setpower % power set to motor
  */
 
-void Turret::ResetTurretEncoder(){
-    m_turEncoder->Reset();
-}
 void Turret::Turn(double setPower)
 {
     debugDashNum("(Tur) Turret Power", setPower);
     //limits turret turn range
    
-        
 
-         double encoderAngle = (m_turEncoder->GetAbsolutePosition() * 360) - 172.22;
+      //   double encoderAngle = (m_turEncoder->GetAbsolutePosition() * 360);
 
-         debugCons("TURRET POSITION: " << encoderAngle << "\n");
+         debugCons("TURRET POSITION: " << GetAngle() << "\n");
     
 
 
-       if ((setPower < 0 && (encoderAngle) > -90) || (setPower > 0 && (encoderAngle) < 90)){
+       if ((setPower < 0 && (GetAngle()) > -90) || (setPower > 0 && (GetAngle()) < 90)){
            
         m_turretMotor->Set(std::clamp(setPower,-kMAX_TURRET_POWER,kMAX_TURRET_POWER));
 
@@ -78,12 +71,12 @@ void Turret::TurnLimelightLeft(double setPower){
  */
 double Turret::GetAngle()
 {
-    double encoderAngle = (m_turEncoder->GetAbsolutePosition()*360);
+    double encoderAngle = (m_turEncoder->GetAbsolutePosition()*360) - 67;
     
     if (encoderAngle > 180) {
-        (encoderAngle = encoderAngle);
+        (encoderAngle = encoderAngle - 360);
     }
-    return encoderAngle-164;
+    return encoderAngle;
 
 }
 
