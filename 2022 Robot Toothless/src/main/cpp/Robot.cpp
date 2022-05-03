@@ -233,9 +233,11 @@ void Robot::ExecuteControls()
 
 
   //turret manual turning
-  if (std::abs(m_controllerInputs->mani_rightX) > .1) {
+  if ((std::abs(m_controllerInputs->mani_rightX)) > .1) {
+
 
       m_turret.Turn(-m_controllerInputs->mani_rightX/5);
+
 
     } else {
       m_turret.Turn(0); //this conflicts with turret turning of the light is left on at all times 
