@@ -1,4 +1,5 @@
-// Author: Team 3229 Programming Subteam
+//Author: Sebastian Roman (Programming Lead)
+//Co Author: 3229 Programming
 
 #ifndef DRIVESYSTEM_H
 #define DRIVESYSTEM_H

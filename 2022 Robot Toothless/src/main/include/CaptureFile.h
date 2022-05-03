@@ -1,7 +1,5 @@
-/*
- * Team 3229
- * CaptureFile.h
- */
+//Author: Sebastian Roman (Programming Lead)
+//Co Author: 3229 Programming
 
 #ifndef CAPTUREFILE_H_
 #define CAPTUREFILE_H_

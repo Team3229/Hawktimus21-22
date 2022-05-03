@@ -1,3 +1,6 @@
+//Author: Sebastian Roman (Programming Lead)
+//Co Author: 3229 Programming
+
 #ifndef AUTO_H
 #define AUTO_H
 
@@ -41,14 +44,9 @@ private:
   Pivot * autoPivot; 
   LEDS * autoLeds;
   
-  // files stuff
-  // Use .aut file extension
-  
+ 
   std::string stationText = "Auto file path: /home/lvuser/";
   std::string inputFileName; //other was crossLine  "crossLineAndShoot"
-
-  //crossLineAndShoot 2 ball auto
-  //crossLineAndShoot4
 
   const bool WRITE = true;
   const bool READ = false;

@@ -1,3 +1,6 @@
+//Author: Sebastian Roman (Programming Lead)
+//Co Author: 3229 Programming
+
 #ifndef INTAKE_H
 #define INTAKE_H
 
@@ -33,7 +36,7 @@ class IntakePivot
 {
 
 private:
-  //ctre::phoenix::motorcontrol::can::WPI_TalonSRX * m_intakePivot;
+  
 
     rev::CANSparkMax * m_intakePivot;
 

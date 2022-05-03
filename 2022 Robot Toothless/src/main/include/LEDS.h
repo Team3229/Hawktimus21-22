@@ -1,3 +1,5 @@
+//Author: Sebastian Roman (Programming Lead)
+//Co Author: 3229 Programming
 
 #ifndef LEDSUBSYSTEM
 #define LEDSUBSYSTEM_H

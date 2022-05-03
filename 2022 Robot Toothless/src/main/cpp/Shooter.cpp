@@ -1,10 +1,7 @@
 #include "Shooter.h"
 
 Shooter::Shooter(){
-   //instantiate shooter motors
-
-
-    //restore for facotry defaults
+  
     flyWheelUpperOne.RestoreFactoryDefaults();
     flyWheelUpperTwo.RestoreFactoryDefaults();
 

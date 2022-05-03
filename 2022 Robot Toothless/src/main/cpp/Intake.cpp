@@ -1,3 +1,6 @@
+//Author: Sebastian Roman (Programming Lead)
+//Co Author: 3229 Programming
+
 #include "Intake.h"
 
 //Intake Indexer 
@@ -31,8 +34,6 @@ void Intake::stopIntake()
 
 IntakePivot::IntakePivot(){
 
-    // m_intakePivot = new ctre::phoenix::motorcontrol::can::WPI_TalonSRX(kIntakePivotMotorID);
-    //m_intakePivot->ClearStickyFaults();
       
       m_intakePivot  = new rev::CANSparkMax(kIntakePivotMotorID,rev::CANSparkMax::MotorType::kBrushless);
       m_intakePivot->RestoreFactoryDefaults();

@@ -1,9 +1,5 @@
-/*----------------------------------------------------------------------------*/
-/* Copyright (c) 2017-2020 FIRST. All Rights Reserved.                        */
-/* Open Source Software - may be modified and shared by FRC teams. The code   */
-/* must be accompanied by the FIRST BSD license file in the root directory of */
-/* the project.                                                               */
-/*----------------------------------------------------------------------------*/
+//Author: Sebastian Roman (Programming Lead)
+//Co Author: 3229 Programming
 
 #pragma once
 
@@ -101,8 +97,6 @@ class Robot : public frc::TimedRobot
   double angleToGoalDegrees = limelightMountAngleDegrees + m_yOffset;
   double angleToGoalRadians = angleToGoalDegrees * (3.14159 / 180.0);
 
-  //calculate distance 
-  //double distanceFromLimelightToGoalInches = (goalHeightInches - limelightLensHeightInches)/tan(angleToGoalRadians);
 
   double angleForPivot;
 

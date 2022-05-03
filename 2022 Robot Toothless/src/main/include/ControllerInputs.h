@@ -1,3 +1,6 @@
+//Author: Sebastian Roman (Programming Lead)
+//Co Author: 3229 Programming
+
 #ifndef CONTROLLER_INPUTS_H
 #define CONTROLLER_INPUTS_H
 

@@ -1,3 +1,6 @@
+//Author: Sebastian Roman (Programming Lead)
+//Co Author: 3229 Programming
+
 #ifndef FEEDER_H
 #define FEEDER_H
 

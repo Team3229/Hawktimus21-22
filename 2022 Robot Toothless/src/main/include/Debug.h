@@ -1,4 +1,5 @@
-// Author: Team 3229 Programming Subteam
+//Author: Sebastian Roman (Programming Lead)
+//Co Author: 3229 Programming
 
 #ifndef DEBUG_H
 #define DEBUG_H

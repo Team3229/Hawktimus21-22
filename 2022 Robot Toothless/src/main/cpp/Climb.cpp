@@ -1,3 +1,7 @@
+//Author: Sebastian Roman (Programming Lead)
+//Co Author: 3229 Programming
+
+
 #include "Climb.h"
 #include <iostream>
 #include <rev/SparkMaxRelativeEncoder.h>

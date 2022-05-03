@@ -44,8 +44,6 @@ double Pivot::GetAngle()
     
     pivotAngleActual = m_pivotMotor->GetSelectedSensorPosition();
     
-   
-    //debugCons("PIVOT VALUES: " << pivotAngleActual  << "\n");
 
     return (pivotAngleActual);
    

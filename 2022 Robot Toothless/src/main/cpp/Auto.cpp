@@ -1,4 +1,5 @@
-// 2020 test for capture/replay autonomous system
+//Author: Sebastian Roman (Programming Lead)
+//Co Author: 3229 Programming
 
 #include "Auto.h"
 

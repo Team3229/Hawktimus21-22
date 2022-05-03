@@ -162,14 +162,6 @@ void Robot::ExecuteControls()
      chassis.Stop();
   }
 
-  /*if (m_controllerInputs->mani_YButton)
-  {
-    m_feeder.runFeeder();
-  }
-  else
-  {
-    m_feeder.stopFeeder();
-  }*/
 
   //Run polycoord feeder and intake forwards driver has this control
    if (std::abs(m_controllerInputs->driver_leftY > 0.15)) {
@@ -346,112 +338,10 @@ void Robot::ExecuteControls()
   
   m_shooter.runShooterAuto(RPM1, RPM2);
   desiredPivotAngle = 58700;
-  /*
-
-   if (distanceFromLimelightToGoalInches <= 68) {
-
-          //m_shooter.SetPointOne = 2554;
-         // m_shooter.SetPointTwo = -2667; 
-	        desiredPivotAngle = 21659;
-          m_shooter.runShooterAuto(2960, -2960 * 0.6);
-	        desiredPivotAngle = 58700;
-
-	        debugCons("FIRST DISTANCE\n");          
-     	 }
-
-         else if (distanceFromLimelightToGoalInches > 68 && distanceFromLimelightToGoalInches <= 93) {
-
-         // m_shooter.SetPointOne = 3008;
-	       // m_shooter.SetPointTwo= -3575;
-	        desiredPivotAngle = 41219; 
-          m_shooter.runShooterAuto(3100, -3100 * 0.6);
-	        desiredPivotAngle = 58700; 
-
-	         debugCons("SECOND DISTANCE\n");          
-     	 }
-	  
-         else if (distanceFromLimelightToGoalInches > 93 && distanceFromLimelightToGoalInches <= 109){
-
-         // m_shooter.SetPointOne= 3008;
-	       // m_shooter.SetPointTwo = -3575;
-	        desiredPivotAngle = 41219;
-         m_shooter.runShooterAuto(3300, -3300 * 0.6);
-	        desiredPivotAngle = 58700;
-
-	          debugCons("THIRD DISTANCE\n");          
-     	 }
-
-        else if (distanceFromLimelightToGoalInches > 109 && distanceFromLimelightToGoalInches <= 125){
-
-         // m_shooter.SetPointOne = 2951;
-	       // m_shooter.SetPointTwo = -2838;  
-	        desiredPivotAngle = 41219;
-            m_shooter.runShooterAuto(3600, -3600 * 0.6);
-	        desiredPivotAngle = 58700;
-           debugCons("Fourth Distance\n");    
-
-      }
-	  
-         else if (distanceFromLimelightToGoalInches > 125 && distanceFromLimelightToGoalInches <= 141){
-
-       //  m_shooter.SetPointOne = 3178;
-	     // m_shooter.SetPointTwo = -3405; 
-	      desiredPivotAngle = 42790;
-        m_shooter.runShooterAuto(3700, -3700 * 0.6);
-	      desiredPivotAngle = 58700;
-
-	      debugCons("Fifth distance\n");          
-     	 }
-
-        else if (distanceFromLimelightToGoalInches > 141 && distanceFromLimelightToGoalInches <= 155){
-
-       // m_shooter.SetPointOne = 3235;
-	      //m_shooter.SetPointTwo = -3462;
-	      desiredPivotAngle = 42790;
-        m_shooter.runShooterAuto(3800, -3800 * .6);
-	      desiredPivotAngle = 58700;
-
-	      debugCons("sixth distance\n");       
-       }
-	  
-
-        else if (distanceFromLimelightToGoalInches > 156 && distanceFromLimelightToGoalInches <= 191) {
-          
-         m_shooter.runShooterAuto(3950, -3950 * .6);
-	      desiredPivotAngle = 58700;
-
-	    debugCons("Seventh distance\n");          
-     	}
-
-         else if (distanceFromLimelightToGoalInches > 191 && distanceFromLimelightToGoalInches <= 216) {
-          
-       // m_shooter.SetPointOne = 3462;
-	     // m_shooter.SetPointTwo = -3746; 
-	      desiredPivotAngle = 52825;
-         m_shooter.runShooterAuto(4200, -4200 * .6);
-	      desiredPivotAngle = 58700;
-
-	    debugCons("VERY FAR\n");          
-	    debugCons("8 distance\n");          
-     	}
-
-       else if (distanceFromLimelightToGoalInches >  216) {
-          
-         m_shooter.runShooterAuto(4400, -4400 * .6);
-	      desiredPivotAngle = 58700;
-
-	    debugCons("9 distance\n");          
-     	}
-*/
-
+ 
   debugCons("DISTANCE AWAY: " << distanceFromLimelightToGoalInches << "\n");
 
-  //for human player station shots
-  /*if (RPM1 >= 5100)
-  {
-    m_shooter.runShooterAuto(5100, -5100 * 0.6);
-  }
-*/
+
   //limelight moves to target if target on screen
   if (abs(m_xOffset) < TARGET_RANGE)
   {
@@ -496,12 +386,10 @@ void Robot::ExecuteControls()
 	if (haveTarget && turretAligned && pivotAligned){  //auto shoot without driver input wehn all values are true they start shooting, manip driver just has to perss X and robot does everything 
 	   debugCons("TAKING A SHOT\n");
      
-    //m_feeder.runFeeder();
-    //m_upperFeeder.runUpperFeeder();
+    
 	}
   else{
-     // m_upperFeeder.stopUpperFeeder();
-     // m_feeder.stopFeeder();
+
   }
 
   
