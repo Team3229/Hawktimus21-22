@@ -14,8 +14,8 @@ public:
     Climb();
     ~Climb();
 
-    void ClimbUp();
-    void ClimbDown();
+    void ClimbUp(double input);
+    void ClimbDown(double input);
     void ClimbSync(double up, double down);
     void ClimbHighUP();
     void ClimbHighDOWN();
@@ -33,8 +33,8 @@ private:
     const int HIGH_ID = 16;
 
     
-    const double CLIMB_SPEED = 1.0;
-    const double CLIMB_SPEED2 = -1.0;
+    const double CLIMB_SPEED = 0.5;
+    const double CLIMB_SPEED2 = -0.5;
 
 
     const double CLIMBHIGH_SPEED = 1.0;

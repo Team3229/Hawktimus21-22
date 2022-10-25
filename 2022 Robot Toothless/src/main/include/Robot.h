@@ -155,6 +155,7 @@ class Robot : public frc::TimedRobot
   const std::string kMainTwoRightAuto = "4MainTwoBallAutoRight";
   const std::string kMainThirdRightAuto = "4MainThirdBallAutoRight";
   const std::string kMainFourRightAuto = "4MainFourBallAutoRight";
+  const std::string kTaxiAuto = "TaxiAuto";
 
   const std::string kAutoroutineDefault = kRightAuto;
 

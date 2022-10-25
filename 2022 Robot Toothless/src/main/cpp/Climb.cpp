@@ -25,15 +25,15 @@ Climb::~Climb()
     delete climbHigh;
 }
 
-void Climb::ClimbUp()
+void Climb::ClimbUp(double input)
 {
-    climbLead->Set(CLIMB_SPEED2);
-    climbFollower->Set(CLIMB_SPEED2);
+    climbLead->Set(CLIMB_SPEED2*input);
+    climbFollower->Set(CLIMB_SPEED2*input);
 }
-void Climb::ClimbDown()
+void Climb::ClimbDown(double input)
 {
-    climbLead->Set(CLIMB_SPEED);
-    climbFollower->Set(CLIMB_SPEED);
+    climbLead->Set(CLIMB_SPEED*input);
+    climbFollower->Set(CLIMB_SPEED*input);
 }
 void Climb::ClimbSync(double up, double down)
 {

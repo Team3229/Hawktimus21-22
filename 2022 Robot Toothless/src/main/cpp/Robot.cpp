@@ -24,6 +24,7 @@ void Robot::RobotInit(){
   m_chooser.AddOption("3 Ball Auto From Alternate", kMainTwoRightAuto);
   m_chooser.AddOption("4 Ball Auto Alternate Mid", kMainThirdRightAuto);
   m_chooser.AddOption("4 Ball Auto Alternate Yikes", kMainFourRightAuto );
+  m_chooser.AddOption("Taxi", kTaxiAuto );
   
 
 }
@@ -121,8 +122,6 @@ void Robot::DisabledInit()
 
 void Robot::ExecuteControls()
 {
-
-
 
 
   //slow mode - 4mps (affects acceleration and fine control)
@@ -238,7 +237,7 @@ void Robot::ExecuteControls()
  //shooter manual turning 
   if (std::abs(m_controllerInputs->mani_LeftTriggerAxis > .15)){
      
-      m_shooter.runShooterAuto(4000, -4000 * .6);
+      m_shooter.runShooterAuto(2000 * .95, -2000 * .5);
   }
     else{
       
@@ -328,10 +327,12 @@ void Robot::ExecuteControls()
   double distanceFromLimelightToGoalInches = (goalHeightInches - limelightLensHeightInches)/(tan(angleToGoalRadians));
 	  
   
-  double RPM1 = (11.9 * distanceFromLimelightToGoalInches) + 2270; //previoisly 2215  //previously 
+  double RPM1 = ((11.9 * distanceFromLimelightToGoalInches) + 2270); //previoisly 2215  //previously 
 
    
-  double RPM2 = -RPM1 * 0.6;
+  double RPM2;
+
+  RPM2 = ((11.9 * distanceFromLimelightToGoalInches) + 2270) * -.48;
 
   debugCons("DISTANCE: " << distanceFromLimelightToGoalInches << "\n");
   //debugCons("RPM VALUE: " << RPM1);
@@ -422,12 +423,18 @@ void Robot::ExecuteControls()
       }
     }
   }
+  //  else {
+  //   double RPM1 = 1000;
+  //   double RPM2 = -600;
+
+  //   m_shooter.runShooterAuto(RPM1, RPM2);
+  // }
   
 
   //right and left climbers
 
-  if (m_controllerInputs->driver_RightTriggerAxis > 0.5) {
-    m_climb.ClimbUp();
+  if (m_controllerInputs->driver_RightTriggerAxis > 0.075) {
+    m_climb.ClimbUp(m_controllerInputs->driver_RightTriggerAxis);
     m_leds.ChangeLEDColors(-0.7);
   }
   else {
@@ -435,9 +442,9 @@ void Robot::ExecuteControls()
     
   }
 
-  if (m_controllerInputs->driver_LeftTriggerAxis > 0.5)
+  if (m_controllerInputs->driver_LeftTriggerAxis > 0.075)
    { 
-    m_climb.ClimbDown();
+    m_climb.ClimbDown(m_controllerInputs->driver_LeftTriggerAxis);
      m_leds.ChangeLEDColors(-0.7);
   }
 
